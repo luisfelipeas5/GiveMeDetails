@@ -5,29 +5,30 @@ import android.net.Uri;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.List;
 import java.util.Scanner;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import br.com.luisfelipeas5.wherewatch.R;
-import br.com.luisfelipeas5.wherewatch.model.Movie;
+import br.com.luisfelipeas5.wherewatch.api.responsebodies.MoviesResponseBody;
 
 public class WhereWatchApi {
     private static final String AUTHORITY = "api.themoviedb.org";
-    private static final String SHOWING_MOVIES = "movie/popular";
+    private static final String SHOWING_MOVIES = "3/movie/popular";
 
     private static final String KEY_QUERY_API_KEY = "api_key";
+
+    public static final String IMG_URLS_PREFIX = "http://image.tmdb.org/t/p/w185";
 
     public interface Callback<T> {
         void onResult(T movies);
     }
 
-    public static void getMovies(Context context, final Callback<List<Movie>> callback) {
+    public static void getPopularMovies(Context context, final Callback<MoviesResponseBody> callback) {
         final Uri.Builder builder = new Uri.Builder()
                 .scheme("https")
                 .appendQueryParameter(KEY_QUERY_API_KEY, context.getString(R.string.the_movie_db_api_key))
@@ -38,14 +39,14 @@ public class WhereWatchApi {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                List<Movie> movies = new Gson().fromJson(s, new TypeToken<List<Movie>>(){}.getType());
-                callback.onResult(movies);
+                MoviesResponseBody moviesResponseBody = new Gson().fromJson(s, MoviesResponseBody.class);
+                callback.onResult(moviesResponseBody);
             }
         }.execute();
     }
 
     private static String getResponseFromHttpUrl(URL url) throws IOException {
-        HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+        HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
         try {
             InputStream in = urlConnection.getInputStream();
             Scanner scanner = new Scanner(in);
