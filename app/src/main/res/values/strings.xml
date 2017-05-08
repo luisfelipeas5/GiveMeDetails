@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WhereWatch</string>
+    <string name="zip_code">ZIP CODE</string>
+    <string name="search">search</string>
+</resources>
