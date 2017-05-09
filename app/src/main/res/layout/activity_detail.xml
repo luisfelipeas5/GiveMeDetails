@@ -6,17 +6,18 @@
             type="br.com.luisfelipeas5.wherewatch.model.Movie"/>
     </data>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:background="@drawable/transparent_clickable"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        tools:context="br.com.luisfelipeas5.wherewatch.ui.DetailActivity">
 
         <ImageView android:id="@+id/img_movie"
-            app:set_movie_thumbnail="@{movie}"
-            android:background="@color/colorPrimary"
-            android:contentDescription="@string/img_movie"
+            android:contentDescription="@{movie.title}"
+            app:set_movie="@{movie}"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/img_movie_height" />
+            android:layout_height="match_parent" />
 
     </FrameLayout>
+
 </layout>

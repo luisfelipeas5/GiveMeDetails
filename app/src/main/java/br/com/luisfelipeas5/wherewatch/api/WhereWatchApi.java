@@ -17,7 +17,8 @@ import br.com.luisfelipeas5.wherewatch.R;
 import br.com.luisfelipeas5.wherewatch.api.responsebodies.MoviesResponseBody;
 
 public class WhereWatchApi {
-    public static final String IMG_BASE_URL = "http://image.tmdb.org/t/p/w185";
+    public static final String IMG_BASE_URL_THUMBNAIL = "http://image.tmdb.org/t/p/w185";
+    public static final String IMG_BASE_URL_ORIGINAL = "http://image.tmdb.org/t/p/original";
     private static final String AUTHORITY = "api.themoviedb.org";
 
     private static final String MOVIES_POPULAR = "3/movie/popular";

@@ -1,22 +1,18 @@
 package br.com.luisfelipeas5.wherewatch.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import br.com.luisfelipeas5.wherewatch.R;
-import br.com.luisfelipeas5.wherewatch.api.WhereWatchApi;
+import br.com.luisfelipeas5.wherewatch.databinding.LayoutMoviesAdapterItemBinding;
 import br.com.luisfelipeas5.wherewatch.model.Movie;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
     private final List<Movie> mMovies;
+    private Listener mListener;
 
     public MoviesAdapter(List<Movie> movies) {
         mMovies = movies;
@@ -25,14 +21,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.layout_movies_adapter_item, parent, false);
-        return new ViewHolder(view);
+        LayoutMoviesAdapterItemBinding binding =
+                LayoutMoviesAdapterItemBinding.inflate(inflater, parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Movie movie = mMovies.get(position);
-        holder.setMovie(movie);
+        holder.binding.setMovie(movie);
     }
 
     @Override
@@ -40,23 +37,30 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         return mMovies.size();
     }
 
+    public void setListener(Listener listener) {
+        mListener = listener;
+    }
+
+    public interface Listener {
+        void onMovieClicked(Movie movie);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView mImgMovie;
+        LayoutMoviesAdapterItemBinding binding;
 
-        ViewHolder(View itemView) {
-            super(itemView);
-            mImgMovie = (ImageView) itemView.findViewById(R.id.img_movie);
-        }
-
-        void setMovie(Movie movie) {
-            Context context = mImgMovie.getContext();
-
-            String posterUrl = WhereWatchApi.IMG_BASE_URL + movie.getPoster();
-            Glide.with(context)
-                    .load(posterUrl)
-                    .dontAnimate()
-                    .into(mImgMovie);
-            mImgMovie.setContentDescription(movie.getTitle());
+        ViewHolder(LayoutMoviesAdapterItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            binding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (mListener != null && position != RecyclerView.NO_POSITION) {
+                        Movie movie = mMovies.get(position);
+                        mListener.onMovieClicked(movie);
+                    }
+                }
+            });
         }
     }
 }
