@@ -51,7 +51,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         void setMovie(Movie movie) {
             Context context = mImgMovie.getContext();
 
-            String posterUrl = WhereWatchApi.IMG_URLS_PREFIX + movie.getPoster();
+            String posterUrl = WhereWatchApi.IMG_BASE_URL + movie.getPoster();
             Glide.with(context)
                     .load(posterUrl)
                     .dontAnimate()
