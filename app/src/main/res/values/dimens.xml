@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="img_movie_height">300dp</dimen>
+
+    <dimen name="detail_big_text">20sp</dimen>
+    <dimen name="detail_normal_text">16sp</dimen>
+    <dimen name="details_small_text">14sp</dimen>
+    <dimen name="details_card_layout_padding">16dp</dimen>
 </resources>

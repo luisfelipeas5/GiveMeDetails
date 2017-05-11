@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">WhereWatch</string>
-    <string name="zip_code">ZIP CODE</string>
-    <string name="search">search</string>
     <string name="img_movie">Movie\'s image</string>
     <string name="popular_movies">Popular movies</string>
     <string name="top_rated_movies">Top rated movies</string>
+
+    <string name="basic_information">Basic information</string>
+
 </resources>

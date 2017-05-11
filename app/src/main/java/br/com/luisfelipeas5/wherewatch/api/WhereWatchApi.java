@@ -2,9 +2,6 @@ package br.com.luisfelipeas5.wherewatch.api;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.AsyncTask;
-
-import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,14 +12,18 @@ import javax.net.ssl.HttpsURLConnection;
 
 import br.com.luisfelipeas5.wherewatch.R;
 import br.com.luisfelipeas5.wherewatch.api.responsebodies.MoviesResponseBody;
+import br.com.luisfelipeas5.wherewatch.api.tasks.GetMovieTask;
+import br.com.luisfelipeas5.wherewatch.api.tasks.GetMoviesTask;
+import br.com.luisfelipeas5.wherewatch.model.Movie;
 
 public class WhereWatchApi {
     public static final String IMG_BASE_URL_THUMBNAIL = "http://image.tmdb.org/t/p/w185";
     public static final String IMG_BASE_URL_ORIGINAL = "http://image.tmdb.org/t/p/original";
     private static final String AUTHORITY = "api.themoviedb.org";
 
-    private static final String MOVIES_POPULAR = "3/movie/popular";
-    private static final String MOVIES_TOP_RATED = "3/movie/top_rated";
+    private static final String GET_MOVIES_POPULAR_PATH = "3/movie/popular";
+    private static final String GET_MOVIES_TOP_RATED_PATH = "3/movie/top_rated";
+    private static final String GET_MOVIE_PATH = "3/movie";
 
     private static final String KEY_QUERY_API_KEY = "api_key";
 
@@ -32,7 +33,7 @@ public class WhereWatchApi {
 
     public static GetMoviesTask getPopularMovies(Context context, final Callback<MoviesResponseBody> callback) {
         Uri.Builder builder = getDefaultBuilder(context)
-                .path(MOVIES_POPULAR);
+                .path(GET_MOVIES_POPULAR_PATH);
 
         GetMoviesTask task = new GetMoviesTask(builder, callback);
         task.execute();
@@ -41,9 +42,19 @@ public class WhereWatchApi {
 
     public static GetMoviesTask getTopRatedMovies(Context context, final Callback<MoviesResponseBody> callback) {
         Uri.Builder builder = getDefaultBuilder(context)
-                .path(MOVIES_TOP_RATED);
+                .path(GET_MOVIES_TOP_RATED_PATH);
 
         GetMoviesTask task = new GetMoviesTask(builder, callback);
+        task.execute();
+        return task;
+    }
+
+    public static GetMovieTask getMovie(Context context, Movie movie, Callback<Movie> callback) {
+        Uri.Builder builder = getDefaultBuilder(context)
+                .path(GET_MOVIE_PATH)
+                .appendPath(movie.getId());
+
+        GetMovieTask task = new GetMovieTask(builder, callback);
         task.execute();
         return task;
     }
@@ -55,7 +66,7 @@ public class WhereWatchApi {
                 .authority(AUTHORITY);
     }
 
-    private static String getResponseFromHttpUrl(URL url) throws IOException {
+    public static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
         try {
             InputStream in = urlConnection.getInputStream();
@@ -70,43 +81,6 @@ public class WhereWatchApi {
             }
         } finally {
             urlConnection.disconnect();
-        }
-    }
-
-    public static class GetMoviesTask extends Task {
-
-        private Callback<MoviesResponseBody> callback;
-
-        private GetMoviesTask(Uri.Builder builder, Callback<MoviesResponseBody> callback) {
-            super(builder);
-            this.callback = callback;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            MoviesResponseBody moviesResponseBody = new Gson().fromJson(s, MoviesResponseBody.class);
-            callback.onResult(moviesResponseBody);
-        }
-    }
-
-    static class Task extends AsyncTask<Void, Void, String>{
-        private Uri.Builder builder;
-
-        private Task(Uri.Builder builder) {
-            this.builder = builder;
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            URL url;
-            try {
-                url = new URL(builder.build().toString());
-                return getResponseFromHttpUrl(url);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
         }
     }
 }

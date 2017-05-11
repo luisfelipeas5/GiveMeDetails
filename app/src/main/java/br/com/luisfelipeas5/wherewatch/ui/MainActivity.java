@@ -17,6 +17,7 @@ import br.com.luisfelipeas5.wherewatch.R;
 import br.com.luisfelipeas5.wherewatch.adapter.MoviesAdapter;
 import br.com.luisfelipeas5.wherewatch.api.WhereWatchApi;
 import br.com.luisfelipeas5.wherewatch.api.responsebodies.MoviesResponseBody;
+import br.com.luisfelipeas5.wherewatch.api.tasks.GetMoviesTask;
 import br.com.luisfelipeas5.wherewatch.databinding.ActivityMainBinding;
 import br.com.luisfelipeas5.wherewatch.model.Movie;
 
@@ -25,8 +26,8 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Lis
     ActivityMainBinding mBinding;
 
     private MainActivity.MODE mMode;
-    private WhereWatchApi.GetMoviesTask mGetPopularMoviesTask;
-    private WhereWatchApi.GetMoviesTask mGetTopRatedMoviesTask;
+    private GetMoviesTask mGetPopularMoviesTask;
+    private GetMoviesTask mGetTopRatedMoviesTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +50,7 @@ public class MainActivity extends AppCompatActivity implements MoviesAdapter.Lis
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         mBinding.recycler.setLayoutManager(layoutManager);
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
         getPopularMovies();
     }
 
