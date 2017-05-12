@@ -5,5 +5,9 @@
     <string name="top_rated_movies">Top rated movies</string>
 
     <string name="basic_information">Basic information</string>
+    <string name="original_title">Original title: %s</string>
+    <string name="vote_average">average rating</string>
+    <string name="vote_count">%d rating this movie</string>
+    <string name="value">%.01f</string>
 
 </resources>

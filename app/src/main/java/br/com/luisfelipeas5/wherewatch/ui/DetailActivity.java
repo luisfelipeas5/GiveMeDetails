@@ -5,6 +5,7 @@ import android.databinding.DataBindingUtil;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import br.com.luisfelipeas5.wherewatch.R;
 import br.com.luisfelipeas5.wherewatch.api.WhereWatchApi;
@@ -12,6 +13,7 @@ import br.com.luisfelipeas5.wherewatch.api.tasks.GetMovieTask;
 import br.com.luisfelipeas5.wherewatch.databinding.ActivityDetailBinding;
 import br.com.luisfelipeas5.wherewatch.model.Movie;
 import br.com.luisfelipeas5.wherewatch.ui.fragments.DetailFragment;
+import br.com.luisfelipeas5.wherewatch.ui.fragments.SocialFragment;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -30,11 +32,11 @@ public class DetailActivity extends AppCompatActivity {
             Movie movie = intent.getParcelableExtra(EXTRA_MOVIE);
             mBinding.setMovie(movie);
         }
+        getMovie();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void getMovie() {
+        mBinding.cardLoading.setVisibility(View.VISIBLE);
         final Movie movie = mBinding.getMovie();
         if (movie != null) {
             mGetMovieTask = WhereWatchApi.getMovie(this, movie, new WhereWatchApi.Callback<Movie>() {
@@ -44,6 +46,12 @@ public class DetailActivity extends AppCompatActivity {
                     DetailFragment detailFragment =
                             (DetailFragment) fragmentManager.findFragmentById(R.id.fragment_detail);
                     detailFragment.setMovie(movie);
+
+                    SocialFragment socialFragment =
+                            (SocialFragment) fragmentManager.findFragmentById(R.id.fragment_social);
+                    socialFragment.setMovie(movie);
+
+                    mBinding.cardLoading.setVisibility(View.GONE);
                 }
             });
         }

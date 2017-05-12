@@ -1,28 +1,28 @@
 package br.com.luisfelipeas5.wherewatch.ui.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import br.com.luisfelipeas5.wherewatch.databinding.FragmentDetailBinding;
+import br.com.luisfelipeas5.wherewatch.databinding.FragmentSocialBinding;
 import br.com.luisfelipeas5.wherewatch.model.Movie;
 
-public class DetailFragment extends Fragment {
+public class SocialFragment extends Fragment {
 
+    private FragmentSocialBinding mBinding;
     private Movie mMovie;
-    private FragmentDetailBinding mBinding;
 
-    public DetailFragment() {
+    public SocialFragment() {
         // Required empty public constructor
     }
 
-
+    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        mBinding = FragmentDetailBinding.inflate(inflater, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        mBinding = FragmentSocialBinding.inflate(inflater, container, false);
         inflateBinding();
         return mBinding.getRoot();
     }

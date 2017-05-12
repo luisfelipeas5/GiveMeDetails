@@ -19,6 +19,12 @@ public class Movie implements Parcelable {
     private String overview;
     @SerializedName("id")
     private String id;
+    @SerializedName("original_title")
+    private String originalTitle;
+    @SerializedName("vote_average")
+    private double voteAverage;
+    @SerializedName("vote_count")
+    private long voteCount;
 
     private String getPoster() {
         return poster;
@@ -30,6 +36,18 @@ public class Movie implements Parcelable {
 
     public String getOverview() {
         return overview;
+    }
+
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
+    public double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public long getVoteCount() {
+        return voteCount;
     }
 
     @BindingAdapter("set_movie_thumbnail")
@@ -70,6 +88,9 @@ public class Movie implements Parcelable {
         dest.writeString(this.title);
         dest.writeString(this.overview);
         dest.writeString(this.id);
+        dest.writeString(this.originalTitle);
+        dest.writeDouble(this.voteAverage);
+        dest.writeLong(this.voteCount);
     }
 
     protected Movie(Parcel in) {
@@ -77,6 +98,9 @@ public class Movie implements Parcelable {
         this.title = in.readString();
         this.overview = in.readString();
         this.id = in.readString();
+        this.originalTitle = in.readString();
+        this.voteAverage = in.readDouble();
+        this.voteCount = in.readLong();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {

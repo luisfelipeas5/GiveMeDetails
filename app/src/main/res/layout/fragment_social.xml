@@ -6,16 +6,16 @@
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="vertical"
         android:id="@+id/layout_content"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
-        tools:context=".ui.fragments.DetailFragment">
+        tools:context=".ui.fragments.SocialFragment">
 
-        <include android:id="@+id/include_movie_basic_info"
+        <include android:id="@+id/include_movie_social"
             app:movie="@{movie}"
-            layout="@layout/movie_basic_info"/>
+            layout="@layout/movie_social"/>
 
     </LinearLayout>
 

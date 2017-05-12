@@ -17,33 +17,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView android:id="@+id/txt_basic_info_label"
-                android:text="@string/basic_information"
-                style="@style/TxtDetailSessionTitle"
+            <TextView android:id="@+id/txt_vote_average_label"
+                android:text="@string/vote_average"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/detail_normal_text"
+                android:textColor="@color/colorAccent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <TextView android:id="@+id/txt_title"
-                android:text="@{movie.title}"
+            <TextView android:id="@+id/txt_vote_average"
+                android:text="@{@string/value(movie.voteAverage)}"
+                android:gravity="center_horizontal"
                 android:textSize="@dimen/detail_big_text"
                 android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <TextView android:id="@+id/txt_original_title"
-                android:text="@{@string/original_title(movie.originalTitle)}"
-                android:layout_marginTop="2dp"
+            <TextView android:id="@+id/txt_vote_count"
+                android:text="@{@string/vote_count(movie.voteCount)}"
+                android:layout_marginTop="5dp"
                 android:textSize="@dimen/details_small_text"
-                android:textColor="@android:color/black"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView android:id="@+id/txt_overview"
-                android:layout_marginTop="10dp"
-                android:text="@{movie.overview}"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/detail_normal_text"
+                android:gravity="center"
+                android:textColor="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
