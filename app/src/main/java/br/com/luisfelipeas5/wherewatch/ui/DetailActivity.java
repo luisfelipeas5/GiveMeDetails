@@ -19,6 +19,7 @@ public class DetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_MOVIE =
             "br.com.luisfelipeas5.wherewatch.ui.DetailActivity.EXTRA_MOVIE";
+
     private ActivityDetailBinding mBinding;
     private GetMovieTask mGetMovieTask;
 
@@ -32,6 +33,7 @@ public class DetailActivity extends AppCompatActivity {
             Movie movie = intent.getParcelableExtra(EXTRA_MOVIE);
             mBinding.setMovie(movie);
         }
+
         getMovie();
     }
 
@@ -41,20 +43,24 @@ public class DetailActivity extends AppCompatActivity {
         if (movie != null) {
             mGetMovieTask = WhereWatchApi.getMovie(this, movie, new WhereWatchApi.Callback<Movie>() {
                 @Override
-                public void onResult(Movie movies) {
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    DetailFragment detailFragment =
-                            (DetailFragment) fragmentManager.findFragmentById(R.id.fragment_detail);
-                    detailFragment.setMovie(movie);
-
-                    SocialFragment socialFragment =
-                            (SocialFragment) fragmentManager.findFragmentById(R.id.fragment_social);
-                    socialFragment.setMovie(movie);
-
-                    mBinding.cardLoading.setVisibility(View.GONE);
+                public void onResult(Movie movie) {
+                    onMovieReady(movie);
                 }
             });
         }
+    }
+
+    private void onMovieReady(Movie movie) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DetailFragment detailFragment =
+                (DetailFragment) fragmentManager.findFragmentById(R.id.fragment_detail);
+        detailFragment.setMovie(movie);
+
+        SocialFragment socialFragment =
+                (SocialFragment) fragmentManager.findFragmentById(R.id.fragment_social);
+        socialFragment.setMovie(movie);
+
+        mBinding.cardLoading.setVisibility(View.GONE);
     }
 
     @Override

@@ -9,5 +9,8 @@
     <string name="vote_average">average rating</string>
     <string name="vote_count">%d rating this movie</string>
     <string name="value">%.01f</string>
+    <string name="popularity">Popularidade</string>
+    <string name="date_format_pattern">MM/dd/yyyy</string>
+    <string name="release_date">Release date: %s</string>
 
 </resources>

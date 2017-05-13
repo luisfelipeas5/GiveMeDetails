@@ -8,6 +8,11 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.google.gson.annotations.SerializedName;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import br.com.luisfelipeas5.wherewatch.api.WhereWatchApi;
 
 public class Movie implements Parcelable {
@@ -25,6 +30,10 @@ public class Movie implements Parcelable {
     private double voteAverage;
     @SerializedName("vote_count")
     private long voteCount;
+    @SerializedName("popularity")
+    private float popularity;
+    @SerializedName("release_date")
+    private String releaseDate;
 
     private String getPoster() {
         return poster;
@@ -48,6 +57,10 @@ public class Movie implements Parcelable {
 
     public long getVoteCount() {
         return voteCount;
+    }
+
+    public float getPopularity() {
+        return popularity;
     }
 
     @BindingAdapter("set_movie_thumbnail")
@@ -77,6 +90,21 @@ public class Movie implements Parcelable {
         return id;
     }
 
+    public Date getReleaseDate() {
+        Date date = null;
+        SimpleDateFormat simpleDateFormat = getSimpleDateFormat();
+        try {
+            date = simpleDateFormat.parse(releaseDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    private SimpleDateFormat getSimpleDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -91,6 +119,8 @@ public class Movie implements Parcelable {
         dest.writeString(this.originalTitle);
         dest.writeDouble(this.voteAverage);
         dest.writeLong(this.voteCount);
+        dest.writeFloat(this.popularity);
+        dest.writeString(this.releaseDate);
     }
 
     protected Movie(Parcel in) {
@@ -101,6 +131,8 @@ public class Movie implements Parcelable {
         this.originalTitle = in.readString();
         this.voteAverage = in.readDouble();
         this.voteCount = in.readLong();
+        this.popularity = in.readFloat();
+        this.releaseDate = in.readString();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
