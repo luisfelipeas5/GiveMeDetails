@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.wherewatch.api.tasks;
+package br.com.luisfelipeas5.givemedetails.api.tasks;
 
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import java.io.IOException;
 import java.net.URL;
 
-import br.com.luisfelipeas5.wherewatch.api.WhereWatchApi;
+import br.com.luisfelipeas5.givemedetails.utils.NetworkUtils;
 
 class Task extends AsyncTask<Void, Void, String> {
     private Uri.Builder builder;
@@ -20,7 +20,7 @@ class Task extends AsyncTask<Void, Void, String> {
         URL url;
         try {
             url = new URL(builder.build().toString());
-            return WhereWatchApi.getResponseFromHttpUrl(url);
+            return NetworkUtils.getResponseFromHttpUrl(url);
         } catch (IOException e) {
             e.printStackTrace();
         }

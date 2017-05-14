@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.wherewatch.adapter;
+package br.com.luisfelipeas5.givemedetails.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,8 +7,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import br.com.luisfelipeas5.wherewatch.databinding.LayoutMoviesAdapterItemBinding;
-import br.com.luisfelipeas5.wherewatch.model.Movie;
+import br.com.luisfelipeas5.givemedetails.databinding.LayoutMoviesAdapterItemBinding;
+import br.com.luisfelipeas5.givemedetails.model.Movie;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
     private final List<Movie> mMovies;

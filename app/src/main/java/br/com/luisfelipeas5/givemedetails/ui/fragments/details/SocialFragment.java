@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.wherewatch.ui.fragments;
+package br.com.luisfelipeas5.givemedetails.ui.fragments.details;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,8 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import br.com.luisfelipeas5.wherewatch.databinding.FragmentSocialBinding;
-import br.com.luisfelipeas5.wherewatch.model.Movie;
+import br.com.luisfelipeas5.givemedetails.databinding.FragmentSocialBinding;
+import br.com.luisfelipeas5.givemedetails.model.Movie;
 
 public class SocialFragment extends Fragment {
 
@@ -30,9 +30,6 @@ public class SocialFragment extends Fragment {
     private void inflateBinding() {
         if (mMovie != null && mBinding != null) {
             mBinding.setMovie(mMovie);
-            mBinding.layoutContent.setVisibility(View.VISIBLE);
-        } else if (mBinding != null){
-            mBinding.layoutContent.setVisibility(View.GONE);
         }
     }
 

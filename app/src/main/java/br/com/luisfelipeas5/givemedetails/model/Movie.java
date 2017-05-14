@@ -1,19 +1,15 @@
-package br.com.luisfelipeas5.wherewatch.model;
+package br.com.luisfelipeas5.givemedetails.model;
 
-import android.databinding.BindingAdapter;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.google.gson.annotations.SerializedName;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
-import br.com.luisfelipeas5.wherewatch.api.WhereWatchApi;
+import br.com.luisfelipeas5.givemedetails.controllers.MovieController;
 
 public class Movie implements Parcelable {
     @SerializedName("poster_path")
@@ -35,7 +31,7 @@ public class Movie implements Parcelable {
     @SerializedName("release_date")
     private String releaseDate;
 
-    private String getPoster() {
+    public String getPoster() {
         return poster;
     }
 
@@ -63,26 +59,6 @@ public class Movie implements Parcelable {
         return popularity;
     }
 
-    @BindingAdapter("set_movie_thumbnail")
-    public static void setImageAsThumbnail(ImageView imageView, Movie movie) {
-        String posterUrl = WhereWatchApi.IMG_BASE_URL_THUMBNAIL + movie.getPoster();
-        setImage(imageView, movie, posterUrl);
-    }
-
-    @BindingAdapter("set_movie")
-    public static void setImage(ImageView imageView, Movie movie) {
-        String posterUrl = WhereWatchApi.IMG_BASE_URL_ORIGINAL + movie.getPoster();
-        setImage(imageView, movie, posterUrl);
-    }
-
-    private static void setImage(ImageView imageView, Movie movie, String url) {
-        Glide.with(imageView.getContext())
-                .load(url)
-                .dontAnimate()
-                .into(imageView);
-        imageView.setContentDescription(movie.getTitle());
-    }
-
     public Movie() {
     }
 
@@ -92,17 +68,13 @@ public class Movie implements Parcelable {
 
     public Date getReleaseDate() {
         Date date = null;
-        SimpleDateFormat simpleDateFormat = getSimpleDateFormat();
+        SimpleDateFormat simpleDateFormat = MovieController.getSimpleDateFormat();
         try {
             date = simpleDateFormat.parse(releaseDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         return date;
-    }
-
-    private SimpleDateFormat getSimpleDateFormat() {
-        return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     }
 
     @Override

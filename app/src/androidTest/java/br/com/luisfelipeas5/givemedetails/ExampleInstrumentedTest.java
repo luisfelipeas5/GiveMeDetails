@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.wherewatch;
+package br.com.luisfelipeas5.givemedetails;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

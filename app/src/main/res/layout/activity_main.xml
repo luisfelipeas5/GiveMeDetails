@@ -1,20 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/swipe_refresh"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="@color/colorPrimaryDark"
-        android:gravity="center"
-        tools:context="br.com.luisfelipeas5.wherewatch.ui.MainActivity">
+        tools:context="br.com.luisfelipeas5.givemedetails.ui.MainActivity">
 
-        <android.support.v7.widget.RecyclerView android:id="@+id/recycler"
-            android:visibility="gone"
+        <TextView android:id="@+id/txt_title"
+            android:layout_marginTop="16dp"
+            android:textSize="@dimen/detail_big_text"
+            android:textColor="@color/colorAccent"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.viewpagerindicator.LinePageIndicator android:id="@+id/page_indicator"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            app:unselectedColor="@color/colorPrimary"
+            app:selectedColor="@color/colorAccent"
+            app:strokeWidth="@dimen/page_indicator_stroke_width"
+            app:lineWidth="@dimen/page_indicator_line_width"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+        <android.support.v4.view.ViewPager android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
 
 </layout>

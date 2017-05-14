@@ -3,14 +3,14 @@
     <data>
         <variable
             name="movie"
-            type="br.com.luisfelipeas5.wherewatch.model.Movie"/>
+            type="br.com.luisfelipeas5.givemedetails.model.Movie"/>
     </data>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="br.com.luisfelipeas5.wherewatch.ui.DetailActivity">
+        tools:context="br.com.luisfelipeas5.givemedetails.ui.DetailActivity">
 
         <ProgressBar android:id="@+id/progress_bar"
             android:layout_gravity="center"
@@ -19,7 +19,7 @@
 
         <ImageView android:id="@+id/img_movie"
             android:contentDescription="@{movie.title}"
-            app:set_movie="@{movie}"
+            app:set_movie_poster="@{movie}"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -30,6 +30,7 @@
 
             <LinearLayout android:id="@+id/layout_detail"
                 android:orientation="vertical"
+                android:padding="@dimen/details_card_layout_padding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -37,33 +38,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_fake_view_header_height"/>
 
-                <android.support.v7.widget.CardView android:id="@+id/card_loading"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <FrameLayout
-                        android:padding="@dimen/details_card_layout_padding"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ProgressBar
-                            android:layout_gravity="center"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                    </FrameLayout>
-
-                </android.support.v7.widget.CardView>
-
                 <fragment android:id="@+id/fragment_detail"
-                    android:name="br.com.luisfelipeas5.wherewatch.ui.fragments.DetailFragment"
+                    android:name="br.com.luisfelipeas5.givemedetails.ui.fragments.details.DetailFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <fragment android:id="@+id/fragment_social"
                     android:layout_marginTop="5dp"
-                    android:name="br.com.luisfelipeas5.wherewatch.ui.fragments.SocialFragment"
+                    android:name="br.com.luisfelipeas5.givemedetails.ui.fragments.details.SocialFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 

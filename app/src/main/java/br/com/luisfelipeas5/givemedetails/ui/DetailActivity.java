@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.wherewatch.ui;
+package br.com.luisfelipeas5.givemedetails.ui;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -7,13 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import br.com.luisfelipeas5.wherewatch.R;
-import br.com.luisfelipeas5.wherewatch.api.WhereWatchApi;
-import br.com.luisfelipeas5.wherewatch.api.tasks.GetMovieTask;
-import br.com.luisfelipeas5.wherewatch.databinding.ActivityDetailBinding;
-import br.com.luisfelipeas5.wherewatch.model.Movie;
-import br.com.luisfelipeas5.wherewatch.ui.fragments.DetailFragment;
-import br.com.luisfelipeas5.wherewatch.ui.fragments.SocialFragment;
+import br.com.luisfelipeas5.givemedetails.R;
+import br.com.luisfelipeas5.givemedetails.api.GiveMeDetailsApi;
+import br.com.luisfelipeas5.givemedetails.api.tasks.GetMovieTask;
+import br.com.luisfelipeas5.givemedetails.databinding.ActivityDetailBinding;
+import br.com.luisfelipeas5.givemedetails.model.Movie;
+import br.com.luisfelipeas5.givemedetails.ui.fragments.details.DetailFragment;
+import br.com.luisfelipeas5.givemedetails.ui.fragments.details.SocialFragment;
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,12 +39,16 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private void getMovie() {
-        mBinding.cardLoading.setVisibility(View.VISIBLE);
         final Movie movie = mBinding.getMovie();
         if (movie != null) {
-            mGetMovieTask = WhereWatchApi.getMovie(this, movie, new WhereWatchApi.Callback<Movie>() {
+            mGetMovieTask = GiveMeDetailsApi.getMovie(this, movie, new GiveMeDetailsApi.Callback<Movie>() {
                 @Override
                 public void onResult(Movie movie) {
+                    onMovieReady(movie);
+                }
+
+                @Override
+                public void onError() {
                     onMovieReady(movie);
                 }
             });
@@ -60,8 +64,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         SocialFragment socialFragment =
                 (SocialFragment) fragmentManager.findFragmentById(R.id.fragment_social);
         socialFragment.setMovie(movie);
-
-        mBinding.cardLoading.setVisibility(View.GONE);
     }
 
     @Override

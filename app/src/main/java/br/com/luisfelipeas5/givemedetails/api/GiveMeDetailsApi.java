@@ -1,25 +1,20 @@
-package br.com.luisfelipeas5.wherewatch.api;
+package br.com.luisfelipeas5.givemedetails.api;
 
 import android.content.Context;
 import android.net.Uri;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Scanner;
+import br.com.luisfelipeas5.givemedetails.R;
+import br.com.luisfelipeas5.givemedetails.api.responsebodies.MoviesResponseBody;
+import br.com.luisfelipeas5.givemedetails.api.tasks.GetMovieTask;
+import br.com.luisfelipeas5.givemedetails.api.tasks.GetMoviesTask;
+import br.com.luisfelipeas5.givemedetails.model.Movie;
 
-import javax.net.ssl.HttpsURLConnection;
+public class GiveMeDetailsApi {
+    private static final int[] IMAGE_WIDTH_AVAILABLE = {92, 154, 185, 342, 500, 780};
+    private static final String[] IMAGE_PATH_WIDTH_AVAILABLE = {"w92", "w154", "w185", "w342", "w500", "w780", "original"};
 
-import br.com.luisfelipeas5.wherewatch.R;
-import br.com.luisfelipeas5.wherewatch.api.responsebodies.MoviesResponseBody;
-import br.com.luisfelipeas5.wherewatch.api.tasks.GetMovieTask;
-import br.com.luisfelipeas5.wherewatch.api.tasks.GetMoviesTask;
-import br.com.luisfelipeas5.wherewatch.model.Movie;
-
-public class WhereWatchApi {
-    public static final String IMG_BASE_URL_THUMBNAIL = "http://image.tmdb.org/t/p/w185";
-    public static final String IMG_BASE_URL_ORIGINAL = "http://image.tmdb.org/t/p/original";
     private static final String AUTHORITY = "api.themoviedb.org";
+    private static final String IMG_AUTHORITY = "image.tmdb.org";
 
     private static final String GET_MOVIES_POPULAR_PATH = "3/movie/popular";
     private static final String GET_MOVIES_TOP_RATED_PATH = "3/movie/top_rated";
@@ -29,6 +24,30 @@ public class WhereWatchApi {
 
     public interface Callback<T> {
         void onResult(T movies);
+        void onError();
+    }
+
+    public static String getImgUrlThumbnail(int measuredWidth) {
+        String measuredPath = null;
+        for (int i = 0; i < IMAGE_WIDTH_AVAILABLE.length; i++) {
+            int widthAvailable = IMAGE_WIDTH_AVAILABLE[i];
+            if (measuredWidth < widthAvailable) {
+                measuredPath = IMAGE_PATH_WIDTH_AVAILABLE[i];
+                break;
+            }
+        }
+        if (measuredPath == null) {
+            measuredPath = IMAGE_PATH_WIDTH_AVAILABLE[IMAGE_PATH_WIDTH_AVAILABLE.length - 1];
+        }
+
+        Uri uri = new Uri.Builder()
+                .scheme("http")
+                .authority(IMG_AUTHORITY)
+                .appendPath("t")
+                .appendPath("p")
+                .appendPath(measuredPath)
+                .build();
+        return uri.toString();
     }
 
     public static GetMoviesTask getPopularMovies(Context context, final Callback<MoviesResponseBody> callback) {
@@ -64,23 +83,5 @@ public class WhereWatchApi {
                 .scheme("https")
                 .appendQueryParameter(KEY_QUERY_API_KEY, context.getString(R.string.the_movie_db_api_key))
                 .authority(AUTHORITY);
-    }
-
-    public static String getResponseFromHttpUrl(URL url) throws IOException {
-        HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-        try {
-            InputStream in = urlConnection.getInputStream();
-            Scanner scanner = new Scanner(in);
-            scanner.useDelimiter("\\A");
-
-            boolean hasInput = scanner.hasNext();
-            if (hasInput) {
-                return scanner.next();
-            } else {
-                return null;
-            }
-        } finally {
-            urlConnection.disconnect();
-        }
     }
 }

@@ -1,22 +1,84 @@
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="movie"
-            type="br.com.luisfelipeas5.wherewatch.model.Movie"/>
+            type="br.com.luisfelipeas5.givemedetails.model.Movie"/>
+        <import type="android.view.View"/>
     </data>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/layout_content"
+
+    <android.support.v7.widget.CardView
+        tools:context=".ui.fragments.details.SocialFragment"
         android:orientation="vertical"
+        app:cardElevation="4dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        tools:context=".ui.fragments.SocialFragment">
+        android:layout_height="wrap_content">
 
-        <include android:id="@+id/include_movie_social"
-            app:movie="@{movie}"
-            layout="@layout/movie_social"/>
+        <LinearLayout
+            android:id="@+id/layout_content"
+            android:gravity="center"
+            android:padding="@dimen/details_card_layout_padding"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </LinearLayout>
+            <TextView android:id="@+id/txt_popularity_label"
+                android:text="@string/popularity"
+                android:textSize="@dimen/detail_normal_text"
+                android:textColor="@color/colorAccent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ProgressBar android:id="@+id/progress_bar"
+                android:layout_marginTop="5dp"
+                android:visibility="@{movie != null? View.GONE : View.VISIBLE}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView android:id="@+id/txt_popularity"
+                android:visibility="@{movie != null? View.VISIBLE : View.GONE}"
+                android:text="@{@string/value(movie.popularity)}"
+                android:textSize="@dimen/detail_big_text"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView android:id="@+id/txt_vote_average_label"
+                android:layout_marginTop="10dp"
+                android:text="@string/vote_average"
+                android:textSize="@dimen/detail_normal_text"
+                android:textColor="@color/colorAccent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ProgressBar android:id="@+id/progress_bar2"
+                android:layout_marginTop="5dp"
+                android:visibility="@{movie != null? View.GONE : View.VISIBLE}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView android:id="@+id/txt_vote_average"
+                android:text="@{@string/value(movie.voteAverage)}"
+                android:visibility="@{movie != null? View.VISIBLE : View.GONE}"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/detail_big_text"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView android:id="@+id/txt_vote_count"
+                android:text="@{@string/vote_count(movie.voteCount)}"
+                android:visibility="@{movie != null? View.VISIBLE : View.GONE}"
+                android:layout_marginTop="5dp"
+                android:textSize="@dimen/details_small_text"
+                android:textColor="@color/colorPrimary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 </layout>
