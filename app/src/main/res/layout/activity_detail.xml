@@ -71,6 +71,20 @@
 
         </ScrollView>
 
+        <android.support.v7.widget.AppCompatImageView
+            app:srcCompat="@drawable/background_shadow_gradient"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize" />
+
+        <android.support.v7.widget.AppCompatImageButton android:id="@+id/img_back_arrow"
+            app:srcCompat="@drawable/ic_arrow_back_white_24dp"
+            style="?borderlessButtonStyle"
+            android:layout_marginStart="-16dp"
+            android:layout_marginLeft="-16dp"
+            android:contentDescription="@string/arrow_back_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </FrameLayout>
 
 </layout>

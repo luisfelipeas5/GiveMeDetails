@@ -15,7 +15,7 @@ import br.com.luisfelipeas5.wherewatch.model.Movie;
 import br.com.luisfelipeas5.wherewatch.ui.fragments.DetailFragment;
 import br.com.luisfelipeas5.wherewatch.ui.fragments.SocialFragment;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String EXTRA_MOVIE =
             "br.com.luisfelipeas5.wherewatch.ui.DetailActivity.EXTRA_MOVIE";
@@ -27,6 +27,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
+        mBinding.imgBackArrow.setOnClickListener(this);
 
         Intent intent = getIntent();
         if (intent.hasExtra(EXTRA_MOVIE)) {
@@ -68,6 +69,16 @@ public class DetailActivity extends AppCompatActivity {
         super.onPause();
         if (mGetMovieTask != null && !mGetMovieTask.isCancelled()) {
             mGetMovieTask.cancel(true);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+        switch (id) {
+            case R.id.img_back_arrow:
+                onBackPressed();
+                break;
         }
     }
 }
