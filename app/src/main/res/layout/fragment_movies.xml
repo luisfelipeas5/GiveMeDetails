@@ -1,0 +1,23 @@
+<layout>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="br.com.luisfelipeas5.givemedetails.ui.fragments.movielists.MoviesFragment">
+
+        <TextView android:id="@+id/txt_no_movies"
+            android:text="@string/no_movies"
+            android:gravity="center"
+            android:padding="16dp"
+            android:visibility="gone"
+            android:textColor="@android:color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <android.support.v7.widget.RecyclerView android:id="@+id/recycler"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+</layout>
