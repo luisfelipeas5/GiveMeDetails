@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.wherewatch;
+package br.com.luisfelipeas5.givemedetails;
 
 import org.junit.Test;
 

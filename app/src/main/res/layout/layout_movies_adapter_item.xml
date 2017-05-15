@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/transparent_clickable"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <ImageView android:id="@+id/img_movie"
-        android:background="@color/colorPrimary"
-        android:contentDescription="@string/img_movie"
-        android:scaleType="centerCrop"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="movie"
+            type="br.com.luisfelipeas5.givemedetails.model.Movie"/>
+    </data>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@drawable/transparent_clickable"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/img_movie_height" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <ImageView android:id="@+id/img_movie"
+            app:set_movie_poster="@{movie}"
+            android:contentDescription="@string/img_movie"
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            android:layout_height="@dimen/img_movie_height" />
+
+    </FrameLayout>
+</layout>
