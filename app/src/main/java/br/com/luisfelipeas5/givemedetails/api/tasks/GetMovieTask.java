@@ -5,7 +5,7 @@ import android.net.Uri;
 import com.google.gson.Gson;
 
 import br.com.luisfelipeas5.givemedetails.api.GiveMeDetailsApi;
-import br.com.luisfelipeas5.givemedetails.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 
 public class GetMovieTask extends Task {
 

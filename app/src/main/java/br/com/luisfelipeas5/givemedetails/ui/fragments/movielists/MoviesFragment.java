@@ -17,10 +17,10 @@ import java.util.List;
 import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.adapter.MoviesAdapter;
 import br.com.luisfelipeas5.givemedetails.api.GiveMeDetailsApi;
-import br.com.luisfelipeas5.givemedetails.api.responsebodies.MoviesResponseBody;
+import br.com.luisfelipeas5.givemedetails.model.model.MoviesResponseBody;
 import br.com.luisfelipeas5.givemedetails.api.tasks.GetMoviesTask;
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentMoviesBinding;
-import br.com.luisfelipeas5.givemedetails.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.ui.DetailActivity;
 import br.com.luisfelipeas5.givemedetails.utils.NetworkUtils;
 

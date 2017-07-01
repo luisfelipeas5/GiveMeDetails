@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.databinding.LayoutMoviesAdapterItemBinding;
-import br.com.luisfelipeas5.givemedetails.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder> {
     private final List<Movie> mMovies;

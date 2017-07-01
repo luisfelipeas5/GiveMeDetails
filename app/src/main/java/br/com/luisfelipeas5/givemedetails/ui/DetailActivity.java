@@ -11,7 +11,7 @@ import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.api.GiveMeDetailsApi;
 import br.com.luisfelipeas5.givemedetails.api.tasks.GetMovieTask;
 import br.com.luisfelipeas5.givemedetails.databinding.ActivityDetailBinding;
-import br.com.luisfelipeas5.givemedetails.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.ui.fragments.details.DetailFragment;
 import br.com.luisfelipeas5.givemedetails.ui.fragments.details.SocialFragment;
 

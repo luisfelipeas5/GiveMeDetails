@@ -3,7 +3,7 @@
     <data>
         <variable
             name="movie"
-            type="br.com.luisfelipeas5.givemedetails.model.Movie"/>
+            type="br.com.luisfelipeas5.givemedetails.model.model.Movie"/>
     </data>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:background="@drawable/transparent_clickable"

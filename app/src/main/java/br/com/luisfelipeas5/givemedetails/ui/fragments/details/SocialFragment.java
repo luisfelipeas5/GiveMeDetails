@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentSocialBinding;
-import br.com.luisfelipeas5.givemedetails.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 
 public class SocialFragment extends Fragment {
 

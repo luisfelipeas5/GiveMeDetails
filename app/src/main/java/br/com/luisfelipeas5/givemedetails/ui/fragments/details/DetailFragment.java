@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentDetailBinding;
-import br.com.luisfelipeas5.givemedetails.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 
 public class DetailFragment extends Fragment {
 

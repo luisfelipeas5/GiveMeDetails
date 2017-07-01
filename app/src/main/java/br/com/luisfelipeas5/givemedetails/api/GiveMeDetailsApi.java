@@ -4,10 +4,10 @@ import android.content.Context;
 import android.net.Uri;
 
 import br.com.luisfelipeas5.givemedetails.R;
-import br.com.luisfelipeas5.givemedetails.api.responsebodies.MoviesResponseBody;
+import br.com.luisfelipeas5.givemedetails.model.model.MoviesResponseBody;
 import br.com.luisfelipeas5.givemedetails.api.tasks.GetMovieTask;
 import br.com.luisfelipeas5.givemedetails.api.tasks.GetMoviesTask;
-import br.com.luisfelipeas5.givemedetails.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 
 public class GiveMeDetailsApi {
     private static final int[] IMAGE_WIDTH_AVAILABLE = {92, 154, 185, 342, 500, 780};

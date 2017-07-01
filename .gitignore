@@ -9,4 +9,4 @@
 .externalNativeBuild
 
 libs/
-src/main/res/values/themoviewdb.xml
+/app/src/main/res/values/themoviewdb.xml

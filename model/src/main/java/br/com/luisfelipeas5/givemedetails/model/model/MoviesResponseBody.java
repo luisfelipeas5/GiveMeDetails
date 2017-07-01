@@ -1,10 +1,8 @@
-package br.com.luisfelipeas5.givemedetails.api.responsebodies;
+package br.com.luisfelipeas5.givemedetails.model.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-
-import br.com.luisfelipeas5.givemedetails.model.Movie;
 
 public class MoviesResponseBody {
     @SerializedName("results")
@@ -12,5 +10,9 @@ public class MoviesResponseBody {
 
     public List<Movie> getMovies() {
         return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
     }
 }

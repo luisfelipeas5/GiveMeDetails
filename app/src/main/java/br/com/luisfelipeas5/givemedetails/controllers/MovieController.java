@@ -14,7 +14,7 @@ import java.util.Locale;
 
 import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.api.GiveMeDetailsApi;
-import br.com.luisfelipeas5.givemedetails.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 
 public class MovieController {
 
@@ -52,10 +52,6 @@ public class MovieController {
                 .dontAnimate()
                 .into(imageView);
         imageView.setContentDescription(movie.getTitle());
-    }
-
-    public static SimpleDateFormat getSimpleDateFormat() {
-        return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     }
 
 }

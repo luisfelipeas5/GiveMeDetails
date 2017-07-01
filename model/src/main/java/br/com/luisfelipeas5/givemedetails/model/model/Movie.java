@@ -1,15 +1,15 @@
-package br.com.luisfelipeas5.givemedetails.model;
+package br.com.luisfelipeas5.givemedetails.model.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import br.com.luisfelipeas5.givemedetails.controllers.MovieController;
+import java.util.Locale;
 
 public class Movie implements Parcelable {
     @SerializedName("poster_path")
@@ -30,6 +30,13 @@ public class Movie implements Parcelable {
     private float popularity;
     @SerializedName("release_date")
     private String releaseDate;
+
+    private DateFormat dateFormat;
+
+    public Movie(String title) {
+        this();
+        setTitle(title);
+    }
 
     public String getPoster() {
         return poster;
@@ -60,6 +67,7 @@ public class Movie implements Parcelable {
     }
 
     public Movie() {
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     }
 
     public String getId() {
@@ -68,9 +76,8 @@ public class Movie implements Parcelable {
 
     public Date getReleaseDate() {
         Date date = null;
-        SimpleDateFormat simpleDateFormat = MovieController.getSimpleDateFormat();
         try {
-            date = simpleDateFormat.parse(releaseDate);
+            date = dateFormat.parse(releaseDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -95,7 +102,7 @@ public class Movie implements Parcelable {
         dest.writeString(this.releaseDate);
     }
 
-    protected Movie(Parcel in) {
+    public Movie(Parcel in) {
         this.poster = in.readString();
         this.title = in.readString();
         this.overview = in.readString();
@@ -118,4 +125,8 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }
