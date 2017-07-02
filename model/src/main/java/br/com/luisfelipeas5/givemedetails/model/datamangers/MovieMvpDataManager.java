@@ -7,4 +7,8 @@ import io.reactivex.Observable;
 
 public interface MovieMvpDataManager {
     Observable<List<Movie>> getPopularMovies();
+
+    Observable<List<Movie>> getTopRatedMovies();
+
+    Observable<Movie> getMovie(String movieId);
 }
