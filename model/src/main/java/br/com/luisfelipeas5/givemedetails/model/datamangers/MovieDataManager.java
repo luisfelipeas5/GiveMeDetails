@@ -6,6 +6,7 @@ import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.MoviesResponseBody;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 
@@ -18,23 +19,25 @@ public class MovieDataManager implements MovieMvpDataManager {
     }
 
     @Override
-    public Observable<List<Movie>> getPopularMovies() {
+    public Single<List<Movie>> getPopularMovies() {
         return movieApiMvpHelper.getPopular()
-                .flatMap(getMovieResponseMapper());
+                .flatMap(getMovieResponseMapper())
+                .singleOrError();
     }
 
     @Override
-    public Observable<List<Movie>> getTopRatedMovies() {
+    public Single<List<Movie>> getTopRatedMovies() {
         return movieApiMvpHelper.getTopRated()
-                .flatMap(getMovieResponseMapper());
+                .flatMap(getMovieResponseMapper())
+                .singleOrError();
     }
 
     @Override
-    public Observable<Movie> getMovie(String movieId) {
+    public Single<Movie> getMovie(String movieId) {
         if (movieId == null || movieId.trim().isEmpty()) {
             return null;
         }
-        return movieApiMvpHelper.getMovie(movieId);
+        return movieApiMvpHelper.getMovie(movieId).singleOrError();
     }
 
     @android.support.annotation.NonNull

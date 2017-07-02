@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails;
+package br.com.luisfelipeas5.givemedetails.presenter;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("br.com.luisfelipeas5.givemedetails", appContext.getPackageName());
+        assertEquals("br.com.luisfelipeas5.givemedetails.presenter.test", appContext.getPackageName());
     }
 }

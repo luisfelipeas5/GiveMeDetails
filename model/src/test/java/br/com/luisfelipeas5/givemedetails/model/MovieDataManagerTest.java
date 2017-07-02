@@ -16,6 +16,7 @@ import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.MoviesResponseBody;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 
 import static org.mockito.Matchers.anyString;
@@ -68,7 +69,7 @@ public class MovieDataManagerTest {
 
     @Test
     public void whenGetPopularMovies_returnMovies_success() {
-        Observable<List<Movie>> moviesObservable = mMvpDataManager.getPopularMovies();
+        Single<List<Movie>> moviesObservable = mMvpDataManager.getPopularMovies();
 
         TestObserver<List<Movie>> testObserver = moviesObservable.test();
         testObserver.assertNoErrors();
@@ -80,8 +81,18 @@ public class MovieDataManagerTest {
     }
 
     @Test
+    public void whenGetPopularMovies_returnMoviesEmpty_success() {
+        when(mMovieApiMvpHelper.getPopular()).thenReturn(Observable.<MoviesResponseBody>empty());
+
+        Single<List<Movie>> moviesObservable = mMvpDataManager.getPopularMovies();
+
+        TestObserver<List<Movie>> testObserver = moviesObservable.test();
+        testObserver.assertError(Exception.class);
+    }
+
+    @Test
     public void whenGetToRatedMovies_returnMovies_success() {
-        Observable<List<Movie>> moviesObservable = mMvpDataManager.getTopRatedMovies();
+        Single<List<Movie>> moviesObservable = mMvpDataManager.getTopRatedMovies();
 
         TestObserver<List<Movie>> testObserver = moviesObservable.test();
         testObserver.assertNoErrors();
@@ -92,9 +103,19 @@ public class MovieDataManagerTest {
     }
 
     @Test
+    public void whenGetTopRatedMovies_returnMoviesEmpty_success() {
+        when(mMovieApiMvpHelper.getTopRated()).thenReturn(Observable.<MoviesResponseBody>empty());
+
+        Single<List<Movie>> moviesObservable = mMvpDataManager.getTopRatedMovies();
+
+        TestObserver<List<Movie>> testObserver = moviesObservable.test();
+        testObserver.assertError(Exception.class);
+    }
+
+    @Test
     public void whenGetMovie_ByValidId_returnMovie_success() {
         String movieId = "someMovieIdMocked";
-        Observable<Movie> movieObservable = mMvpDataManager.getMovie(movieId);
+        Single<Movie> movieObservable = mMvpDataManager.getMovie(movieId);
 
         TestObserver<Movie> testObserver = movieObservable.test();
         testObserver.assertNoErrors();
@@ -106,7 +127,7 @@ public class MovieDataManagerTest {
 
     @Test
     public void whenGetMovie_ByNullId_returnMovie_failed() {
-        Observable<Movie> movieObservable = mMvpDataManager.getMovie(null);
+        Single<Movie> movieObservable = mMvpDataManager.getMovie(null);
         Assert.assertNull(movieObservable);
         verify(mMovieApiMvpHelper, never()).getMovie(anyString());
         verify(mMovieApiMvpHelper, never()).getMovie(isNull(String.class));
@@ -114,7 +135,7 @@ public class MovieDataManagerTest {
 
     @Test
     public void whenGetMovie_ByEmptyId_returnMovie_failed() {
-        Observable<Movie> movieObservable = mMvpDataManager.getMovie("");
+        Single<Movie> movieObservable = mMvpDataManager.getMovie("");
         Assert.assertNull(movieObservable);
         verify(mMovieApiMvpHelper, never()).getMovie(anyString());
         verify(mMovieApiMvpHelper, never()).getMovie(isNull(String.class));
@@ -122,7 +143,7 @@ public class MovieDataManagerTest {
 
     @Test
     public void whenGetMovie_ByManySpacesId_returnMovie_failed() {
-        Observable<Movie> movieObservable = mMvpDataManager.getMovie("               ");
+        Single<Movie> movieObservable = mMvpDataManager.getMovie("               ");
         Assert.assertNull(movieObservable);
         verify(mMovieApiMvpHelper, never()).getMovie(anyString());
         verify(mMovieApiMvpHelper, never()).getMovie(isNull(String.class));

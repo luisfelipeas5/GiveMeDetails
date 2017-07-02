@@ -4,7 +4,7 @@ android {
     compileSdkVersion project.ext.compileSdkVersion
     buildToolsVersion project.ext.buildToolsVersion
     defaultConfig {
-        applicationId "br.com.luisfelipeas5.wherewatch"
+        applicationId "br.com.luisfelipeas5.givemedetails"
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
         versionCode 1

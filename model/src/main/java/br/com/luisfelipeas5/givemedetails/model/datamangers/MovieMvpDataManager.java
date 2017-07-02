@@ -4,11 +4,12 @@ import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public interface MovieMvpDataManager {
-    Observable<List<Movie>> getPopularMovies();
+    Single<List<Movie>> getPopularMovies();
 
-    Observable<List<Movie>> getTopRatedMovies();
+    Single<List<Movie>> getTopRatedMovies();
 
-    Observable<Movie> getMovie(String movieId);
+    Single<Movie> getMovie(String movieId);
 }

@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.model;
+package br.com.luisfelipeas5.givemedetails.view;
 
 import org.junit.Test;
 

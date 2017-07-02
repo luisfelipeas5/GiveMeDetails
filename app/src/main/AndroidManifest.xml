@@ -25,11 +25,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http"
-                    android:host="www.wherewatch.com"
+                    android:host="www.givemedetails.com"
                     android:pathPrefix="/app" />
                 <!-- note that the leading "/" is required for pathPrefix-->
                 <!-- Accepts URIs that begin with "example://gizmos” -->
-                <data android:scheme="wherewatch"
+                <data android:scheme="givemedetails"
                     android:host="app" />
 
             </intent-filter>

@@ -31,7 +31,8 @@ dependencies {
 
     compile 'com.android.support:appcompat-v7:' + project.ext.androidLibrariesVersion
 
-    compile 'com.google.code.gson:gson:' + project.ext.gsonVersion
-
     compile "io.reactivex.rxjava2:rxjava:" + project.ext.rxjavaVersion
+
+    compile project(':model')
+    compile project(':view')
 }

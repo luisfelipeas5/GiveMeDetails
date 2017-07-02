@@ -18,7 +18,7 @@ import br.com.luisfelipeas5.givemedetails.ui.fragments.details.SocialFragment;
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String EXTRA_MOVIE =
-            "br.com.luisfelipeas5.wherewatch.ui.DetailActivity.EXTRA_MOVIE";
+            "br.com.luisfelipeas5.givemedetails.ui.DetailActivity.EXTRA_MOVIE";
 
     private ActivityDetailBinding mBinding;
     private GetMovieTask mGetMovieTask;
