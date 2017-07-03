@@ -21,6 +21,7 @@ import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.presenter.list.MoviesMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.ui.DetailActivity;
 import br.com.luisfelipeas5.givemedetails.utils.NetworkUtils;
+import br.com.luisfelipeas5.givemedetails.view.di.ViewNeedsComponent;
 import br.com.luisfelipeas5.givemedetails.view.list.MoviesMvpView;
 
 public abstract class MoviesFragment extends Fragment implements View.OnClickListener, MoviesAdapter.Listener, MoviesMvpView {
@@ -127,6 +128,10 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
     @Override
     public void onGettingMovies(boolean isGetting) {
         mBinding.swipeRefreshLayout.setRefreshing(isGetting);
+    }
+
+    public void setPresenter(MoviesMvpPresenter presenter) {
+        mPresenter = presenter;
     }
 
     public abstract int getTitleResource();

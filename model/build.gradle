@@ -34,4 +34,8 @@ dependencies {
     compile 'com.google.code.gson:gson:' + project.ext.gsonVersion
 
     compile "io.reactivex.rxjava2:rxjava:" + project.ext.rxjavaVersion
+
+    compile 'com.google.dagger:dagger:' + project.ext.daggerVersion
+
+    compile 'com.squareup.retrofit2:retrofit:' + project.ext.retrofitVersion
 }

@@ -11,7 +11,7 @@ import br.com.luisfelipeas5.givemedetails.view.list.MoviesMvpView;
 
 import static org.mockito.Mockito.verify;
 
-public class MoviesPopularViewTest {
+public class PopularMoviesViewTest {
 
     private MoviesMvpView mPopularView;
     @Mock
