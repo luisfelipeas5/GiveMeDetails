@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.ui.fragments.movielists;
+package br.com.luisfelipeas5.givemedetails.ui.fragments.lists;
 
 
 import android.content.BroadcastReceiver;
@@ -16,19 +16,18 @@ import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.adapter.MoviesAdapter;
-import br.com.luisfelipeas5.givemedetails.api.GiveMeDetailsApi;
-import br.com.luisfelipeas5.givemedetails.model.model.MoviesResponseBody;
-import br.com.luisfelipeas5.givemedetails.api.tasks.GetMoviesTask;
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentMoviesBinding;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.presenter.list.MoviesMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.ui.DetailActivity;
 import br.com.luisfelipeas5.givemedetails.utils.NetworkUtils;
+import br.com.luisfelipeas5.givemedetails.view.list.MoviesMvpView;
 
-public abstract class MoviesFragment extends Fragment implements View.OnClickListener, MoviesAdapter.Listener {
+public abstract class MoviesFragment extends Fragment implements View.OnClickListener, MoviesAdapter.Listener, MoviesMvpView {
 
     private static final String CONNECTIVITY_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
     private FragmentMoviesBinding mBinding;
-    private GetMoviesTask mGetMoviesTask;
+    protected MoviesMvpPresenter mPresenter;
 
     public MoviesFragment() {
         // Required empty public constructor
@@ -48,28 +47,6 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
         return mBinding.getRoot();
     }
 
-    public abstract GetMoviesTask getMovies(GiveMeDetailsApi.Callback<MoviesResponseBody> callback);
-
-    GiveMeDetailsApi.Callback<MoviesResponseBody> mGetMoviesCallback = new GiveMeDetailsApi.Callback<MoviesResponseBody>() {
-        @Override
-        public void onResult(MoviesResponseBody movies) {
-            if (movies != null) {
-                setAdapter(movies.getMovies());
-            }
-            mBinding.recycler.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        public void onError() {
-            mBinding.recycler.setVisibility(View.GONE);
-            if (!NetworkUtils.isConnected(getContext())) {
-                mBinding.txtNoMovies.setText(R.string.no_movies_network_error);
-            } else {
-                mBinding.txtNoMovies.setText(R.string.no_movies);
-            }
-        }
-    };
-
     private void setAdapter(List<Movie> movies) {
         MoviesAdapter adapter = new MoviesAdapter(movies);
         adapter.setListener(this);
@@ -77,11 +54,9 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        if (mGetMoviesTask != null && !mGetMoviesTask.isCancelled()) {
-            mGetMoviesTask.cancel(true);
-        }
+    public void onStop() {
+        super.onStop();
+        mPresenter.detachView();
     }
 
     @Override
@@ -103,7 +78,7 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
 
     public void onRefresh() {
         if (NetworkUtils.isConnected(getContext())) {
-            mGetMoviesTask = getMovies(mGetMoviesCallback);
+            onGetMovies();
         } else {
             mBinding.recycler.setVisibility(View.GONE);
             mBinding.txtNoMovies.setVisibility(View.VISIBLE);
@@ -130,6 +105,29 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
             }
         }
     };
+
+    @Override
+    public void onMoviesReady(List<Movie> movies) {
+        if (movies != null) {
+            setAdapter(movies);
+        }
+        mBinding.recycler.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onGetMoviesFailed() {
+        mBinding.recycler.setVisibility(View.GONE);
+        if (!NetworkUtils.isConnected(getContext())) {
+            mBinding.txtNoMovies.setText(R.string.no_movies_network_error);
+        } else {
+            mBinding.txtNoMovies.setText(R.string.no_movies);
+        }
+    }
+
+    @Override
+    public void onGettingMovies(boolean isGetting) {
+        mBinding.swipeRefreshLayout.setRefreshing(isGetting);
+    }
 
     public abstract int getTitleResource();
 }

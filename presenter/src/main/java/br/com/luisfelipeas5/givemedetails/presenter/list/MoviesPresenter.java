@@ -27,6 +27,28 @@ public class MoviesPresenter implements MoviesMvpPresenter {
     }
 
     @Override
+    public void detachView() {
+        mMoviesMvpView = getEmptyView();
+    }
+
+    private MoviesMvpView getEmptyView() {
+        return new MoviesMvpView() {
+            @Override
+            public void onMoviesReady(List<Movie> movies) {
+            }
+            @Override
+            public void onGetMoviesFailed() {
+            }
+            @Override
+            public void onGettingMovies(boolean isGetting) {
+            }
+            @Override
+            public void onGetMovies() {
+            }
+        };
+    }
+
+    @Override
     public void getPopularMovies() {
         mMovieMvpDataManager.getPopularMovies()
                 .observeOn(mSchedulerProvider.io())

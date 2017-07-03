@@ -9,11 +9,11 @@ import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.adapter.MoviesListsPagerAdapter;
 import br.com.luisfelipeas5.givemedetails.databinding.ActivityMainBinding;
 import br.com.luisfelipeas5.givemedetails.pagetransformers.ZoomOutPageTransformer;
-import br.com.luisfelipeas5.givemedetails.ui.fragments.movielists.PopularMoviesFragment;
-import br.com.luisfelipeas5.givemedetails.ui.fragments.movielists.MoviesFragment;
-import br.com.luisfelipeas5.givemedetails.ui.fragments.movielists.TopRatedMoviesFragment;
+import br.com.luisfelipeas5.givemedetails.ui.fragments.lists.PopularMoviesFragment;
+import br.com.luisfelipeas5.givemedetails.ui.fragments.lists.MoviesFragment;
+import br.com.luisfelipeas5.givemedetails.ui.fragments.lists.TopRatedMoviesFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity {
 
     private MoviesListsPagerAdapter mMoviesListsAdapter;
     private ActivityMainBinding mBinding;

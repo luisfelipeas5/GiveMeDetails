@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import br.com.luisfelipeas5.givemedetails.ui.fragments.movielists.MoviesFragment;
+import br.com.luisfelipeas5.givemedetails.ui.fragments.lists.MoviesFragment;
 
 public class MoviesListsPagerAdapter extends FragmentPagerAdapter {
     private final MoviesFragment[] mMoviesFragments;

@@ -10,4 +10,6 @@ public interface MoviesMvpView {
     void onGetMoviesFailed();
 
     void onGettingMovies(boolean isGetting);
+
+    void onGetMovies();
 }
