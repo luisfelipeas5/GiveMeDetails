@@ -39,6 +39,7 @@ dependencies {
     compile 'com.google.code.gson:gson:' + project.ext.gsonVersion
 
     compile 'com.google.dagger:dagger:' + project.ext.daggerVersion
+    annotationProcessor "com.google.dagger:dagger-compiler:" + project.ext.daggerVersion
 
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 

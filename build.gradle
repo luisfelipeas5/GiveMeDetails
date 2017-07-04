@@ -33,6 +33,8 @@ allprojects {
         gsonVersion = "2.7"
 
         rxjavaVersion = "2.1.1"
+        rxandroidVersion = "2.0.1"
+
         mockitoVersion = "2.0.2-beta"
 
         daggerVersion = "2.11"

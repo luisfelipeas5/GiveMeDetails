@@ -23,6 +23,7 @@ public class PopularMoviesViewTest {
 
         mPopularView = new PopularMoviesFragment();
         ((PopularMoviesFragment) mPopularView).setPresenter(mMoviesMvpPresenter);
+        verify(mMoviesMvpPresenter).attach(mPopularView);
     }
 
     @Test

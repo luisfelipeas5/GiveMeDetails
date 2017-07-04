@@ -19,12 +19,12 @@ public class ModelModule {
     }
 
     @Provides
-    public MovieApiMvpHelper provideMovieApiMvpHelper() {
+    MovieApiMvpHelper provideMovieApiMvpHelper() {
         return new TheMovieDbApiHelper(mContext);
     }
 
     @Provides
-    public MovieMvpDataManager provideMovieMvpDataManager(MovieApiMvpHelper movieApiMvpHelper) {
+    MovieMvpDataManager provideMovieMvpDataManager(MovieApiMvpHelper movieApiMvpHelper) {
         return new MovieDataManager(movieApiMvpHelper);
     }
 

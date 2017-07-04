@@ -32,6 +32,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:' + project.ext.androidLibrariesVersion
 
     compile "io.reactivex.rxjava2:rxjava:" + project.ext.rxjavaVersion
+    compile 'io.reactivex.rxjava2:rxandroid:' + project.ext.rxandroidVersion
 
     compile project(':model')
     compile project(':view')

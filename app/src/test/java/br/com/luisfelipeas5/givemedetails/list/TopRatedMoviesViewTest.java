@@ -23,6 +23,7 @@ public class TopRatedMoviesViewTest {
 
         mTopRatedMoviesView = new TopRatedMoviesFragment();
         ((TopRatedMoviesFragment) mTopRatedMoviesView).setPresenter(mMoviesMvpPresenter);
+        verify(mMoviesMvpPresenter).attach(mTopRatedMoviesView);
     }
 
     @Test

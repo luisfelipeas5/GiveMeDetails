@@ -14,13 +14,18 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.adapter.MoviesAdapter;
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentMoviesBinding;
+import br.com.luisfelipeas5.givemedetails.model.di.ModelModule;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.presenter.di.PresenterModule;
 import br.com.luisfelipeas5.givemedetails.presenter.list.MoviesMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.ui.DetailActivity;
 import br.com.luisfelipeas5.givemedetails.utils.NetworkUtils;
+import br.com.luisfelipeas5.givemedetails.view.di.DaggerViewNeedsComponent;
 import br.com.luisfelipeas5.givemedetails.view.di.ViewNeedsComponent;
 import br.com.luisfelipeas5.givemedetails.view.list.MoviesMvpView;
 
@@ -28,7 +33,7 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
 
     private static final String CONNECTIVITY_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
     private FragmentMoviesBinding mBinding;
-    protected MoviesMvpPresenter mPresenter;
+    public MoviesMvpPresenter mPresenter;
 
     public MoviesFragment() {
         // Required empty public constructor
@@ -38,6 +43,12 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mBinding = FragmentMoviesBinding.inflate(inflater, container, false);
+
+        ViewNeedsComponent viewNeedsComponent = DaggerViewNeedsComponent.builder()
+                .modelModule(new ModelModule(getContext()))
+                .presenterModule(new PresenterModule())
+                .build();
+        setPresenter(mPresenter);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         mBinding.recycler.setLayoutManager(layoutManager);
@@ -132,6 +143,7 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
 
     public void setPresenter(MoviesMvpPresenter presenter) {
         mPresenter = presenter;
+        mPresenter.attach(this);
     }
 
     public abstract int getTitleResource();

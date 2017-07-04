@@ -36,6 +36,7 @@ dependencies {
     compile "io.reactivex.rxjava2:rxjava:" + project.ext.rxjavaVersion
 
     compile 'com.google.dagger:dagger:' + project.ext.daggerVersion
+    annotationProcessor "com.google.dagger:dagger-compiler:" + project.ext.daggerVersion
 
     compile 'com.squareup.retrofit2:retrofit:' + project.ext.retrofitVersion
 }
