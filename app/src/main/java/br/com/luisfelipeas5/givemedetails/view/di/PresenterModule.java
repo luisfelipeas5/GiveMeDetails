@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.presenter.di;
+package br.com.luisfelipeas5.givemedetails.view.di;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
 import br.com.luisfelipeas5.givemedetails.presenter.list.MoviesMvpPresenter;
@@ -9,16 +9,16 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class PresenterModule {
+class PresenterModule {
 
     @Provides
-    SchedulerProvider provideSchedulerProvider() {
+    static SchedulerProvider provideSchedulerProvider() {
         return new AppSchedulerProvider();
     }
 
     @Provides
-    MoviesMvpPresenter provideMoviesMvpPresenter(MovieMvpDataManager movieMvpDataManager,
-                                                 SchedulerProvider schedulerProvider) {
+    static MoviesMvpPresenter provideMoviesMvpPresenter(MovieMvpDataManager movieMvpDataManager,
+                                                        SchedulerProvider schedulerProvider) {
         return new MoviesPresenter(movieMvpDataManager, schedulerProvider);
     }
 

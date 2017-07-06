@@ -46,7 +46,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
 
-    compile project(':model')
-    compile project(':view')
-    compile project(':presenter')
+    compile project(path: ':model')
+    compile project(path: ':view')
+    compile project(path: ':presenter')
 }

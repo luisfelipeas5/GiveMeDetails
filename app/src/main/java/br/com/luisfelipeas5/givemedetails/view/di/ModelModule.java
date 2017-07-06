@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.model.di;
+package br.com.luisfelipeas5.givemedetails.view.di;
 
 import android.content.Context;
 
@@ -19,8 +19,13 @@ public class ModelModule {
     }
 
     @Provides
-    MovieApiMvpHelper provideMovieApiMvpHelper() {
-        return new TheMovieDbApiHelper(mContext);
+    Context provideContext() {
+        return mContext;
+    }
+
+    @Provides
+    MovieApiMvpHelper provideMovieApiMvpHelper(Context context) {
+        return new TheMovieDbApiHelper(context);
     }
 
     @Provides
