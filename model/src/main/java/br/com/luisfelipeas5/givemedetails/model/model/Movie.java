@@ -84,6 +84,14 @@ public class Movie implements Parcelable {
         return date;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -100,9 +108,10 @@ public class Movie implements Parcelable {
         dest.writeLong(this.voteCount);
         dest.writeFloat(this.popularity);
         dest.writeString(this.releaseDate);
+        dest.writeSerializable(this.dateFormat);
     }
 
-    public Movie(Parcel in) {
+    protected Movie(Parcel in) {
         this.poster = in.readString();
         this.title = in.readString();
         this.overview = in.readString();
@@ -112,6 +121,7 @@ public class Movie implements Parcelable {
         this.voteCount = in.readLong();
         this.popularity = in.readFloat();
         this.releaseDate = in.readString();
+        this.dateFormat = (DateFormat) in.readSerializable();
     }
 
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
@@ -125,8 +135,4 @@ public class Movie implements Parcelable {
             return new Movie[size];
         }
     };
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
 }
