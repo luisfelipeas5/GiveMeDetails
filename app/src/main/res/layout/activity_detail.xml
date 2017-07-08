@@ -10,7 +10,7 @@
         android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="br.com.luisfelipeas5.givemedetails.ui.DetailActivity">
+        tools:context="br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity">
 
         <ProgressBar android:id="@+id/progress_bar"
             android:layout_gravity="center"
@@ -39,13 +39,13 @@
                     android:layout_height="@dimen/detail_fake_view_header_height"/>
 
                 <fragment android:id="@+id/fragment_detail"
-                    android:name="br.com.luisfelipeas5.givemedetails.ui.fragments.details.DetailFragment"
+                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.DetailFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <fragment android:id="@+id/fragment_social"
                     android:layout_marginTop="5dp"
-                    android:name="br.com.luisfelipeas5.givemedetails.ui.fragments.details.SocialFragment"
+                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.SocialFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 

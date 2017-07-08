@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/swipe_refresh_layout"
-        tools:context="br.com.luisfelipeas5.givemedetails.ui.fragments.lists.MoviesFragment">
+        tools:context=".view.fragments.lists.MoviesFragment">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

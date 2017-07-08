@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.ui.fragments.lists;
+package br.com.luisfelipeas5.givemedetails.view.fragments.lists;
 
 
 import android.content.BroadcastReceiver;
@@ -21,9 +21,9 @@ import br.com.luisfelipeas5.givemedetails.adapter.MoviesAdapter;
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentMoviesBinding;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.presenter.list.MoviesMvpPresenter;
-import br.com.luisfelipeas5.givemedetails.ui.DetailActivity;
-import br.com.luisfelipeas5.givemedetails.utils.NetworkUtils;
 import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
+import br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity;
+import br.com.luisfelipeas5.givemedetails.utils.NetworkUtils;
 import br.com.luisfelipeas5.givemedetails.view.di.AppComponent;
 import br.com.luisfelipeas5.givemedetails.view.list.MoviesMvpView;
 

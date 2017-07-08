@@ -8,13 +8,15 @@ import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.MoviesResponseBody;
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public class TheMovieDbApiHelper implements MovieApiMvpHelper {
 
-    private static final String AUTHORITY = "api.themoviedb.org";
+    private static final String BASE_URL = "https://api.themoviedb.org/";
 
     private static final String GET_MOVIES_POPULAR_PATH = "3/movie/popular";
     private static final String GET_MOVIES_TOP_RATED_PATH = "3/movie/top_rated";
@@ -28,12 +30,10 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
     private String mApiKey;
 
     public TheMovieDbApiHelper(Context context) {
-        Uri.Builder builder = new Uri.Builder()
-                .scheme("https")
-                .authority(AUTHORITY);
-
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(builder.toString())
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
         mTheMovieDbApi = retrofit.create(TheMovieDbApi.class);
 

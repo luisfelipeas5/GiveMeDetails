@@ -51,14 +51,16 @@ public class MoviesPresenter implements MoviesMvpPresenter {
     @Override
     public void getPopularMovies() {
         mMovieMvpDataManager.getPopularMovies()
-                .observeOn(mSchedulerProvider.io())
-                .subscribeOn(mSchedulerProvider.ui())
+                .subscribeOn(mSchedulerProvider.io())
+                .observeOn(mSchedulerProvider.ui())
                 .subscribe(getMoviesObserver());
     }
 
     @Override
     public void getTopRatedMovies() {
         mMovieMvpDataManager.getTopRatedMovies()
+                .subscribeOn(mSchedulerProvider.io())
+                .observeOn(mSchedulerProvider.ui())
                 .subscribe(getMoviesObserver());
     }
 

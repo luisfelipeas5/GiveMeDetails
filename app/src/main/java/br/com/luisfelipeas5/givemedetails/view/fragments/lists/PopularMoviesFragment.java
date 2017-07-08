@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.ui.fragments.lists;
+package br.com.luisfelipeas5.givemedetails.view.fragments.lists;
 
 import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.view.list.MoviesMvpView;

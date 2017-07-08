@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.ui.fragments.details;
+package br.com.luisfelipeas5.givemedetails.view.fragments.details;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

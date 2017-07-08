@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.ui;
+package br.com.luisfelipeas5.givemedetails.view.activities;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -12,13 +12,13 @@ import br.com.luisfelipeas5.givemedetails.api.GiveMeDetailsApi;
 import br.com.luisfelipeas5.givemedetails.api.tasks.GetMovieTask;
 import br.com.luisfelipeas5.givemedetails.databinding.ActivityDetailBinding;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
-import br.com.luisfelipeas5.givemedetails.ui.fragments.details.DetailFragment;
-import br.com.luisfelipeas5.givemedetails.ui.fragments.details.SocialFragment;
+import br.com.luisfelipeas5.givemedetails.view.fragments.details.DetailFragment;
+import br.com.luisfelipeas5.givemedetails.view.fragments.details.SocialFragment;
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String EXTRA_MOVIE =
-            "br.com.luisfelipeas5.givemedetails.ui.DetailActivity.EXTRA_MOVIE";
+            "br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity.EXTRA_MOVIE";
 
     private ActivityDetailBinding mBinding;
     private GetMovieTask mGetMovieTask;

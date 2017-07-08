@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.ui;
+package br.com.luisfelipeas5.givemedetails.view.activities;
 
 import android.databinding.DataBindingUtil;
 import android.support.v4.view.ViewPager;
@@ -9,9 +9,9 @@ import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.adapter.MoviesListsPagerAdapter;
 import br.com.luisfelipeas5.givemedetails.databinding.ActivityMainBinding;
 import br.com.luisfelipeas5.givemedetails.pagetransformers.ZoomOutPageTransformer;
-import br.com.luisfelipeas5.givemedetails.ui.fragments.lists.PopularMoviesFragment;
-import br.com.luisfelipeas5.givemedetails.ui.fragments.lists.MoviesFragment;
-import br.com.luisfelipeas5.givemedetails.ui.fragments.lists.TopRatedMoviesFragment;
+import br.com.luisfelipeas5.givemedetails.view.fragments.lists.PopularMoviesFragment;
+import br.com.luisfelipeas5.givemedetails.view.fragments.lists.MoviesFragment;
+import br.com.luisfelipeas5.givemedetails.view.fragments.lists.TopRatedMoviesFragment;
 
 public class HomeActivity extends AppCompatActivity {
 

@@ -36,8 +36,6 @@ dependencies {
     compile 'com.android.support:cardview-v7:' + project.ext.androidLibrariesVersion
     compile 'com.android.support:support-v4:' + project.ext.androidLibrariesVersion
 
-    compile 'com.google.code.gson:gson:' + project.ext.gsonVersion
-
     compile 'com.google.dagger:dagger:' + project.ext.daggerVersion
     annotationProcessor "com.google.dagger:dagger-compiler:" + project.ext.daggerVersion
 

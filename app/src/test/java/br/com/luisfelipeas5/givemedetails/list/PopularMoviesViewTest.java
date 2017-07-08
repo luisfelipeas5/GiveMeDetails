@@ -6,7 +6,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import br.com.luisfelipeas5.givemedetails.presenter.list.MoviesMvpPresenter;
-import br.com.luisfelipeas5.givemedetails.ui.fragments.lists.PopularMoviesFragment;
+import br.com.luisfelipeas5.givemedetails.view.fragments.lists.PopularMoviesFragment;
 import br.com.luisfelipeas5.givemedetails.view.list.MoviesMvpView;
 
 import static org.mockito.Mockito.verify;

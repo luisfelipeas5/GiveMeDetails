@@ -12,7 +12,7 @@
         app:cardElevation="4dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.fragments.details.DetailFragment">
+        tools:context=".view.fragments.details.DetailFragment">
 
         <LinearLayout android:id="@+id/layout_content"
             android:padding="@dimen/details_card_layout_padding"

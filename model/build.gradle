@@ -39,4 +39,8 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:" + project.ext.daggerVersion
 
     compile 'com.squareup.retrofit2:retrofit:' + project.ext.retrofitVersion
+    compile 'com.squareup.retrofit2:adapter-rxjava2:' + project.ext.retrofitVersion
+    compile 'com.squareup.retrofit2:converter-gson:' + project.ext.retrofitVersion
+
+    compile 'com.google.code.gson:gson:' + project.ext.gsonVersion
 }
