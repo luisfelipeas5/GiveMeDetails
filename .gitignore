@@ -11,3 +11,7 @@
 libs/
 /app/src/main/res/values/themoviewdb.xml
 /model/src/main/res/values/themoviewdb.xml
+.idea/compiler.xml
+.idea/copyright/
+.idea/misc.xml
+gradle/
