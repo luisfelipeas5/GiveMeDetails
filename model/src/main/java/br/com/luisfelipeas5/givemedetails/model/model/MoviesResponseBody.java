@@ -6,13 +6,13 @@ import java.util.List;
 
 public class MoviesResponseBody {
     @SerializedName("results")
-    private List<Movie> movies;
+    private List<MovieTMDb> movies;
 
-    public List<Movie> getMovies() {
+    public List<MovieTMDb> getMovies() {
         return movies;
     }
 
-    public void setMovies(List<Movie> movies) {
+    public void setMovies(List<MovieTMDb> movies) {
         this.movies = movies;
     }
 }

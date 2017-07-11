@@ -1,13 +1,14 @@
 package br.com.luisfelipeas5.givemedetails.model.helpers;
 
+import java.util.List;
+
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
-import br.com.luisfelipeas5.givemedetails.model.model.MoviesResponseBody;
 import io.reactivex.Observable;
 
 public interface MovieApiMvpHelper {
-    Observable<MoviesResponseBody> getPopular();
+    Observable<List<Movie>> getPopular();
 
-    Observable<MoviesResponseBody> getTopRated();
+    Observable<List<Movie>> getTopRated();
 
     Observable<Movie> getMovie(String movieId);
 }

@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.model;
+package br.com.luisfelipeas5.givemedetails.model.datamanagers;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,14 +7,12 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
-import br.com.luisfelipeas5.givemedetails.model.model.MoviesResponseBody;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
@@ -30,9 +28,11 @@ public class MovieDataManagerTest {
     @Mock
     private MovieApiMvpHelper mMovieApiMvpHelper;
 
-    //Mocked responses to use in the .assertResult()
+    @Mock
     private List<Movie> mPopularMoviesMocked;
+    @Mock
     private List<Movie> mTopRatedMoviesMocked;
+    @Mock
     private Movie mMovieMocked;
 
     @Before
@@ -40,23 +40,9 @@ public class MovieDataManagerTest {
         MockitoAnnotations.initMocks(this);
         mMvpDataManager = new MovieDataManager(mMovieApiMvpHelper);
 
-        mPopularMoviesMocked = new LinkedList<>();
-        mPopularMoviesMocked.add(new Movie("Mistborn: The Final Empire - Part 1"));
-        mPopularMoviesMocked.add(new Movie("Spider-man: Homecoming"));
-        mPopularMoviesMocked.add(new Movie("Watchmen"));
-        MoviesResponseBody popularMoviesResponseBody = new MoviesResponseBody();
-        popularMoviesResponseBody.setMovies(mPopularMoviesMocked);
-        when(mMovieApiMvpHelper.getPopular()).thenReturn(Observable.just(popularMoviesResponseBody));
+        when(mMovieApiMvpHelper.getPopular()).thenReturn(Observable.just(mPopularMoviesMocked));
+        when(mMovieApiMvpHelper.getTopRated()).thenReturn(Observable.just(mTopRatedMoviesMocked));
 
-        mTopRatedMoviesMocked = new LinkedList<>();
-        mTopRatedMoviesMocked.add(new Movie("The Name of the Wind"));
-        mTopRatedMoviesMocked.add(new Movie("Wonder woman"));
-        mTopRatedMoviesMocked.add(new Movie("Gone Girl"));
-        MoviesResponseBody topRatedMoviesResponseBody = new MoviesResponseBody();
-        topRatedMoviesResponseBody.setMovies(mTopRatedMoviesMocked);
-        when(mMovieApiMvpHelper.getTopRated()).thenReturn(Observable.just(topRatedMoviesResponseBody));
-
-        mMovieMocked = new Movie("Elantris: the movie");
         Observable<Movie> movieObservable = Observable.just(mMovieMocked);
         when(mMovieApiMvpHelper.getMovie(Matchers.isNotNull(String.class))).thenReturn(movieObservable);
         when(mMovieApiMvpHelper.getMovie(Matchers.matches(".{1,}"))).thenReturn(movieObservable);
@@ -82,7 +68,7 @@ public class MovieDataManagerTest {
 
     @Test
     public void whenGetPopularMovies_returnMoviesEmpty_success() {
-        when(mMovieApiMvpHelper.getPopular()).thenReturn(Observable.<MoviesResponseBody>empty());
+        when(mMovieApiMvpHelper.getPopular()).thenReturn(Observable.<List<Movie>>empty());
 
         Single<List<Movie>> moviesObservable = mMvpDataManager.getPopularMovies();
 
@@ -104,7 +90,7 @@ public class MovieDataManagerTest {
 
     @Test
     public void whenGetTopRatedMovies_returnMoviesEmpty_success() {
-        when(mMovieApiMvpHelper.getTopRated()).thenReturn(Observable.<MoviesResponseBody>empty());
+        when(mMovieApiMvpHelper.getTopRated()).thenReturn(Observable.<List<Movie>>empty());
 
         Single<List<Movie>> moviesObservable = mMvpDataManager.getTopRatedMovies();
 

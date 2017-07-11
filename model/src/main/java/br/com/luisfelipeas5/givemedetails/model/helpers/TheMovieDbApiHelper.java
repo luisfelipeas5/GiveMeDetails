@@ -1,12 +1,17 @@
 package br.com.luisfelipeas5.givemedetails.model.helpers;
 
 import android.content.Context;
-import android.net.Uri;
+
+import java.util.LinkedList;
+import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.R;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
 import br.com.luisfelipeas5.givemedetails.model.model.MoviesResponseBody;
 import io.reactivex.Observable;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -30,11 +35,7 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
     private String mApiKey;
 
     public TheMovieDbApiHelper(Context context) {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
+        Retrofit retrofit = getRetrofit();
         mTheMovieDbApi = retrofit.create(TheMovieDbApi.class);
 
         if (context != null) {
@@ -42,19 +43,43 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
         }
     }
 
-    @Override
-    public Observable<MoviesResponseBody> getPopular() {
-        return mTheMovieDbApi.getPopular(mApiKey);
+    @android.support.annotation.NonNull
+    private Retrofit getRetrofit() {
+        return new Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                    .build();
     }
 
     @Override
-    public Observable<MoviesResponseBody> getTopRated() {
-        return mTheMovieDbApi.getTopRated(mApiKey);
+    public Observable<List<Movie>> getPopular() {
+        return mTheMovieDbApi.getPopular(mApiKey)
+                .flatMap(getMovieResponseMapper());
+    }
+
+    @Override
+    public Observable<List<Movie>> getTopRated() {
+        return mTheMovieDbApi.getTopRated(mApiKey)
+                .flatMap(getMovieResponseMapper());
     }
 
     @Override
     public Observable<Movie> getMovie(String movieId) {
-        return mTheMovieDbApi.getMovie(movieId, mApiKey);
+        return mTheMovieDbApi.getMovie(movieId, mApiKey)
+                .cast(Movie.class);
+    }
+
+    @android.support.annotation.NonNull
+    private Function<MoviesResponseBody, Observable<List<Movie>>> getMovieResponseMapper() {
+        return new Function<MoviesResponseBody, Observable<List<Movie>>>() {
+            @Override
+            public Observable<List<Movie>> apply(@NonNull MoviesResponseBody moviesResponseBody) throws Exception {
+                List<Movie> movies = new LinkedList<>();
+                movies.addAll(moviesResponseBody.getMovies());
+                return Observable.just(movies);
+            }
+        };
     }
 
     interface TheMovieDbApi {
@@ -66,8 +91,8 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
         Observable<MoviesResponseBody> getTopRated(@Query(KEY_QUERY_API_KEY) String apiKey);
 
         @GET(GET_MOVIE_PATH)
-        Observable<Movie> getMovie(@Path(MOVIE_ID_PATH) String movieId,
-                                   @Query(KEY_QUERY_API_KEY) String apiKey);
+        Observable<MovieTMDb> getMovie(@Path(MOVIE_ID_PATH) String movieId,
+                                       @Query(KEY_QUERY_API_KEY) String apiKey);
     }
 
 }
