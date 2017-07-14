@@ -13,6 +13,7 @@ import br.com.luisfelipeas5.givemedetails.api.tasks.GetMovieTask;
 import br.com.luisfelipeas5.givemedetails.databinding.ActivityDetailBinding;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.DetailFragment;
+import br.com.luisfelipeas5.givemedetails.view.fragments.details.DetailPosterFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.SocialFragment;
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
@@ -33,9 +34,17 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         if (intent.hasExtra(EXTRA_MOVIE)) {
             Movie movie = intent.getParcelableExtra(EXTRA_MOVIE);
             mBinding.setMovie(movie);
+
+            DetailPosterFragment detailPosterFragment = getDetailPosterFragment();
+            detailPosterFragment.setMovieId(movie.getId());
         }
 
         getMovie();
+    }
+
+    private DetailPosterFragment getDetailPosterFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        return (DetailPosterFragment) fragmentManager.findFragmentById(R.id.fragment_poster);
     }
 
     private void getMovie() {

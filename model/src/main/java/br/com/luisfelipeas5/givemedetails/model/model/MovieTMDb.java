@@ -33,6 +33,10 @@ public class MovieTMDb implements Parcelable, Movie {
 
     private DateFormat dateFormat;
 
+    public MovieTMDb() {
+        dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+    }
+
     public String getPoster() {
         return poster;
     }
@@ -68,7 +72,9 @@ public class MovieTMDb implements Parcelable, Movie {
     public Date getReleaseDate() {
         Date date = null;
         try {
-            date = dateFormat.parse(releaseDate);
+            if (releaseDate != null) {
+                date = dateFormat.parse(releaseDate);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }

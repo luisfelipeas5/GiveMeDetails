@@ -1,64 +1,67 @@
 package br.com.luisfelipeas5.givemedetails.presenter.details;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.presenter.BasePresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.schedulers.SchedulerProvider;
-import br.com.luisfelipeas5.givemedetails.view.details.MovieMvpView;
+import br.com.luisfelipeas5.givemedetails.view.details.MoviePosterMvpView;
 import io.reactivex.SingleObserver;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
-public class MovieDetailPresenter extends BasePresenter<MovieMvpView> implements MovieDetailMvpPresenter {
+public class MoviePosterPresenter extends BasePresenter<MoviePosterMvpView> implements MoviePosterMvpPresenter {
     private final MovieMvpDataManager mMovieMvpDataManager;
-    private MovieMvpView mMovieMvpView;
+    private MoviePosterMvpView mMovieMvpView;
 
-    public MovieDetailPresenter(MovieMvpDataManager movieMvpDataManager, SchedulerProvider schedulerProvider) {
+    public MoviePosterPresenter(MovieMvpDataManager movieMvpDataManager, SchedulerProvider schedulerProvider) {
         super(schedulerProvider);
         mMovieMvpDataManager = movieMvpDataManager;
     }
 
     @Override
-    public void attach(MovieMvpView movieMvpView) {
+    public void attach(MoviePosterMvpView movieMvpView) {
         mMovieMvpView = movieMvpView;
     }
 
     @Override
     public void detachView() {
-        mMovieMvpView = new MovieMvpView() {
+        mMovieMvpView = new MoviePosterMvpView() {
+
             @Override
-            public void onMovieReady(Movie movie) {
+            public void onMoviePosterUrlReady(String posterUrl) {
 
             }
 
             @Override
-            public void onGetMovieFailed() {
+            public void onGetMoviePosterUrlFailed() {
+
+            }
+
+            @Override
+            public void getPosterWidth() {
 
             }
         };
     }
 
     @Override
-    public void getMovie(String movieId) {
+    public void getMoviePosterUrl(String movieId, int width) {
         SchedulerProvider schedulerProvider = getSchedulerProvider();
-
-        mMovieMvpDataManager.getMovie(movieId)
+        mMovieMvpDataManager.getMoviePosterUrl(width, movieId)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .subscribe(new SingleObserver<Movie>() {
+                .subscribe(new SingleObserver<String>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-
                     }
 
                     @Override
-                    public void onSuccess(@NonNull Movie movie) {
-                        mMovieMvpView.onMovieReady(movie);
+                    public void onSuccess(@NonNull String posterUrl) {
+                        mMovieMvpView.onMoviePosterUrlReady(posterUrl);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        mMovieMvpView.onGetMovieFailed();
+                        mMovieMvpView.onGetMoviePosterUrlFailed();
                     }
                 });
     }

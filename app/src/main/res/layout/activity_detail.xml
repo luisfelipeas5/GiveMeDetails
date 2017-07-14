@@ -17,12 +17,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <ImageView android:id="@+id/img_movie"
-            android:contentDescription="@{movie.title}"
-            app:set_movie_poster="@{movie}"
-            android:scaleType="centerCrop"
+        <fragment android:id="@+id/fragment_poster"
+            android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.DetailPosterFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
         <ScrollView
             android:layout_width="match_parent"

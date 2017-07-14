@@ -4,6 +4,7 @@ import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 public interface MovieApiMvpHelper {
     Observable<List<Movie>> getPopular();
@@ -11,4 +12,6 @@ public interface MovieApiMvpHelper {
     Observable<List<Movie>> getTopRated();
 
     Observable<Movie> getMovie(String movieId);
+
+    Single<String> getMoviePosterUrl(int width, String posterSuffixPath);
 }

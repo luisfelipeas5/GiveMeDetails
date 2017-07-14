@@ -10,18 +10,19 @@ import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.presenter.schedulers.SchedulerProvider;
 import br.com.luisfelipeas5.givemedetails.presenter.schedulers.TestSchedulerProvider;
 import br.com.luisfelipeas5.givemedetails.view.details.MovieMvpView;
+import br.com.luisfelipeas5.givemedetails.view.details.MoviePosterMvpView;
 import io.reactivex.Single;
 import io.reactivex.schedulers.TestScheduler;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MovieDetailPresenterTest {
+public class MoviePosterPresenterTest {
 
     private static final String MOVIE_ID_MOCKED = "MOVIE_ID_MOCKED";
-    private MovieDetailMvpPresenter mMovieDetailMvpPresenter;
+    private MoviePosterMvpPresenter mMovieDetailMvpPresenter;
     @Mock
-    private MovieMvpView mMovieMvpView;
+    private MoviePosterMvpView mMovieMvpView;
     @Mock
     private MovieMvpDataManager mMovieMvpDataManager;
     private TestScheduler mTestScheduler;
@@ -35,34 +36,35 @@ public class MovieDetailPresenterTest {
 
         mTestScheduler = new TestScheduler();
         SchedulerProvider schedulerProvider = new TestSchedulerProvider(mTestScheduler);
-        mMovieDetailMvpPresenter = new MovieDetailPresenter(mMovieMvpDataManager, schedulerProvider);
+        mMovieDetailMvpPresenter = new MoviePosterPresenter(mMovieMvpDataManager, schedulerProvider);
         mMovieDetailMvpPresenter.attach(mMovieMvpView);
     }
 
     @Test
-    public void whenGetMovie_callDataManagerAndView_success() {
-        when(mMovieMvpDataManager.getMovie(mMovieMocked.getId()))
-                .thenReturn(Single.just(mMovieMocked));
+    public void whenGetMoviePosterUrl_callDataManagerAndView_success() {
+        int width = 780;
+        String posterUrl = "Fake poster url";
+        when(mMovieMvpDataManager.getMoviePosterUrl(width, MOVIE_ID_MOCKED))
+                .thenReturn(Single.just(posterUrl));
 
-        String movieId = mMovieMocked.getId();
-        mMovieDetailMvpPresenter.getMovie(movieId);
+        mMovieDetailMvpPresenter.getMoviePosterUrl(MOVIE_ID_MOCKED, width);
         mTestScheduler.triggerActions();
 
-        verify(mMovieMvpDataManager).getMovie(movieId);
-        verify(mMovieMvpView).onMovieReady(mMovieMocked);
+        verify(mMovieMvpDataManager).getMoviePosterUrl(width, MOVIE_ID_MOCKED);
+        verify(mMovieMvpView).onMoviePosterUrlReady(posterUrl);
     }
 
     @Test
-    public void whenGetMovie_callDataManagerAndView_failed() {
-        when(mMovieMvpDataManager.getMovie(mMovieMocked.getId()))
-                .thenReturn(Single.<Movie>error(new Exception("Mocked exception")));
+    public void whenGetMoviePosterUrl_callDataManagerAndView_failed() {
+        int width = 780;
+        when(mMovieMvpDataManager.getMoviePosterUrl(width, MOVIE_ID_MOCKED))
+                .thenReturn(Single.<String>error(new Exception("Movie poster wasn't find.")));
 
-        String movieId = mMovieMocked.getId();
-        mMovieDetailMvpPresenter.getMovie(movieId);
+        mMovieDetailMvpPresenter.getMoviePosterUrl(MOVIE_ID_MOCKED, width);
         mTestScheduler.triggerActions();
 
-        verify(mMovieMvpDataManager).getMovie(movieId);
-        verify(mMovieMvpView).onGetMovieFailed();
+        verify(mMovieMvpDataManager).getMoviePosterUrl(width, MOVIE_ID_MOCKED);
+        verify(mMovieMvpView).onGetMoviePosterUrlFailed();
     }
 
 }

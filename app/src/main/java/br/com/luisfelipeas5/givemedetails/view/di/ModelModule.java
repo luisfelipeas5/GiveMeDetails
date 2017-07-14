@@ -5,6 +5,8 @@ import android.content.Context;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
+import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheHelper;
+import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.TheMovieDbApiHelper;
 import dagger.Module;
 import dagger.Provides;
@@ -29,8 +31,14 @@ public class ModelModule {
     }
 
     @Provides
-    MovieMvpDataManager provideMovieMvpDataManager(MovieApiMvpHelper movieApiMvpHelper) {
-        return new MovieDataManager(movieApiMvpHelper);
+    MovieCacheMvpHelper provideMovieCacheMvpHelper() {
+        return new MovieCacheHelper();
+    }
+
+    @Provides
+    MovieMvpDataManager provideMovieMvpDataManager(MovieApiMvpHelper movieApiMvpHelper,
+                                                   MovieCacheMvpHelper movieCacheMvpHelper) {
+        return new MovieDataManager(movieApiMvpHelper, movieCacheMvpHelper);
     }
 
 }

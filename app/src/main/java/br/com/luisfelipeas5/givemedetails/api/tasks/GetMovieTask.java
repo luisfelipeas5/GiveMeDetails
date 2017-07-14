@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import br.com.luisfelipeas5.givemedetails.api.GiveMeDetailsApi;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
 
 public class GetMovieTask extends Task {
 
@@ -20,7 +21,7 @@ public class GetMovieTask extends Task {
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         if (s != null) {
-            Movie movie = new Gson().fromJson(s, Movie.class);
+            Movie movie = new Gson().fromJson(s, MovieTMDb.class);
             callback.onResult(movie);
         } else {
             callback.onError();
