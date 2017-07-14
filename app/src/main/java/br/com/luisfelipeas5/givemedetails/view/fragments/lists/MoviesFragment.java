@@ -70,7 +70,7 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
     @Override
     public void onMovieClicked(Movie movie) {
         Intent movieDetailsIntent = new Intent(getContext(), DetailActivity.class);
-        movieDetailsIntent.putExtra(DetailActivity.EXTRA_MOVIE, movie);
+        movieDetailsIntent.putExtra(DetailActivity.EXTRA_MOVIE_ID, movie.getId());
         startActivity(movieDetailsIntent);
     }
 
