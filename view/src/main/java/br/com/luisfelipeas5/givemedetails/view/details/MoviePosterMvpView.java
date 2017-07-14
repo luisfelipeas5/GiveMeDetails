@@ -8,4 +8,8 @@ public interface MoviePosterMvpView extends MvpView{
     void onGetMoviePosterUrlFailed();
 
     void getPosterWidth();
+
+    void onGetMovieTitleReady(String movieTitle);
+
+    void onGetMovieTitleFailed();
 }

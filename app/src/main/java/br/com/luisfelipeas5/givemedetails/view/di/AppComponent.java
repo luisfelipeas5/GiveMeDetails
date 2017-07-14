@@ -1,5 +1,6 @@
 package br.com.luisfelipeas5.givemedetails.view.di;
 
+import br.com.luisfelipeas5.givemedetails.adapter.MoviesAdapter;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.DetailPosterFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.lists.MoviesFragment;
 import dagger.Component;
@@ -9,4 +10,6 @@ public interface AppComponent {
     void inject(MoviesFragment moviesFragment);
 
     void inject(DetailPosterFragment detailPosterFragment);
+
+    void inject(MoviesAdapter.ViewHolder viewHolder);
 }

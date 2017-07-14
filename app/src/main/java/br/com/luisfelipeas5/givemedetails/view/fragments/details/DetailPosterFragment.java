@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 
 import javax.inject.Inject;
 
+import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentDetailPosterBinding;
 import br.com.luisfelipeas5.givemedetails.presenter.details.MoviePosterMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
@@ -52,6 +53,7 @@ public class DetailPosterFragment extends Fragment implements MoviePosterMvpView
     public void setMovieId(String movieId) {
         mMovieId = movieId;
         getPosterWidth();
+        mPresenter.getMovieTitle(movieId);
     }
 
     @Override
@@ -73,6 +75,19 @@ public class DetailPosterFragment extends Fragment implements MoviePosterMvpView
                 }
             }
         }
+    }
+
+    @Override
+    public void onGetMovieTitleReady(String movieTitle) {
+        if (mBinding != null) {
+            String contentDescription = getString(R.string.movie_poster_description, movieTitle);
+            mBinding.imgMoviePoster.setContentDescription(contentDescription);
+        }
+    }
+
+    @Override
+    public void onGetMovieTitleFailed() {
+
     }
 
     @Inject

@@ -9,12 +9,12 @@ import android.view.ViewGroup;
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentDetailBinding;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 
-public class DetailFragment extends Fragment {
+public class SummaryFragment extends Fragment {
 
     private Movie mMovie;
     private FragmentDetailBinding mBinding;
 
-    public DetailFragment() {
+    public SummaryFragment() {
         // Required empty public constructor
     }
 

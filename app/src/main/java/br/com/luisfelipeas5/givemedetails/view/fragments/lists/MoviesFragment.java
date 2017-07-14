@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,11 +28,12 @@ import br.com.luisfelipeas5.givemedetails.utils.NetworkUtils;
 import br.com.luisfelipeas5.givemedetails.view.di.AppComponent;
 import br.com.luisfelipeas5.givemedetails.view.list.MoviesMvpView;
 
-public abstract class MoviesFragment extends Fragment implements View.OnClickListener, MoviesAdapter.Listener, MoviesMvpView {
+public abstract class MoviesFragment extends Fragment implements View.OnClickListener, MoviesAdapter.Listener, MoviesMvpView, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String CONNECTIVITY_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
     private FragmentMoviesBinding mBinding;
     protected MoviesMvpPresenter mPresenter;
+    private boolean mIsGettingMovies;
 
     public MoviesFragment() {
         // Required empty public constructor
@@ -50,15 +52,11 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
         mBinding.recycler.setLayoutManager(layoutManager);
         mBinding.txtNoMovies.setOnClickListener(this);
 
+        mBinding.swipeRefreshLayout.setOnRefreshListener(this);
+
         onRefresh();
 
         return mBinding.getRoot();
-    }
-
-    private void setAdapter(List<Movie> movies) {
-        MoviesAdapter adapter = new MoviesAdapter(movies);
-        adapter.setListener(this);
-        mBinding.recycler.setAdapter(adapter);
     }
 
     @Override
@@ -84,6 +82,7 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
         }
     }
 
+    @Override
     public void onRefresh() {
         if (NetworkUtils.isConnected(getContext())) {
             onGetMovies();
@@ -117,7 +116,12 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
     @Override
     public void onMoviesReady(List<Movie> movies) {
         if (movies != null) {
-            setAdapter(movies);
+            MoviesApp moviesApp = (MoviesApp) getContext().getApplicationContext();
+            AppComponent appComponent = moviesApp.getAppComponent();
+
+            MoviesAdapter adapter = new MoviesAdapter(movies, appComponent);
+            adapter.setListener(this);
+            mBinding.recycler.setAdapter(adapter);
         }
         mBinding.recycler.setVisibility(View.VISIBLE);
     }
@@ -133,8 +137,18 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
     }
 
     @Override
-    public void onGettingMovies(boolean isGetting) {
-        mBinding.swipeRefreshLayout.setRefreshing(isGetting);
+    public void onGettingMovies(final boolean isGetting) {
+        mIsGettingMovies = isGetting;
+        mBinding.swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                if (isGetting && mIsGettingMovies) {
+                    mBinding.swipeRefreshLayout.setRefreshing(true);
+                } else {
+                    mBinding.swipeRefreshLayout.setRefreshing(false);
+                }
+            }
+        });
     }
 
     @Inject

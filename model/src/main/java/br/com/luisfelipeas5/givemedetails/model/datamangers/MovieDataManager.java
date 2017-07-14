@@ -53,6 +53,19 @@ public class MovieDataManager implements MovieMvpDataManager {
                 });
     }
 
+    @Override
+    public Single<String> getMovieTitle(String movieId) {
+        return movieCacheMvpHelper.hasMovieTitleOnCache(movieId)
+                .flatMap(getMovieCacheMapper(movieId))
+                .flatMap(new Function<Movie, Single<String>>() {
+                    @Override
+                    public Single<String> apply(@NonNull Movie movie) throws Exception {
+                        String movieTitle = movie.getTitle();
+                        return Single.just(movieTitle);
+                    }
+                });
+    }
+
     @android.support.annotation.NonNull
     private Function<Boolean, SingleSource<Movie>> getMovieCacheMapper(final String movieId) {
         return new Function<Boolean, SingleSource<Movie>>() {

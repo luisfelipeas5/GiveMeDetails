@@ -27,7 +27,7 @@
                     android:layout_height="@dimen/detail_fake_view_header_height"/>
 
                 <fragment android:id="@+id/fragment_detail"
-                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.DetailFragment"
+                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.SummaryFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 

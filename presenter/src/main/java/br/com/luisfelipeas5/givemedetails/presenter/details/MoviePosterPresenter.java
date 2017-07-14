@@ -40,6 +40,16 @@ public class MoviePosterPresenter extends BasePresenter<MoviePosterMvpView> impl
             public void getPosterWidth() {
 
             }
+
+            @Override
+            public void onGetMovieTitleReady(String movieTitle) {
+
+            }
+
+            @Override
+            public void onGetMovieTitleFailed() {
+
+            }
         };
     }
 
@@ -62,6 +72,29 @@ public class MoviePosterPresenter extends BasePresenter<MoviePosterMvpView> impl
                     @Override
                     public void onError(@NonNull Throwable e) {
                         mMovieMvpView.onGetMoviePosterUrlFailed();
+                    }
+                });
+    }
+
+    @Override
+    public void getMovieTitle(String movieId) {
+        SchedulerProvider schedulerProvider = getSchedulerProvider();
+        mMovieMvpDataManager.getMovieTitle(movieId)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe(new SingleObserver<String>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull String movieTitle) {
+                        mMovieMvpView.onGetMovieTitleReady(movieTitle);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mMovieMvpView.onGetMovieTitleFailed();
                     }
                 });
     }

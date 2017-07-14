@@ -5,4 +5,6 @@ import br.com.luisfelipeas5.givemedetails.view.details.MoviePosterMvpView;
 
 public interface MoviePosterMvpPresenter extends MvpPresenter<MoviePosterMvpView> {
     void getMoviePosterUrl(String movieId, int width);
+
+    void getMovieTitle(String movieId);
 }

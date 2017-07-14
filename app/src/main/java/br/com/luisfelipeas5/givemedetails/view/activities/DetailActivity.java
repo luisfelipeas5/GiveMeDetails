@@ -9,8 +9,7 @@ import android.view.View;
 
 import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.databinding.ActivityDetailBinding;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
-import br.com.luisfelipeas5.givemedetails.view.fragments.details.DetailFragment;
+import br.com.luisfelipeas5.givemedetails.view.fragments.details.SummaryFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.DetailPosterFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.SocialFragment;
 
@@ -31,23 +30,25 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
             DetailPosterFragment detailPosterFragment = getDetailPosterFragment();
             detailPosterFragment.setMovieId(movieId);
+
+            SummaryFragment summaryFragment = getSummaryFragment();
+            SocialFragment socialFragment = getSocialFragment();
         }
+    }
+
+    private SocialFragment getSocialFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        return (SocialFragment) fragmentManager.findFragmentById(R.id.fragment_social);
+    }
+
+    private SummaryFragment getSummaryFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        return (SummaryFragment) fragmentManager.findFragmentById(R.id.fragment_detail);
     }
 
     private DetailPosterFragment getDetailPosterFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         return (DetailPosterFragment) fragmentManager.findFragmentById(R.id.fragment_poster);
-    }
-
-    private void onMovieReady(Movie movie) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        DetailFragment detailFragment =
-                (DetailFragment) fragmentManager.findFragmentById(R.id.fragment_detail);
-        detailFragment.setMovie(movie);
-
-        SocialFragment socialFragment =
-                (SocialFragment) fragmentManager.findFragmentById(R.id.fragment_social);
-        socialFragment.setMovie(movie);
     }
 
     @Override

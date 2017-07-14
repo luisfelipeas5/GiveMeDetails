@@ -31,27 +31,4 @@ public class MovieController {
         }
     }
 
-    @BindingAdapter("set_movie_poster")
-    public static void setImage(final ImageView imageView, final Movie movie) {
-        ViewTreeObserver vto = imageView.getViewTreeObserver();
-        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            public boolean onPreDraw() {
-                imageView.getViewTreeObserver().removeOnPreDrawListener(this);
-                int measuredWidth = imageView.getMeasuredWidth();
-
-                String posterUrl = GiveMeDetailsApi.getImgUrlThumbnail(measuredWidth) + movie.getPoster();
-                setImage(imageView, movie, posterUrl);
-                return true;
-            }
-        });
-    }
-
-    private static void setImage(ImageView imageView, Movie movie, String url) {
-        Glide.with(imageView.getContext())
-                .load(url)
-                .dontAnimate()
-                .into(imageView);
-        imageView.setContentDescription(movie.getTitle());
-    }
-
 }
