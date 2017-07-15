@@ -8,11 +8,11 @@ import io.reactivex.SingleObserver;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
-public class MoviePosterPresenter extends BasePresenter<MoviePosterMvpView> implements MoviePosterMvpPresenter {
+public class PosterPresenter extends BasePresenter<MoviePosterMvpView> implements PosterMvpPresenter {
     private final MovieMvpDataManager mMovieMvpDataManager;
     private MoviePosterMvpView mMovieMvpView;
 
-    public MoviePosterPresenter(MovieMvpDataManager movieMvpDataManager, SchedulerProvider schedulerProvider) {
+    public PosterPresenter(MovieMvpDataManager movieMvpDataManager, SchedulerProvider schedulerProvider) {
         super(schedulerProvider);
         mMovieMvpDataManager = movieMvpDataManager;
     }

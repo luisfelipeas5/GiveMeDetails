@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class MoviePosterPresenterTest {
 
     private static final String MOVIE_ID_MOCKED = "MOVIE_ID_MOCKED";
-    private MoviePosterMvpPresenter mMovieDetailMvpPresenter;
+    private PosterMvpPresenter mMovieDetailMvpPresenter;
     @Mock
     private MoviePosterMvpView mMovieMvpView;
     @Mock
@@ -35,7 +35,7 @@ public class MoviePosterPresenterTest {
 
         mTestScheduler = new TestScheduler();
         SchedulerProvider schedulerProvider = new TestSchedulerProvider(mTestScheduler);
-        mMovieDetailMvpPresenter = new MoviePosterPresenter(mMovieMvpDataManager, schedulerProvider);
+        mMovieDetailMvpPresenter = new PosterPresenter(mMovieMvpDataManager, schedulerProvider);
         mMovieDetailMvpPresenter.attach(mMovieMvpView);
     }
 

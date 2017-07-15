@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import br.com.luisfelipeas5.givemedetails.presenter.details.MoviePosterMvpPresenter;
+import br.com.luisfelipeas5.givemedetails.presenter.details.PosterMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.view.details.MoviePosterMvpView;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.PosterFragment;
 
@@ -15,7 +15,7 @@ public class MoviePosterViewTest {
 
     private MoviePosterMvpView mMovieMvpView;
     @Mock
-    private MoviePosterMvpPresenter mMovieDetailMvpPresenter;
+    private PosterMvpPresenter mMovieDetailMvpPresenter;
 
     @Before
     public void setUp() {

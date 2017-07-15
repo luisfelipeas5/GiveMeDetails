@@ -14,13 +14,13 @@ import javax.inject.Inject;
 
 import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentDetailPosterBinding;
-import br.com.luisfelipeas5.givemedetails.presenter.details.MoviePosterMvpPresenter;
+import br.com.luisfelipeas5.givemedetails.presenter.details.PosterMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.details.MoviePosterMvpView;
 import br.com.luisfelipeas5.givemedetails.view.di.AppComponent;
 
 public class PosterFragment extends Fragment implements MoviePosterMvpView {
-    private MoviePosterMvpPresenter mPresenter;
+    private PosterMvpPresenter mPresenter;
     private FragmentDetailPosterBinding mBinding;
     private String mMovieId;
 
@@ -91,7 +91,7 @@ public class PosterFragment extends Fragment implements MoviePosterMvpView {
     }
 
     @Inject
-    public void setPresenter(MoviePosterMvpPresenter presenter) {
+    public void setPresenter(PosterMvpPresenter presenter) {
         mPresenter = presenter;
         mPresenter.attach(this);
     }

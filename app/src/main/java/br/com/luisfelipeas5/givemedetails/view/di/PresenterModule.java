@@ -3,8 +3,10 @@ package br.com.luisfelipeas5.givemedetails.view.di;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
 import br.com.luisfelipeas5.givemedetails.presenter.details.MovieDetailMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.details.MovieDetailPresenter;
-import br.com.luisfelipeas5.givemedetails.presenter.details.MoviePosterMvpPresenter;
-import br.com.luisfelipeas5.givemedetails.presenter.details.MoviePosterPresenter;
+import br.com.luisfelipeas5.givemedetails.presenter.details.PosterMvpPresenter;
+import br.com.luisfelipeas5.givemedetails.presenter.details.PosterPresenter;
+import br.com.luisfelipeas5.givemedetails.presenter.details.SummaryMvpPresenter;
+import br.com.luisfelipeas5.givemedetails.presenter.details.SummaryPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.list.MoviesMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.list.MoviesPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.schedulers.AppSchedulerProvider;
@@ -33,9 +35,15 @@ class PresenterModule {
     }
 
     @Provides
-    static MoviePosterMvpPresenter provideMoviePosterMvpPresenter(MovieMvpDataManager movieMvpDataManager,
-                                                                  SchedulerProvider schedulerProvider) {
-        return new MoviePosterPresenter(movieMvpDataManager, schedulerProvider);
+    static PosterMvpPresenter provideMoviePosterMvpPresenter(MovieMvpDataManager movieMvpDataManager,
+                                                             SchedulerProvider schedulerProvider) {
+        return new PosterPresenter(movieMvpDataManager, schedulerProvider);
+    }
+
+    @Provides
+    static SummaryMvpPresenter provideSummaryMvpPresenter(MovieMvpDataManager movieMvpDataManager,
+                                                          SchedulerProvider schedulerProvider) {
+        return new SummaryPresenter(movieMvpDataManager, schedulerProvider);
     }
 
 }

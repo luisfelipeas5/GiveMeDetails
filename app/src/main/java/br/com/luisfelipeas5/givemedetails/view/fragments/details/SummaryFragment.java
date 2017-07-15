@@ -6,35 +6,44 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentDetailBinding;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.presenter.details.SummaryMvpPresenter;
+import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
+import br.com.luisfelipeas5.givemedetails.view.details.SummaryMvpView;
+import br.com.luisfelipeas5.givemedetails.view.di.AppComponent;
 
-public class SummaryFragment extends Fragment {
+public class SummaryFragment extends Fragment implements SummaryMvpView {
 
-    private Movie mMovie;
-    private FragmentDetailBinding mBinding;
+    private SummaryMvpPresenter mPresenter;
 
     public SummaryFragment() {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mBinding = FragmentDetailBinding.inflate(inflater, container, false);
-        inflateBinding();
+        FragmentDetailBinding mBinding = FragmentDetailBinding.inflate(inflater, container, false);
+        MoviesApp moviesApp = (MoviesApp) getContext().getApplicationContext();
+        AppComponent appComponent = moviesApp.getAppComponent();
+        appComponent.inject(this);
         return mBinding.getRoot();
     }
 
-    private void inflateBinding() {
-        if (mMovie != null && mBinding != null) {
-            mBinding.setMovie(mMovie);
-        }
+    public void setMovieId(String movieId) {
     }
 
-    public void setMovie(Movie movie) {
-        mMovie = movie;
-        inflateBinding();
+    @Inject
+    public void setPresenter(SummaryMvpPresenter presenter) {
+        mPresenter = presenter;
+        mPresenter.attach(this);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        mPresenter.detachView();
     }
 }
