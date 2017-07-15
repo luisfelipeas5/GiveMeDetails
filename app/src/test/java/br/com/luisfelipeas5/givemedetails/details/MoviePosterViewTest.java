@@ -7,7 +7,7 @@ import org.mockito.MockitoAnnotations;
 
 import br.com.luisfelipeas5.givemedetails.presenter.details.MoviePosterMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.view.details.MoviePosterMvpView;
-import br.com.luisfelipeas5.givemedetails.view.fragments.details.DetailPosterFragment;
+import br.com.luisfelipeas5.givemedetails.view.fragments.details.PosterFragment;
 
 import static org.mockito.Mockito.verify;
 
@@ -21,8 +21,8 @@ public class MoviePosterViewTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        mMovieMvpView = new DetailPosterFragment();
-        ((DetailPosterFragment) mMovieMvpView).setPresenter(mMovieDetailMvpPresenter);
+        mMovieMvpView = new PosterFragment();
+        ((PosterFragment) mMovieMvpView).setPresenter(mMovieDetailMvpPresenter);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class MoviePosterViewTest {
 
     @Test
     public void whenViewStop_detachFromPresenter_success() {
-        ((DetailPosterFragment) mMovieMvpView).onStop();
+        ((PosterFragment) mMovieMvpView).onStop();
         verify(mMovieDetailMvpPresenter).detachView();
     }
 

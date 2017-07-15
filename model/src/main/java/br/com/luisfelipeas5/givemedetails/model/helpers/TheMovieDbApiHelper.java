@@ -10,7 +10,6 @@ import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
 import br.com.luisfelipeas5.givemedetails.model.model.MoviesResponseBody;
 import io.reactivex.Observable;
-import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import retrofit2.Retrofit;
@@ -21,11 +20,6 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public class TheMovieDbApiHelper implements MovieApiMvpHelper {
-
-    private static final int[] IMAGE_WIDTH_AVAILABLE = {92, 154, 185, 342, 500, 780};
-    private static final String[] IMAGE_PATH_WIDTH_AVAILABLE = {"w92", "w154", "w185", "w342", "w500", "w780", "original"};
-
-    private static final String IMG_AUTHORITY = "image.tmdb.org";
 
     private static final String BASE_URL = "https://api.themoviedb.org/";
 
@@ -74,24 +68,6 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
     public Observable<Movie> getMovie(String movieId) {
         return mTheMovieDbApi.getMovie(movieId, mApiKey)
                 .cast(Movie.class);
-    }
-
-    @Override
-    public Single<String> getMoviePosterUrl(int posterWidth, String posterSuffixPath) {
-        String measuredPath = null;
-        for (int i = 0; i < IMAGE_WIDTH_AVAILABLE.length; i++) {
-            int widthAvailable = IMAGE_WIDTH_AVAILABLE[i];
-            if (posterWidth <= widthAvailable) {
-                measuredPath = IMAGE_PATH_WIDTH_AVAILABLE[i];
-                break;
-            }
-        }
-        if (measuredPath == null) {
-            measuredPath = IMAGE_PATH_WIDTH_AVAILABLE[IMAGE_PATH_WIDTH_AVAILABLE.length - 1];
-        }
-
-        String posterFullPath = String.format("http://" + IMG_AUTHORITY + "/t/p/%s%s", measuredPath, posterSuffixPath);
-        return Single.just(posterFullPath);
     }
 
     @android.support.annotation.NonNull

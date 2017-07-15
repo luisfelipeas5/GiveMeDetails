@@ -7,6 +7,8 @@ import java.util.Date;
 public interface Movie extends Parcelable {
     String getPoster();
 
+    String getPoster(int posterWidth);
+
     String getTitle();
 
     String getOverview();

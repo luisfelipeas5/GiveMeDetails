@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import br.com.luisfelipeas5.givemedetails.R;
-import br.com.luisfelipeas5.givemedetails.adapter.MoviesListsPagerAdapter;
+import br.com.luisfelipeas5.givemedetails.adapters.MoviesListsPagerAdapter;
 import br.com.luisfelipeas5.givemedetails.databinding.ActivityMainBinding;
 import br.com.luisfelipeas5.givemedetails.pagetransformers.ZoomOutPageTransformer;
 import br.com.luisfelipeas5.givemedetails.view.fragments.lists.PopularMoviesFragment;

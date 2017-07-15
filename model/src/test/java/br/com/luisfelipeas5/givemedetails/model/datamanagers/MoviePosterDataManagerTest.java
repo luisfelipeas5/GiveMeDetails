@@ -38,16 +38,12 @@ public class MoviePosterDataManagerTest {
     @Test
     public void whenGetMoviePosterUrl_ByIdAndWidthReturnUrl_withoutCache_success() {
         String movieId = "someMovieIdMocked";
-        String posterSuffix = "Poster suffix mocked";
         String posterUrl = "Poster full path mocked";
         int width = 0;
 
-        when(mMovieMocked.getPoster()).thenReturn(posterSuffix);
-
+        when(mMovieMocked.getPoster(width)).thenReturn(posterUrl);
         when(mMovieCacheHelper.hasMoviePosterOnCache(movieId)).thenReturn(Single.just(false));
-
         when(mMovieApiMvpHelper.getMovie(movieId)).thenReturn(Observable.just(mMovieMocked));
-        when(mMovieApiMvpHelper.getMoviePosterUrl(width, posterSuffix)).thenReturn(Single.just(posterUrl));
 
         Single<String> moviePosterUrl = mMvpDataManager.getMoviePosterUrl(width, movieId);
         TestObserver<String> testObserver = moviePosterUrl.test();
@@ -55,40 +51,34 @@ public class MoviePosterDataManagerTest {
         testObserver.assertComplete();
         testObserver.assertNoErrors();
 
-        verify(mMovieMocked).getPoster();
+        verify(mMovieMocked).getPoster(width);
         verify(mMovieCacheHelper, never()).getMovie(movieId);
         verify(mMovieCacheHelper).hasMoviePosterOnCache(movieId);
         verify(mMovieApiMvpHelper).getMovie(movieId);
-        verify(mMovieApiMvpHelper).getMoviePosterUrl(width, posterSuffix);
 
     }
 
     @Test
     public void whenGetMoviePosterUrl_ByIdAndWidthReturnUrl_withCache_success() {
         String movieId = "someMovieIdMocked";
-        String posterSuffix = "Poster suffix mocked";
         String posterUrl = "Poster full path mocked";
         int width = 0;
 
-        when(mMovieMocked.getPoster()).thenReturn(posterSuffix);
+        when(mMovieMocked.getPoster(width)).thenReturn(posterUrl);
 
         when(mMovieCacheHelper.hasMoviePosterOnCache(movieId)).thenReturn(Single.just(true));
         when(mMovieCacheHelper.getMovie(movieId)).thenReturn(Single.just(mMovieMocked));
-
-        when(mMovieApiMvpHelper.getMoviePosterUrl(width, posterSuffix)).thenReturn(Single.just(posterUrl));
 
         Single<String> moviePosterUrl = mMvpDataManager.getMoviePosterUrl(width, movieId);
         TestObserver<String> testObserver = moviePosterUrl.test();
         testObserver.assertValue(posterUrl);
 
-        verify(mMovieMocked).getPoster();
+        verify(mMovieMocked).getPoster(width);
 
         verify(mMovieCacheHelper).getMovie(movieId);
         verify(mMovieCacheHelper).hasMoviePosterOnCache(movieId);
 
         verify(mMovieApiMvpHelper, never()).getMovie(movieId);
-        verify(mMovieApiMvpHelper).getMoviePosterUrl(width, posterSuffix);
-
     }
 
     @Test

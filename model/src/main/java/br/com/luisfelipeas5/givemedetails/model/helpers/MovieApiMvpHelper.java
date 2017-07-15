@@ -12,6 +12,4 @@ public interface MovieApiMvpHelper {
     Observable<List<Movie>> getTopRated();
 
     Observable<Movie> getMovie(String movieId);
-
-    Single<String> getMoviePosterUrl(int width, String posterSuffixPath);
 }

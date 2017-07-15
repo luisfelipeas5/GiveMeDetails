@@ -8,7 +8,7 @@
         tools:context="br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity">
 
         <fragment android:id="@+id/fragment_poster"
-            android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.DetailPosterFragment"
+            android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.PosterFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

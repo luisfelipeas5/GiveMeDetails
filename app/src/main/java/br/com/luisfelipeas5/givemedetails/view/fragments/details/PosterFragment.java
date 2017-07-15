@@ -19,7 +19,7 @@ import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.details.MoviePosterMvpView;
 import br.com.luisfelipeas5.givemedetails.view.di.AppComponent;
 
-public class DetailPosterFragment extends Fragment implements MoviePosterMvpView {
+public class PosterFragment extends Fragment implements MoviePosterMvpView {
     private MoviePosterMvpPresenter mPresenter;
     private FragmentDetailPosterBinding mBinding;
     private String mMovieId;

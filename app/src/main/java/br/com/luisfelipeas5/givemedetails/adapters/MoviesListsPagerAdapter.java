@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.adapter;
+package br.com.luisfelipeas5.givemedetails.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

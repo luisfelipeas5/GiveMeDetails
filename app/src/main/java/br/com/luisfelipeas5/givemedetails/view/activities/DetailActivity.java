@@ -10,7 +10,7 @@ import android.view.View;
 import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.databinding.ActivityDetailBinding;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.SummaryFragment;
-import br.com.luisfelipeas5.givemedetails.view.fragments.details.DetailPosterFragment;
+import br.com.luisfelipeas5.givemedetails.view.fragments.details.PosterFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.SocialFragment;
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
@@ -28,8 +28,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         if (intent.hasExtra(EXTRA_MOVIE_ID)) {
             String movieId = intent.getStringExtra(EXTRA_MOVIE_ID);
 
-            DetailPosterFragment detailPosterFragment = getDetailPosterFragment();
-            detailPosterFragment.setMovieId(movieId);
+            PosterFragment posterFragment = getDetailPosterFragment();
+            posterFragment.setMovieId(movieId);
 
             SummaryFragment summaryFragment = getSummaryFragment();
             SocialFragment socialFragment = getSocialFragment();
@@ -46,9 +46,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         return (SummaryFragment) fragmentManager.findFragmentById(R.id.fragment_detail);
     }
 
-    private DetailPosterFragment getDetailPosterFragment() {
+    private PosterFragment getDetailPosterFragment() {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        return (DetailPosterFragment) fragmentManager.findFragmentById(R.id.fragment_poster);
+        return (PosterFragment) fragmentManager.findFragmentById(R.id.fragment_poster);
     }
 
     @Override

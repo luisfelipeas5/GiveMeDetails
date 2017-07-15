@@ -47,8 +47,7 @@ public class MovieDataManager implements MovieMvpDataManager {
                 .flatMap(new Function<Movie, Single<String>>() {
                     @Override
                     public Single<String> apply(@NonNull Movie movie) throws Exception {
-                        String posterSuffixPath = movie.getPoster();
-                        return movieApiMvpHelper.getMoviePosterUrl(width, posterSuffixPath);
+                        return Single.just(movie.getPoster(width));
                     }
                 });
     }

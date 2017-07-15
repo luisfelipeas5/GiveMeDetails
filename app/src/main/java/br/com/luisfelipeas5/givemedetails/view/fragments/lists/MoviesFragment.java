@@ -18,7 +18,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.com.luisfelipeas5.givemedetails.R;
-import br.com.luisfelipeas5.givemedetails.adapter.MoviesAdapter;
+import br.com.luisfelipeas5.givemedetails.adapters.MoviesAdapter;
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentMoviesBinding;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.presenter.list.MoviesMvpPresenter;
@@ -116,10 +116,8 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
     @Override
     public void onMoviesReady(List<Movie> movies) {
         if (movies != null) {
-            MoviesApp moviesApp = (MoviesApp) getContext().getApplicationContext();
-            AppComponent appComponent = moviesApp.getAppComponent();
-
-            MoviesAdapter adapter = new MoviesAdapter(movies, appComponent);
+            int posterWidth = getResources().getDimensionPixelSize(R.dimen.movie_poster_size_median);
+            MoviesAdapter adapter = new MoviesAdapter(movies, posterWidth);
             adapter.setListener(this);
             mBinding.recycler.setAdapter(adapter);
         }
