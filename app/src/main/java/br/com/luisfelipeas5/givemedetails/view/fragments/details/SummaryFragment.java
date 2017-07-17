@@ -46,4 +46,14 @@ public class SummaryFragment extends Fragment implements SummaryMvpView {
         super.onStop();
         mPresenter.detachView();
     }
+
+    @Override
+    public void onTitleReady(String title) {
+
+    }
+
+    @Override
+    public void onSummaryFailed() {
+
+    }
 }
