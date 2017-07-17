@@ -22,4 +22,9 @@ public class SummaryPresenter implements SummaryMvpPresenter {
     public SchedulerProvider getSchedulerProvider() {
         return null;
     }
+
+    @Override
+    public void getSummary(String movieId) {
+
+    }
 }

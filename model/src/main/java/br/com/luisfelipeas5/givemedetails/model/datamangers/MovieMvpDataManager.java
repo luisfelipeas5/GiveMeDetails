@@ -15,4 +15,6 @@ public interface MovieMvpDataManager {
     Single<String> getMoviePosterUrl(int width, String movieId);
 
     Single<String> getMovieTitle(String movieId);
+
+    Single<Movie> getMovieSummary(String movieId);
 }
