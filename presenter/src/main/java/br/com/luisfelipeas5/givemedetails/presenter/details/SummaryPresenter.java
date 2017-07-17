@@ -1,5 +1,7 @@
 package br.com.luisfelipeas5.givemedetails.presenter.details;
 
+import java.util.Date;
+
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.presenter.BasePresenter;
@@ -36,6 +38,21 @@ public class SummaryPresenter extends BasePresenter<SummaryMvpView> implements S
             public void onSummaryFailed() {
 
             }
+
+            @Override
+            public void onOriginalTitleReady(String originalTitle) {
+
+            }
+
+            @Override
+            public void onOverviewReady(String overview) {
+
+            }
+
+            @Override
+            public void onReleaseDateReady(Date releaseDate) {
+
+            }
         };
     }
 
@@ -52,6 +69,9 @@ public class SummaryPresenter extends BasePresenter<SummaryMvpView> implements S
                     @Override
                     public void onSuccess(@NonNull Movie movie) {
                         mSummaryMvpView.onTitleReady(movie.getTitle());
+                        mSummaryMvpView.onOriginalTitleReady(movie.getOriginalTitle());
+                        mSummaryMvpView.onOverviewReady(movie.getOverview());
+                        mSummaryMvpView.onReleaseDateReady(movie.getReleaseDate());
                     }
 
                     @Override

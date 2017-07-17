@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentDetailBinding;
@@ -54,6 +56,21 @@ public class SummaryFragment extends Fragment implements SummaryMvpView {
 
     @Override
     public void onSummaryFailed() {
+
+    }
+
+    @Override
+    public void onOriginalTitleReady(String originalTitle) {
+
+    }
+
+    @Override
+    public void onOverviewReady(String overview) {
+
+    }
+
+    @Override
+    public void onReleaseDateReady(Date releaseDate) {
 
     }
 }

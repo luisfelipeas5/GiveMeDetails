@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Date;
+
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.presenter.schedulers.SchedulerProvider;
@@ -13,6 +15,8 @@ import br.com.luisfelipeas5.givemedetails.view.details.SummaryMvpView;
 import io.reactivex.Single;
 import io.reactivex.schedulers.TestScheduler;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -32,6 +36,11 @@ public class SummaryPresenterTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
+        when(mMovie.getTitle()).thenReturn("Ghost in the shell");
+        when(mMovie.getOriginalTitle()).thenReturn("Ghost in the shell Original Title");
+        when(mMovie.getOverview()).thenReturn("Ghost in the shell's Overview");
+        when(mMovie.getReleaseDate()).thenReturn(new Date(System.currentTimeMillis()));
+
         mTestScheduler = new TestScheduler();
         SchedulerProvider mSchedulerProvider = new TestSchedulerProvider(mTestScheduler);
         mSummaryMvpPresenter = new SummaryPresenter(mMovieMvpDataManager, mSchedulerProvider);
@@ -48,6 +57,9 @@ public class SummaryPresenterTest {
 
         verify(mMovieMvpDataManager).getMovieSummary(movieId);
         verify(mSummaryMvpView).onTitleReady(mMovie.getTitle());
+        verify(mSummaryMvpView).onOriginalTitleReady(mMovie.getOriginalTitle());
+        verify(mSummaryMvpView).onOverviewReady(mMovie.getOverview());
+        verify(mSummaryMvpView).onReleaseDateReady(mMovie.getReleaseDate());
         verify(mSummaryMvpView, never()).onSummaryFailed();
     }
 
@@ -60,7 +72,10 @@ public class SummaryPresenterTest {
         mTestScheduler.triggerActions();
 
         verify(mMovieMvpDataManager).getMovieSummary(movieId);
-        verify(mSummaryMvpView, never()).onTitleReady(mMovie.getTitle());
+        verify(mSummaryMvpView, never()).onTitleReady(anyString());
+        verify(mSummaryMvpView, never()).onOriginalTitleReady(anyString());
+        verify(mSummaryMvpView, never()).onOverviewReady(anyString());
+        verify(mSummaryMvpView, never()).onReleaseDateReady(any(Date.class));
         verify(mSummaryMvpView).onSummaryFailed();
     }
 
