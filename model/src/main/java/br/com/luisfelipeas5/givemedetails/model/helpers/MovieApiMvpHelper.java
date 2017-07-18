@@ -12,4 +12,6 @@ public interface MovieApiMvpHelper {
     Observable<List<Movie>> getTopRated();
 
     Observable<Movie> getMovie(String movieId);
+
+    Observable<Movie> getMovieSummary(String movieId);
 }

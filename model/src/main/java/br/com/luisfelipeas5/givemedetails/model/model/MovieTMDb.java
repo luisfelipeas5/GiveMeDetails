@@ -1,5 +1,8 @@
 package br.com.luisfelipeas5.givemedetails.model.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -11,19 +14,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+@Entity
 public class MovieTMDb implements Parcelable, Movie {
+    @Ignore
     private static final int[] IMAGE_WIDTH_AVAILABLE = {92, 154, 185, 342, 500, 780};
+    @Ignore
     private static final String[] IMAGE_PATH_WIDTH_AVAILABLE = {"w92", "w154", "w185", "w342", "w500", "w780", "original"};
+    @Ignore
     private static final String IMG_AUTHORITY = "image.tmdb.org";
 
+    @PrimaryKey
+    @SerializedName("id")
+    private String id;
     @SerializedName("poster_path")
     private String posterSuffix;
     @SerializedName("title")
     private String title;
     @SerializedName("overview")
     private String overview;
-    @SerializedName("id")
-    private String id;
     @SerializedName("original_title")
     private String originalTitle;
     @SerializedName("vote_average")
@@ -35,9 +43,10 @@ public class MovieTMDb implements Parcelable, Movie {
     @SerializedName("release_date")
     private String releaseDate;
 
+    @Ignore
     private DateFormat dateFormat;
 
-    MovieTMDb() {
+    public MovieTMDb() {
         dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
     }
 
@@ -99,7 +108,7 @@ public class MovieTMDb implements Parcelable, Movie {
     }
 
     @Override
-    public Date getReleaseDate() {
+    public Date getReleaseDateAsDate() {
         Date date = null;
         try {
             if (releaseDate != null) {
@@ -109,6 +118,10 @@ public class MovieTMDb implements Parcelable, Movie {
             e.printStackTrace();
         }
         return date;
+    }
+
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
     @Override
@@ -137,8 +150,44 @@ public class MovieTMDb implements Parcelable, Movie {
         return id != null ? id.hashCode() : 0;
     }
 
-    void setPosterSuffix(String posterSuffix) {
+    public void setPosterSuffix(String posterSuffix) {
         this.posterSuffix = posterSuffix;
+    }
+
+    public String getPosterSuffix() {
+        return posterSuffix;
+    }
+
+    public void setOverview(String overview) {
+        this.overview = overview;
+    }
+
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
+    public void setVoteAverage(double voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
+    public void setVoteCount(long voteCount) {
+        this.voteCount = voteCount;
+    }
+
+    public void setPopularity(float popularity) {
+        this.popularity = popularity;
+    }
+
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public DateFormat getDateFormat() {
+        return dateFormat;
+    }
+
+    public void setDateFormat(DateFormat dateFormat) {
+        this.dateFormat = dateFormat;
     }
 
     @Override

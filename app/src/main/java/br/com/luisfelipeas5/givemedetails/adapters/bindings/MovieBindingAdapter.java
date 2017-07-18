@@ -16,7 +16,7 @@ public class MovieBindingAdapter {
     @BindingAdapter("releaseDate")
     public static void setReleaseDate(TextView textView, Movie movie) {
         if (movie != null) {
-            Date releaseDate = movie.getReleaseDate();
+            Date releaseDate = movie.getReleaseDateAsDate();
             if (releaseDate != null) {
                 Context context = textView.getContext();
                 String dateFormatPattern = context.getString(R.string.date_format_pattern);

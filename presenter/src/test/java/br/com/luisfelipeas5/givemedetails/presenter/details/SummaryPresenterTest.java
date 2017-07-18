@@ -39,7 +39,7 @@ public class SummaryPresenterTest {
         when(mMovie.getTitle()).thenReturn("Ghost in the shell");
         when(mMovie.getOriginalTitle()).thenReturn("Ghost in the shell Original Title");
         when(mMovie.getOverview()).thenReturn("Ghost in the shell's Overview");
-        when(mMovie.getReleaseDate()).thenReturn(new Date(System.currentTimeMillis()));
+        when(mMovie.getReleaseDateAsDate()).thenReturn(new Date(System.currentTimeMillis()));
 
         mTestScheduler = new TestScheduler();
         SchedulerProvider mSchedulerProvider = new TestSchedulerProvider(mTestScheduler);
@@ -59,7 +59,7 @@ public class SummaryPresenterTest {
         verify(mSummaryMvpView).onTitleReady(mMovie.getTitle());
         verify(mSummaryMvpView).onOriginalTitleReady(mMovie.getOriginalTitle());
         verify(mSummaryMvpView).onOverviewReady(mMovie.getOverview());
-        verify(mSummaryMvpView).onReleaseDateReady(mMovie.getReleaseDate());
+        verify(mSummaryMvpView).onReleaseDateReady(mMovie.getReleaseDateAsDate());
         verify(mSummaryMvpView, never()).onSummaryFailed();
     }
 

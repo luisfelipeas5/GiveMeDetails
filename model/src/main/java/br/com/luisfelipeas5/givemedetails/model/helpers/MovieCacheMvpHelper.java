@@ -9,4 +9,8 @@ public interface MovieCacheMvpHelper {
     Single<Boolean> hasMoviePosterOnCache(String movieId);
 
     Single<Boolean> hasMovieTitleOnCache(String movieId);
+
+    Single<Movie> getMovieSummary(String movieId);
+
+    Single<Boolean> hasMovieSummaryOnCache(String movieId);
 }

@@ -11,7 +11,7 @@ import br.com.luisfelipeas5.givemedetails.view.fragments.details.SummaryFragment
 
 import static org.mockito.Mockito.verify;
 
-public class MovieSummaryViewTest {
+public class SummaryViewTest {
 
     private SummaryMvpView mSummaryMvpView;
     @Mock

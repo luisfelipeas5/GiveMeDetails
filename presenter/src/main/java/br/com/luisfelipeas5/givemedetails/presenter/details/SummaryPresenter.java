@@ -71,7 +71,7 @@ public class SummaryPresenter extends BasePresenter<SummaryMvpView> implements S
                         mSummaryMvpView.onTitleReady(movie.getTitle());
                         mSummaryMvpView.onOriginalTitleReady(movie.getOriginalTitle());
                         mSummaryMvpView.onOverviewReady(movie.getOverview());
-                        mSummaryMvpView.onReleaseDateReady(movie.getReleaseDate());
+                        mSummaryMvpView.onReleaseDateReady(movie.getReleaseDateAsDate());
                     }
 
                     @Override

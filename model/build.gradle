@@ -43,4 +43,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:' + project.ext.retrofitVersion
 
     compile 'com.google.code.gson:gson:' + project.ext.gsonVersion
+
+    compile "android.arch.persistence.room:runtime:" + project.ext.roomVersion
+    annotationProcessor "android.arch.persistence.room:compiler:" + project.ext.roomVersion
+    compile "android.arch.persistence.room:rxjava2:" + project.ext.roomVersion
 }

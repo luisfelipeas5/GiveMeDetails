@@ -24,7 +24,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MovieGetByIdDataManagerTest {
+public class GetByIdDataManagerTest {
     private MovieMvpDataManager mMvpDataManager;
 
     @Mock

@@ -70,6 +70,11 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
                 .cast(Movie.class);
     }
 
+    @Override
+    public Observable<Movie> getMovieSummary(String movieId) {
+        return getMovie(movieId);
+    }
+
     @android.support.annotation.NonNull
     private Function<MoviesResponseBody, Observable<List<Movie>>> getMovieResponseMapper() {
         return new Function<MoviesResponseBody, Observable<List<Movie>>>() {

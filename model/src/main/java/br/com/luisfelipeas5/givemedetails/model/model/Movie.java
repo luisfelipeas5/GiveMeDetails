@@ -23,7 +23,7 @@ public interface Movie extends Parcelable {
 
     String getId();
 
-    Date getReleaseDate();
+    Date getReleaseDateAsDate();
 
     void setTitle(String title);
 

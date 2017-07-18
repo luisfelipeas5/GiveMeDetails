@@ -17,6 +17,7 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url 'https://maven.google.com' }
     }
 
     project.ext {
@@ -40,6 +41,8 @@ allprojects {
         daggerVersion = "2.11"
 
         retrofitVersion = "2.3.0"
+
+        roomVersion = "1.0.0-alpha4"
     }
 }
 

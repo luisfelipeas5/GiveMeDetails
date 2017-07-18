@@ -19,7 +19,7 @@ import io.reactivex.observers.TestObserver;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MovieListDataManagerTest {
+public class ListDataManagerTest {
     private MovieMvpDataManager mMvpDataManager;
 
     @Mock
