@@ -5,6 +5,8 @@ import java.util.Date;
 import br.com.luisfelipeas5.givemedetails.model.daos.MovieDao;
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieCacheDatabase;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
@@ -55,28 +57,53 @@ public class MovieCacheHelper implements MovieCacheMvpHelper {
 
     @Override
     public Single<Movie> getMovieSummary(final String movieId) {
-        return hasMovieSummaryOnCache(movieId)
-                .flatMap(new Function<Boolean, Single<Movie>>() {
+        return getMovie(movieId);
+    }
+
+    @Override
+    public Single<Boolean> hasMovieSummaryOnCache(final String movieId) {
+        return hasMovieOnCache(movieId)
+                .flatMap(new Function<Boolean, Single<Boolean>>() {
                     @Override
-                    public Single<Movie> apply(@NonNull Boolean hasSummary) throws Exception {
-                        if (hasSummary) {
-                            return getMovie(movieId);
+                    public Single<Boolean> apply(@NonNull Boolean hasMovieOnCache) throws Exception {
+                        if (hasMovieOnCache) {
+                            return getMovie(movieId)
+                                    .map(new Function<Movie, Boolean>() {
+                                        @Override
+                                        public Boolean apply(@NonNull Movie movie) throws Exception {
+                                            return hasMovieSummaryData(movie);
+                                        }
+                                    });
                         }
-                        return null;
+                        return Single.just(false);
                     }
                 });
     }
 
     @Override
-    public Single<Boolean> hasMovieSummaryOnCache(final String movieId) {
-        return getMovie(movieId)
-                .map(new Function<Movie, Boolean>() {
+    public void saveMovie(Movie movie) {
+        MovieDao movieDao = mMovieCacheDatabase.getMovieDao();
+        if (movie instanceof MovieTMDb) {
+            movieDao.insert((MovieTMDb) movie);
+        }
+    }
+
+    private boolean hasMovieSummaryData(@NonNull Movie movie) {
+        return isDataValid(movie.getOverview()) &&
+                isDataValid(movie.getReleaseDateAsDate()) &&
+                isDataValid(movie.getOriginalTitle()) &&
+                isDataValid(movie.getTitle());
+    }
+
+    private Single<Boolean> hasMovieOnCache(String movieId) {
+        MovieDao movieDao = mMovieCacheDatabase.getMovieDao();
+        Flowable<Integer> movieByIdCount = movieDao.getMovieByIdCount(movieId);
+        return movieByIdCount
+                .single(0)
+                .map(new Function<Integer, Boolean>() {
                     @Override
-                    public Boolean apply(@NonNull Movie movie) throws Exception {
-                        return isDataValid(movie.getOverview()) &&
-                                isDataValid(movie.getReleaseDateAsDate()) &&
-                                isDataValid(movie.getOriginalTitle()) &&
-                                isDataValid(movie.getTitle());
+                    public Boolean apply(@NonNull Integer count) throws Exception {
+                        return count > 0;
                     }
                 });
     }

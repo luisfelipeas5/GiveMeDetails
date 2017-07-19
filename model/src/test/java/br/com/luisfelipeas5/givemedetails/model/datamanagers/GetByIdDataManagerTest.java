@@ -61,6 +61,7 @@ public class GetByIdDataManagerTest {
 
         testObserver.assertValue(mMovieMocked);
         verify(mMovieApiMvpHelper).getMovie(movieId);
+        verify(mMovieCacheHelper).saveMovie(mMovieMocked);
     }
 
     @Test

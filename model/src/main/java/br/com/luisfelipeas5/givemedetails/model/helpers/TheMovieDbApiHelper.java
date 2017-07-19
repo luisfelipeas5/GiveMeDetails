@@ -66,7 +66,8 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
 
     @Override
     public Observable<Movie> getMovie(String movieId) {
-        return mTheMovieDbApi.getMovie(movieId, mApiKey)
+        return mTheMovieDbApi
+                .getMovie(movieId, mApiKey)
                 .cast(Movie.class);
     }
 

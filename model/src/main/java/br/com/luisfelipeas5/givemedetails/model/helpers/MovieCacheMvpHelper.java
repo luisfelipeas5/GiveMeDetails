@@ -13,4 +13,6 @@ public interface MovieCacheMvpHelper {
     Single<Movie> getMovieSummary(String movieId);
 
     Single<Boolean> hasMovieSummaryOnCache(String movieId);
+
+    void saveMovie(Movie movie);
 }

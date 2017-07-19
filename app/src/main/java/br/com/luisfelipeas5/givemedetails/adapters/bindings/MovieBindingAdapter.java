@@ -17,12 +17,16 @@ public class MovieBindingAdapter {
     public static void setReleaseDate(TextView textView, Movie movie) {
         if (movie != null) {
             Date releaseDate = movie.getReleaseDateAsDate();
-            if (releaseDate != null) {
-                Context context = textView.getContext();
-                String dateFormatPattern = context.getString(R.string.date_format_pattern);
-                SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern, Locale.getDefault());
-                textView.setText(context.getString(R.string.release_date, dateFormat.format(releaseDate)));
-            }
+            setReleaseDate(textView, releaseDate);
+        }
+    }
+
+    public static void setReleaseDate(TextView textView, Date releaseDate) {
+        if (releaseDate != null) {
+            Context context = textView.getContext();
+            String dateFormatPattern = context.getString(R.string.date_format_pattern);
+            SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern, Locale.getDefault());
+            textView.setText(context.getString(R.string.release_date, dateFormat.format(releaseDate)));
         }
     }
 

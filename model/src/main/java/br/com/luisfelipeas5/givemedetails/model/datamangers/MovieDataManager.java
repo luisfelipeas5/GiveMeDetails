@@ -5,6 +5,8 @@ import java.util.List;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.annotations.NonNull;
@@ -37,7 +39,16 @@ public class MovieDataManager implements MovieMvpDataManager {
         if (movieId == null || movieId.trim().isEmpty()) {
             return null;
         }
-        return movieApiMvpHelper.getMovie(movieId).singleOrError();
+        return movieApiMvpHelper
+                .getMovie(movieId)
+                .map(new Function<Movie, Movie>() {
+                    @Override
+                    public Movie apply(@NonNull Movie movie) throws Exception {
+                        movieCacheMvpHelper.saveMovie(movie);
+                        return movie;
+                    }
+                })
+                .singleOrError();
     }
 
     @Override
@@ -69,6 +80,11 @@ public class MovieDataManager implements MovieMvpDataManager {
     public Single<Movie> getMovieSummary(final String movieId) {
         return movieCacheMvpHelper.hasMovieSummaryOnCache(movieId)
                 .flatMap(getMovieSummaryCacheMapper(movieId));
+    }
+
+    @Override
+    public void saveMovieOnCache(Movie movie) {
+        movieCacheMvpHelper.saveMovie(movie);
     }
 
     @android.support.annotation.NonNull
