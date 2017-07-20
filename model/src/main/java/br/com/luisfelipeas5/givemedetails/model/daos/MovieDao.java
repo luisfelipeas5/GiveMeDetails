@@ -9,14 +9,16 @@ import java.util.List;
 import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
 import io.reactivex.Flowable;
 
+import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
+
 @Dao
 public interface MovieDao {
-    @Query("SELECT * FROM movieTMDb WHERE id = :id LIMIT 1")
-    Flowable<List<MovieTMDb>> getMovieById(String id);
+    @Query("SELECT * FROM movies WHERE id = :id LIMIT 1")
+    MovieTMDb getMovieById(String id);
 
-    @Query("SELECT COUNT(id) FROM movieTMDb WHERE id = :id")
-    Flowable<Integer> getMovieByIdCount(String id);
+    @Query("SELECT COUNT(id) FROM movies WHERE id LIKE :id")
+    Integer getMovieByIdCount(String id);
 
-    @Insert
-    void insert(MovieTMDb... movies);
+    @Insert(onConflict = REPLACE)
+    long insert(MovieTMDb movie);
 }

@@ -17,3 +17,4 @@ libs/
 gradle/
 /app/src/main/res/values/the_movie_db_api_key.xml
 /model/src/main/res/values/the_movie_db_api_key.xml
+/model/src/main/res/values/the_movie_db_key.xml

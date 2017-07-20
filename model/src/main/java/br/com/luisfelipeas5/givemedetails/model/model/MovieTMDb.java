@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-@Entity
+@Entity(tableName = "movies")
 public class MovieTMDb implements Parcelable, Movie {
     @Ignore
     private static final int[] IMAGE_WIDTH_AVAILABLE = {92, 154, 185, 342, 500, 780};
@@ -57,6 +57,9 @@ public class MovieTMDb implements Parcelable, Movie {
 
     @Override
     public String getPoster(int posterWidth) {
+        if (posterSuffix == null) {
+            return null;
+        }
         String measuredPath = null;
         for (int i = 0; i < IMAGE_WIDTH_AVAILABLE.length; i++) {
             int widthAvailable = IMAGE_WIDTH_AVAILABLE[i];

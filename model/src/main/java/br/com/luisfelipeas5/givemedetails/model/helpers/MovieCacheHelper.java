@@ -6,7 +6,6 @@ import br.com.luisfelipeas5.givemedetails.model.daos.MovieDao;
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieCacheDatabase;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
@@ -30,7 +29,8 @@ public class MovieCacheHelper implements MovieCacheMvpHelper {
     @Override
     public Single<Movie> getMovie(String movieId) {
         MovieDao movieDao = mMovieCacheDatabase.getMovieDao();
-        return movieDao.getMovieById(movieId).singleOrError().cast(Movie.class);
+        return Single.just(movieDao.getMovieById(movieId))
+                .cast(Movie.class);
     }
 
     @Override
@@ -81,11 +81,13 @@ public class MovieCacheHelper implements MovieCacheMvpHelper {
     }
 
     @Override
-    public void saveMovie(Movie movie) {
+    public Single<Boolean> saveMovie(Movie movie) {
         MovieDao movieDao = mMovieCacheDatabase.getMovieDao();
         if (movie instanceof MovieTMDb) {
-            movieDao.insert((MovieTMDb) movie);
+            long insert = movieDao.insert((MovieTMDb) movie);
+            return Single.just(insert > 0 );
         }
+        return Single.just(false);
     }
 
     private boolean hasMovieSummaryData(@NonNull Movie movie) {
@@ -97,9 +99,8 @@ public class MovieCacheHelper implements MovieCacheMvpHelper {
 
     private Single<Boolean> hasMovieOnCache(String movieId) {
         MovieDao movieDao = mMovieCacheDatabase.getMovieDao();
-        Flowable<Integer> movieByIdCount = movieDao.getMovieByIdCount(movieId);
-        return movieByIdCount
-                .single(0)
+        Integer movieByIdCount = movieDao.getMovieByIdCount(movieId);
+        return Single.just(movieByIdCount)
                 .map(new Function<Integer, Boolean>() {
                     @Override
                     public Boolean apply(@NonNull Integer count) throws Exception {

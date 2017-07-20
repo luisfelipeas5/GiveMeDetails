@@ -27,7 +27,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:' + project.ext.junitVersion
+    androidTestCompile 'junit:junit:' + project.ext.junitVersion
     testCompile "org.mockito:mockito-core:" + project.ext.mockitoVersion
+    androidTestCompile "org.mockito:mockito-core:" + project.ext.mockitoVersion
 
     compile 'com.android.support:appcompat-v7:' + project.ext.androidLibrariesVersion
 
