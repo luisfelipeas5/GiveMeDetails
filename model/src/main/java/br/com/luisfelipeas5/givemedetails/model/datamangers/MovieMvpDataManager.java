@@ -18,5 +18,4 @@ public interface MovieMvpDataManager {
 
     Single<Movie> getMovieSummary(String movieId);
 
-    void saveMovieOnCache(Movie movie);
 }

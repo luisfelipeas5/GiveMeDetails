@@ -185,14 +185,6 @@ public class MovieTMDb implements Parcelable, Movie {
         this.releaseDate = releaseDate;
     }
 
-    public DateFormat getDateFormat() {
-        return dateFormat;
-    }
-
-    public void setDateFormat(DateFormat dateFormat) {
-        this.dateFormat = dateFormat;
-    }
-
     @Override
     public int describeContents() {
         return 0;

@@ -4,10 +4,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import java.util.List;
-
 import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
-import io.reactivex.Flowable;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
