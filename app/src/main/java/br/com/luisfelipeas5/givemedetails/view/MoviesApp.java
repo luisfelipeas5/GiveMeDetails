@@ -14,12 +14,17 @@ public class MoviesApp extends Application{
     public void onCreate() {
         super.onCreate();
 
-        appComponent = DaggerAppComponent.builder()
+        AppComponent appComponent = DaggerAppComponent.builder()
                 .modelModule(new ModelModule(this))
                 .build();
+        setAppComponent(appComponent);
     }
 
     public AppComponent getAppComponent() {
         return appComponent;
+    }
+
+    public void setAppComponent(AppComponent appComponent) {
+        this.appComponent = appComponent;
     }
 }

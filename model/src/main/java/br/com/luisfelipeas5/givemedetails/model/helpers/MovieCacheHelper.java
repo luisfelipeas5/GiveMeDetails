@@ -1,5 +1,7 @@
 package br.com.luisfelipeas5.givemedetails.model.helpers;
 
+import android.os.AsyncTask;
+
 import java.util.Date;
 
 import br.com.luisfelipeas5.givemedetails.model.daos.MovieDao;
@@ -7,6 +9,8 @@ import br.com.luisfelipeas5.givemedetails.model.databases.MovieCacheDatabase;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
 import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 
@@ -27,10 +31,25 @@ public class MovieCacheHelper implements MovieCacheMvpHelper {
     }
 
     @Override
-    public Single<Movie> getMovie(String movieId) {
-        MovieDao movieDao = mMovieCacheDatabase.getMovieDao();
-        return Single.just(movieDao.getMovieById(movieId))
-                .cast(Movie.class);
+    public Single<Movie> getMovie(final String movieId) {
+        final MovieDao movieDao = mMovieCacheDatabase.getMovieDao();
+        return Single.create(new SingleOnSubscribe<Movie>() {
+            @Override
+            public void subscribe(@NonNull final SingleEmitter<Movie> e) throws Exception {
+                new AsyncTask<Object, Object, MovieTMDb>() {
+                    @Override
+                    protected MovieTMDb doInBackground(Object... voids) {
+                        return movieDao.getMovieById(movieId);
+                    }
+
+                    @Override
+                    protected void onPostExecute(MovieTMDb movieTMDb) {
+                        super.onPostExecute(movieTMDb);
+                        e.onSuccess(movieTMDb);
+                    }
+                }.execute();
+            }
+        }).cast(Movie.class);
     }
 
     @Override
@@ -97,11 +116,25 @@ public class MovieCacheHelper implements MovieCacheMvpHelper {
                 isDataValid(movie.getTitle());
     }
 
-    private Single<Boolean> hasMovieOnCache(String movieId) {
-        MovieDao movieDao = mMovieCacheDatabase.getMovieDao();
-        Integer movieByIdCount = movieDao.getMovieByIdCount(movieId);
-        return Single.just(movieByIdCount)
-                .map(new Function<Integer, Boolean>() {
+    private Single<Boolean> hasMovieOnCache(final String movieId) {
+        final MovieDao movieDao = mMovieCacheDatabase.getMovieDao();
+        return Single.create(new SingleOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(@NonNull final SingleEmitter<Integer> e) throws Exception {
+                new AsyncTask<Object, Object, Integer>() {
+                    @Override
+                    protected Integer doInBackground(Object... objects) {
+                        return movieDao.getMovieByIdCount(movieId);
+                    }
+
+                    @Override
+                    protected void onPostExecute(Integer movieByIdCount) {
+                        super.onPostExecute(movieByIdCount);
+                        e.onSuccess(movieByIdCount);
+                    }
+                }.execute();
+            }
+        }).map(new Function<Integer, Boolean>() {
                     @Override
                     public Boolean apply(@NonNull Integer count) throws Exception {
                         return count > 0;
