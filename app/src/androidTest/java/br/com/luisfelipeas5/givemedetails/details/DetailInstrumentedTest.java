@@ -10,11 +10,13 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 
 import br.com.luisfelipeas5.givemedetails.R;
+import br.com.luisfelipeas5.givemedetails.details.di.MoviesDaggerMockRule;
+import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
-import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -27,8 +29,13 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class DetailInstrumentedTest {
 
     @Rule
-    public ActivityTestRule<DetailActivity> mActivityRule =
-            new ActivityTestRule<>(DetailActivity.class, true, false);
+    public MoviesDaggerMockRule moviesDaggerMockRule = new MoviesDaggerMockRule();
+
+    @Rule
+    public ActivityTestRule<DetailActivity> mActivityRule = new ActivityTestRule<>(DetailActivity.class, true, false);
+
+    @Mock
+    public MovieApiMvpHelper mMovieApiMvpHelper;
 
     private Context mContext;
     private Movie mMovie;
@@ -40,10 +47,6 @@ public class DetailInstrumentedTest {
         mMovie.setTitle("Dawn of the Planet of the Apes");
 
         mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        MoviesApp moviesApp = (MoviesApp) mContext.getApplicationContext();
-        //TODO set a Component to Tests
-        //moviesApp.setAppComponent();
-
         Intent intent = new Intent(mContext, DetailActivity.class);
         intent.putExtra(DetailActivity.EXTRA_MOVIE_ID, mMovie.getId());
         mActivityRule.launchActivity(intent);

@@ -15,7 +15,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-class PresenterModule {
+public class PresenterModule {
 
     @Provides
     static SchedulerProvider provideSchedulerProvider() {

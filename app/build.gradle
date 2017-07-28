@@ -28,9 +28,17 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:' + project.ext.espressoVersion, {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
     testCompile 'junit:junit:' + project.ext.junitVersion
     androidTestCompile 'junit:junit:' + project.ext.junitVersion
+
     testCompile "org.mockito:mockito-core:" + project.ext.mockitoVersion
+    androidTestCompile "org.mockito:mockito-core:" + project.ext.mockitoVersion
+
+    androidTestCompile 'com.github.fabioCollini:DaggerMock:' + project.ext.daggerMockVersion
+
+    androidTestCompile 'com.google.dexmaker:dexmaker:' + project.ext.dexmakerVersion
+    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:' + project.ext.dexmakerVersion
 
     compile 'com.android.support:appcompat-v7:' + project.ext.androidLibrariesVersion
     compile 'com.android.support:recyclerview-v7:' + project.ext.androidLibrariesVersion
