@@ -25,7 +25,7 @@ import br.com.luisfelipeas5.givemedetails.presenter.list.MoviesMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity;
 import br.com.luisfelipeas5.givemedetails.utils.NetworkUtils;
-import br.com.luisfelipeas5.givemedetails.view.di.AppComponent;
+import br.com.luisfelipeas5.givemedetails.view.di.components.BaseComponent;
 import br.com.luisfelipeas5.givemedetails.view.list.MoviesMvpView;
 
 public abstract class MoviesFragment extends Fragment implements View.OnClickListener, MoviesAdapter.Listener, MoviesMvpView, SwipeRefreshLayout.OnRefreshListener {
@@ -45,7 +45,7 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
         mBinding = FragmentMoviesBinding.inflate(inflater, container, false);
 
         MoviesApp moviesApp = (MoviesApp) getContext().getApplicationContext();
-        AppComponent appComponent = moviesApp.getAppComponent();
+        BaseComponent appComponent = moviesApp.getDiComponent();
         appComponent.inject(this);
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);

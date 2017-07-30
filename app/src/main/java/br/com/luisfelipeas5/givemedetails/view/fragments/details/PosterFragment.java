@@ -17,7 +17,7 @@ import br.com.luisfelipeas5.givemedetails.databinding.FragmentDetailPosterBindin
 import br.com.luisfelipeas5.givemedetails.presenter.details.PosterMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.details.MoviePosterMvpView;
-import br.com.luisfelipeas5.givemedetails.view.di.AppComponent;
+import br.com.luisfelipeas5.givemedetails.view.di.components.BaseComponent;
 
 public class PosterFragment extends Fragment implements MoviePosterMvpView {
     private PosterMvpPresenter mPresenter;
@@ -30,7 +30,7 @@ public class PosterFragment extends Fragment implements MoviePosterMvpView {
         mBinding = FragmentDetailPosterBinding.inflate(inflater, container, false);
 
         MoviesApp moviesApp = (MoviesApp) getContext().getApplicationContext();
-        AppComponent appComponent = moviesApp.getAppComponent();
+        BaseComponent appComponent = moviesApp.getDiComponent();
         appComponent.inject(this);
         getPosterWidth();
 

@@ -10,14 +10,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 
 import br.com.luisfelipeas5.givemedetails.R;
-import br.com.luisfelipeas5.givemedetails.details.di.MoviesDaggerMockRule;
-import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
-import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
+import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity;
+import br.com.luisfelipeas5.givemedetails.view.di.components.BaseComponent;
+import br.com.luisfelipeas5.givemedetails.view.di.components.DaggerAppTestComponent;
+import br.com.luisfelipeas5.givemedetails.view.di.modules.model.ModelTestModule;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -29,24 +29,22 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class DetailInstrumentedTest {
 
     @Rule
-    public MoviesDaggerMockRule moviesDaggerMockRule = new MoviesDaggerMockRule();
-
-    @Rule
     public ActivityTestRule<DetailActivity> mActivityRule = new ActivityTestRule<>(DetailActivity.class, true, false);
-
-    @Mock
-    public MovieApiMvpHelper mMovieApiMvpHelper;
 
     private Context mContext;
     private Movie mMovie;
 
     @Before
     public void setUp() {
-        mMovie = new MovieTMDb();
-        mMovie.setId("119450");
-        mMovie.setTitle("Dawn of the Planet of the Apes");
-
         mContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
+        mMovie = ModelTestModule.getMovieMocked();
+
+        MoviesApp moviesApp = (MoviesApp) mContext.getApplicationContext();
+        BaseComponent moviesComponent = DaggerAppTestComponent.builder()
+                .modelTestModule(new ModelTestModule())
+                .build();
+        moviesApp.setDiComponent(moviesComponent);
+
         Intent intent = new Intent(mContext, DetailActivity.class);
         intent.putExtra(DetailActivity.EXTRA_MOVIE_ID, mMovie.getId());
         mActivityRule.launchActivity(intent);

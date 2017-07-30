@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.view.di;
+package br.com.luisfelipeas5.givemedetails.view.di.modules.model;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;

@@ -58,7 +58,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         void onMovieClicked(Movie movie);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         LayoutMoviesAdapterItemBinding binding;
 
         ViewHolder(LayoutMoviesAdapterItemBinding binding) {

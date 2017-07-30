@@ -15,7 +15,7 @@ import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.presenter.details.MovieDetailMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.details.MovieMvpView;
-import br.com.luisfelipeas5.givemedetails.view.di.AppComponent;
+import br.com.luisfelipeas5.givemedetails.view.di.components.BaseComponent;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.SummaryFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.PosterFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.SocialFragment;
@@ -33,7 +33,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         binding.imgBackArrow.setOnClickListener(this);
 
         MoviesApp moviesApp = (MoviesApp) getApplicationContext();
-        AppComponent appComponent = moviesApp.getAppComponent();
+        BaseComponent appComponent = moviesApp.getDiComponent();
         appComponent.inject(this);
 
         Intent intent = getIntent();

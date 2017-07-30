@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.view.di;
+package br.com.luisfelipeas5.givemedetails.view.di.modules.presenter;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
 import br.com.luisfelipeas5.givemedetails.presenter.details.MovieDetailMvpPresenter;

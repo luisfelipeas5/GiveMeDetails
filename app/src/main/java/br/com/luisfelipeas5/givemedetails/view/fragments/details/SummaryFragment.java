@@ -15,7 +15,7 @@ import br.com.luisfelipeas5.givemedetails.databinding.FragmentSummaryBinding;
 import br.com.luisfelipeas5.givemedetails.presenter.details.SummaryMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.details.SummaryMvpView;
-import br.com.luisfelipeas5.givemedetails.view.di.AppComponent;
+import br.com.luisfelipeas5.givemedetails.view.di.components.BaseComponent;
 
 public class SummaryFragment extends Fragment implements SummaryMvpView {
 
@@ -32,7 +32,7 @@ public class SummaryFragment extends Fragment implements SummaryMvpView {
                              Bundle savedInstanceState) {
         mBinding = FragmentSummaryBinding.inflate(inflater, container, false);
         MoviesApp moviesApp = (MoviesApp) getContext().getApplicationContext();
-        AppComponent appComponent = moviesApp.getAppComponent();
+        BaseComponent appComponent = moviesApp.getDiComponent();
         appComponent.inject(this);
 
         if (mMovieId != null) {

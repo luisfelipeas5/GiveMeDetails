@@ -2,29 +2,29 @@ package br.com.luisfelipeas5.givemedetails.view;
 
 import android.app.Application;
 
-import br.com.luisfelipeas5.givemedetails.view.di.AppComponent;
-import br.com.luisfelipeas5.givemedetails.view.di.DaggerAppComponent;
-import br.com.luisfelipeas5.givemedetails.view.di.ModelModule;
+import br.com.luisfelipeas5.givemedetails.view.di.components.BaseComponent;
+import br.com.luisfelipeas5.givemedetails.view.di.components.DaggerAppComponent;
+import br.com.luisfelipeas5.givemedetails.view.di.modules.model.ModelModule;
 
 public class MoviesApp extends Application{
 
-    private AppComponent appComponent;
+    private BaseComponent appComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        AppComponent appComponent = DaggerAppComponent.builder()
+        BaseComponent baseComponent = DaggerAppComponent.builder()
                 .modelModule(new ModelModule(this))
                 .build();
-        setAppComponent(appComponent);
+        setDiComponent(baseComponent);
     }
 
-    public AppComponent getAppComponent() {
+    public BaseComponent getDiComponent() {
         return appComponent;
     }
 
-    public void setAppComponent(AppComponent appComponent) {
+    public void setDiComponent(BaseComponent appComponent) {
         this.appComponent = appComponent;
     }
 }
