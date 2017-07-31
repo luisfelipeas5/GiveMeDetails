@@ -15,4 +15,8 @@ public interface MovieCacheMvpHelper {
     Single<Boolean> hasMovieSummaryOnCache(String movieId);
 
     Single<Boolean> saveMovie(Movie movie);
+
+    Single<Boolean> hasMovieSocialOnCache(String movieId);
+
+    Single<Movie> getMovieSocial(String movieId);
 }

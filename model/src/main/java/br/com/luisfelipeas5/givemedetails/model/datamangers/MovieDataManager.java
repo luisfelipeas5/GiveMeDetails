@@ -80,6 +80,11 @@ public class MovieDataManager implements MovieMvpDataManager {
                 .flatMap(getMovieSummaryCacheMapper(movieId));
     }
 
+    @Override
+    public Single<Movie> getMovieSocial(String movieId) {
+        return null;
+    }
+
     @android.support.annotation.NonNull
     private Function<Boolean, SingleSource<Movie>> getMovieCacheMapper(final String movieId) {
         return new Function<Boolean, SingleSource<Movie>>() {

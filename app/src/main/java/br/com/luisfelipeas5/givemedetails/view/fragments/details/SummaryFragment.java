@@ -6,12 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Date;
-
 import javax.inject.Inject;
 
-import br.com.luisfelipeas5.givemedetails.adapters.bindings.MovieBindingAdapter;
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentSummaryBinding;
+import br.com.luisfelipeas5.givemedetails.model.model.Movie;
 import br.com.luisfelipeas5.givemedetails.presenter.details.SummaryMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.details.SummaryMvpView;
@@ -64,28 +62,14 @@ public class SummaryFragment extends Fragment implements SummaryMvpView {
     }
 
     @Override
-    public void onTitleReady(String title) {
-        mBinding.txtTitle.setText(title);
-    }
-
-    @Override
     public void onSummaryFailed() {
         mBinding.txtNoSummary.setVisibility(View.VISIBLE);
         mBinding.layoutContent.setVisibility(View.GONE);
     }
 
     @Override
-    public void onOriginalTitleReady(String originalTitle) {
-        mBinding.txtOriginalTitle.setText(originalTitle);
+    public void onMovieSummaryReady(Movie mMovie) {
+        mBinding.setMovie(mMovie);
     }
 
-    @Override
-    public void onOverviewReady(String overview) {
-        mBinding.txtOverview.setText(overview);
-    }
-
-    @Override
-    public void onReleaseDateReady(Date releaseDate) {
-        MovieBindingAdapter.setReleaseDate(mBinding.txtReleaseDate, releaseDate);
-    }
 }

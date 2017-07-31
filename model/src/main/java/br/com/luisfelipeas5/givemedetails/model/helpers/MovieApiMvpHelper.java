@@ -14,4 +14,6 @@ public interface MovieApiMvpHelper {
     Observable<Movie> getMovie(String movieId);
 
     Observable<Movie> getMovieSummary(String movieId);
+
+    Observable<Movie> getMovieSocial(String movieId);
 }

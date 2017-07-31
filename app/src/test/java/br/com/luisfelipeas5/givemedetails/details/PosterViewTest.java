@@ -11,7 +11,7 @@ import br.com.luisfelipeas5.givemedetails.view.fragments.details.PosterFragment;
 
 import static org.mockito.Mockito.verify;
 
-public class MoviePosterViewTest {
+public class PosterViewTest {
 
     private MoviePosterMvpView mMovieMvpView;
     @Mock

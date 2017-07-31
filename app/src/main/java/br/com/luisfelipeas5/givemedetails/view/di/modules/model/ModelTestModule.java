@@ -43,6 +43,11 @@ public class ModelTestModule {
             public Observable<Movie> getMovieSummary(String movieId) {
                 return Observable.just(getMovieMocked());
             }
+
+            @Override
+            public Observable<Movie> getMovieSocial(String movieId) {
+                return Observable.just(getMovieMocked());
+            }
         };
     }
 
@@ -101,6 +106,16 @@ public class ModelTestModule {
             @Override
             public Single<Boolean> saveMovie(Movie movie) {
                 return Single.just(true);
+            }
+
+            @Override
+            public Single<Boolean> hasMovieSocialOnCache(String movieId) {
+                return Single.just(true);
+            }
+
+            @Override
+            public Single<Movie> getMovieSocial(String movieId) {
+                return null;
             }
         };
     }

@@ -76,6 +76,11 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
         return getMovie(movieId);
     }
 
+    @Override
+    public Observable<Movie> getMovieSocial(String movieId) {
+        return null;
+    }
+
     @android.support.annotation.NonNull
     private Function<MoviesResponseBody, Observable<List<Movie>>> getMovieResponseMapper() {
         return new Function<MoviesResponseBody, Observable<List<Movie>>>() {

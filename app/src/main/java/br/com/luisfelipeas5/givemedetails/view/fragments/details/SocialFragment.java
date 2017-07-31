@@ -7,13 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentSocialBinding;
 import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.presenter.details.SocialMvpPresenter;
+import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
+import br.com.luisfelipeas5.givemedetails.view.details.SocialMvpView;
 
-public class SocialFragment extends Fragment {
+public class SocialFragment extends Fragment implements SocialMvpView {
 
     private FragmentSocialBinding mBinding;
-    private Movie mMovie;
+    private SocialMvpPresenter mPresenter;
 
     public SocialFragment() {
         // Required empty public constructor
@@ -23,18 +28,36 @@ public class SocialFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mBinding = FragmentSocialBinding.inflate(inflater, container, false);
-        inflateBinding();
+
+        MoviesApp moviesApp = (MoviesApp) getContext().getApplicationContext();
+        moviesApp.getDiComponent().inject(this);
+
         return mBinding.getRoot();
     }
 
-    private void inflateBinding() {
-        if (mMovie != null && mBinding != null) {
-            mBinding.setMovie(mMovie);
-        }
+    @Inject
+    public void setPresenter(SocialMvpPresenter presenter) {
+        mPresenter = presenter;
+        mPresenter.attach(this);
     }
 
-    public void setMovie(Movie movie) {
-        mMovie = movie;
-        inflateBinding();
+    @Override
+    public void onStop() {
+        mPresenter.detachView();
+        super.onStop();
+    }
+
+    @Override
+    public void onMovieSocialReady(Movie movie) {
+        mBinding.setMovie(movie);
+    }
+
+    @Override
+    public void onMovieSocialFailed() {
+
+    }
+
+    public void setMovieId(String movieId) {
+        mPresenter.getSocialById(movieId);
     }
 }

@@ -16,7 +16,7 @@ import io.reactivex.schedulers.TestScheduler;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class MovieDetailPresenterTest {
+public class DetailPresenterTest {
 
     private static final String MOVIE_ID_MOCKED = "MOVIE_ID_MOCKED";
     private MovieDetailMvpPresenter mMovieDetailMvpPresenter;

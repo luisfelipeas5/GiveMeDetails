@@ -79,6 +79,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         summaryFragment.setMovieId(movieId);
 
         SocialFragment socialFragment = getSocialFragment();
+        socialFragment.setMovieId(movieId);
     }
 
     @Override

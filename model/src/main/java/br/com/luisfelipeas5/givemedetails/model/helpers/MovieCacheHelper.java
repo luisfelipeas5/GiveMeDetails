@@ -109,6 +109,16 @@ public class MovieCacheHelper implements MovieCacheMvpHelper {
         return Single.just(false);
     }
 
+    @Override
+    public Single<Boolean> hasMovieSocialOnCache(String movieId) {
+        return null;
+    }
+
+    @Override
+    public Single<Movie> getMovieSocial(String movieId) {
+        return null;
+    }
+
     private boolean hasMovieSummaryData(@NonNull Movie movie) {
         return isDataValid(movie.getOverview()) &&
                 isDataValid(movie.getReleaseDateAsDate()) &&

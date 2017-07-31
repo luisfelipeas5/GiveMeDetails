@@ -16,7 +16,6 @@ import io.reactivex.Single;
 import io.reactivex.schedulers.TestScheduler;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -56,26 +55,20 @@ public class SummaryPresenterTest {
         mTestScheduler.triggerActions();
 
         verify(mMovieMvpDataManager).getMovieSummary(movieId);
-        verify(mSummaryMvpView).onTitleReady(mMovie.getTitle());
-        verify(mSummaryMvpView).onOriginalTitleReady(mMovie.getOriginalTitle());
-        verify(mSummaryMvpView).onOverviewReady(mMovie.getOverview());
-        verify(mSummaryMvpView).onReleaseDateReady(mMovie.getReleaseDateAsDate());
+        verify(mSummaryMvpView).onMovieSummaryReady(mMovie);
         verify(mSummaryMvpView, never()).onSummaryFailed();
     }
 
     @Test
     public void whenGetMovieSummary_callViewAndDataManager_returnMovie_failed() {
         String movieId = "Movie Id mocked";
-        when(mMovieMvpDataManager.getMovieSummary(movieId)).thenReturn(Single.<Movie>error(new Exception("Get movie summary failed")));
+        when(mMovieMvpDataManager.getMovieSummary(movieId)).thenReturn(Single.<Movie>error(new Exception("Get mMovieMocked summary failed")));
 
         mSummaryMvpPresenter.getSummary(movieId);
         mTestScheduler.triggerActions();
 
         verify(mMovieMvpDataManager).getMovieSummary(movieId);
-        verify(mSummaryMvpView, never()).onTitleReady(anyString());
-        verify(mSummaryMvpView, never()).onOriginalTitleReady(anyString());
-        verify(mSummaryMvpView, never()).onOverviewReady(anyString());
-        verify(mSummaryMvpView, never()).onReleaseDateReady(any(Date.class));
+        verify(mSummaryMvpView, never()).onMovieSummaryReady(any(Movie.class));
         verify(mSummaryMvpView).onSummaryFailed();
     }
 

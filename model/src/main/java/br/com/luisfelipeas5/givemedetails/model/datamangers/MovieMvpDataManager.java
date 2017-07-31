@@ -18,4 +18,5 @@ public interface MovieMvpDataManager {
 
     Single<Movie> getMovieSummary(String movieId);
 
+    Single<Movie> getMovieSocial(String movieId);
 }

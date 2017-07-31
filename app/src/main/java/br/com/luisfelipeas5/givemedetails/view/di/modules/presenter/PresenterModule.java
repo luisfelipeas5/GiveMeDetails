@@ -5,6 +5,8 @@ import br.com.luisfelipeas5.givemedetails.presenter.details.MovieDetailMvpPresen
 import br.com.luisfelipeas5.givemedetails.presenter.details.MovieDetailPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.details.PosterMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.details.PosterPresenter;
+import br.com.luisfelipeas5.givemedetails.presenter.details.SocialMvpPresenter;
+import br.com.luisfelipeas5.givemedetails.presenter.details.SocialPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.details.SummaryMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.details.SummaryPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.list.MoviesMvpPresenter;
@@ -44,6 +46,11 @@ public class PresenterModule {
     static SummaryMvpPresenter provideSummaryMvpPresenter(MovieMvpDataManager movieMvpDataManager,
                                                           SchedulerProvider schedulerProvider) {
         return new SummaryPresenter(movieMvpDataManager, schedulerProvider);
+    }
+
+    @Provides
+    static SocialMvpPresenter provideSocialMvpPresenter(SchedulerProvider schedulerProvider, MovieMvpDataManager movieMvpDataManager) {
+        return new SocialPresenter(schedulerProvider, movieMvpDataManager);
     }
 
 }
