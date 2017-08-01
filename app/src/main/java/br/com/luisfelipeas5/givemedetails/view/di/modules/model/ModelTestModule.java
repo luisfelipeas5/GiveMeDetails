@@ -94,11 +94,6 @@ public class ModelTestModule {
             }
 
             @Override
-            public Single<Movie> getMovieSummary(String movieId) {
-                return Single.just(getMovieMocked());
-            }
-
-            @Override
             public Single<Boolean> hasMovieSummaryOnCache(String movieId) {
                 return Single.just(true);
             }
@@ -113,10 +108,6 @@ public class ModelTestModule {
                 return Single.just(true);
             }
 
-            @Override
-            public Single<Movie> getMovieSocial(String movieId) {
-                return null;
-            }
         };
     }
 

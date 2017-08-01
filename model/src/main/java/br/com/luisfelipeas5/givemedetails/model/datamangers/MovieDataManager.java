@@ -82,7 +82,8 @@ public class MovieDataManager implements MovieMvpDataManager {
 
     @Override
     public Single<Movie> getMovieSocial(String movieId) {
-        return null;
+        return movieCacheMvpHelper.hasMovieSocialOnCache(movieId)
+                .flatMap(getMovieSocialCacheMapper(movieId));
     }
 
     @android.support.annotation.NonNull
@@ -104,9 +105,22 @@ public class MovieDataManager implements MovieMvpDataManager {
             @Override
             public SingleSource<Movie> apply(@NonNull Boolean isMovieDetailCached) throws Exception {
                 if (isMovieDetailCached) {
-                    return movieCacheMvpHelper.getMovieSummary(movieId);
+                    return movieCacheMvpHelper.getMovie(movieId);
                 }
                 return movieApiMvpHelper.getMovieSummary(movieId).singleOrError();
+            }
+        };
+    }
+
+    @android.support.annotation.NonNull
+    private Function<Boolean, SingleSource<Movie>> getMovieSocialCacheMapper(final String movieId) {
+        return new Function<Boolean, SingleSource<Movie>>() {
+            @Override
+            public SingleSource<Movie> apply(@NonNull Boolean isMovieDetailCached) throws Exception {
+                if (isMovieDetailCached) {
+                    return movieCacheMvpHelper.getMovie(movieId);
+                }
+                return movieApiMvpHelper.getMovieSocial(movieId).singleOrError();
             }
         };
     }

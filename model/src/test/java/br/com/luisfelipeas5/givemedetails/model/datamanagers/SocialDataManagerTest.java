@@ -52,13 +52,13 @@ public class SocialDataManagerTest {
 
         verify(mMovieApiMvpHelper).getMovieSocial(movieId);
         verify(mMovieCacheHelper).hasMovieSocialOnCache(movieId);
-        verify(mMovieCacheHelper, never()).getMovieSocial(movieId);
+        verify(mMovieCacheHelper, never()).getMovie(movieId);
     }
 
     @Test
     public void whenGetSocialMovie_returnMovieFromCacheHelper_success() {
         String movieId = movie.getId();
-        when(mMovieCacheHelper.getMovieSocial(movieId))
+        when(mMovieCacheHelper.getMovie(movieId))
                 .thenReturn(Single.just(movie));
         when(mMovieCacheHelper.hasMovieSocialOnCache(movieId))
                 .thenReturn(Single.just(true));
@@ -71,7 +71,7 @@ public class SocialDataManagerTest {
 
         verify(mMovieApiMvpHelper, never()).getMovieSocial(movieId);
         verify(mMovieCacheHelper).hasMovieSocialOnCache(movieId);
-        verify(mMovieCacheHelper).getMovieSocial(movieId);
+        verify(mMovieCacheHelper).getMovie(movieId);
     }
 
 }

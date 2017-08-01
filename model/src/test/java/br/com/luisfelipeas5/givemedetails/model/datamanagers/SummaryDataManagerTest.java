@@ -50,14 +50,14 @@ public class SummaryDataManagerTest {
 
         verify(mMovieApiMvpHelper).getMovieSummary(movieMockedId);
         verify(mMovieCacheMvpHelper).hasMovieSummaryOnCache(movieMockedId);
-        verify(mMovieCacheMvpHelper, never()).getMovieSummary(movieMockedId);
+        verify(mMovieCacheMvpHelper, never()).getMovie(movieMockedId);
     }
 
     @Test
     public void whenGetSummary_byId_returnMovie_withCache_success() {
         String movieMockedId = mMovieMocked.getId();
         when(mMovieCacheMvpHelper.hasMovieSummaryOnCache(movieMockedId)).thenReturn(Single.just(true));
-        when(mMovieCacheMvpHelper.getMovieSummary(movieMockedId)).thenReturn(Single.just(mMovieMocked));
+        when(mMovieCacheMvpHelper.getMovie(movieMockedId)).thenReturn(Single.just(mMovieMocked));
 
         Single<Movie> movieSummarySingle = mMovieMvpDataManager.getMovieSummary(movieMockedId);
         TestObserver<Movie> movieTestObserver = movieSummarySingle.test();
@@ -66,7 +66,7 @@ public class SummaryDataManagerTest {
 
         verify(mMovieApiMvpHelper, never()).getMovieSummary(movieMockedId);
         verify(mMovieCacheMvpHelper).hasMovieSummaryOnCache(movieMockedId);
-        verify(mMovieCacheMvpHelper).getMovieSummary(movieMockedId);
+        verify(mMovieCacheMvpHelper).getMovie(movieMockedId);
     }
 
 }

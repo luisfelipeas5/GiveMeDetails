@@ -35,11 +35,11 @@ public class MovieTMDb implements Parcelable, Movie {
     @SerializedName("original_title")
     private String originalTitle;
     @SerializedName("vote_average")
-    private double voteAverage;
+    private Double voteAverage;
     @SerializedName("vote_count")
-    private long voteCount;
+    private Long voteCount;
     @SerializedName("popularity")
-    private float popularity;
+    private Float popularity;
     @SerializedName("release_date")
     private String releaseDate;
 
@@ -91,17 +91,17 @@ public class MovieTMDb implements Parcelable, Movie {
     }
 
     @Override
-    public double getVoteAverage() {
+    public Double getVoteAverage() {
         return voteAverage;
     }
 
     @Override
-    public long getVoteCount() {
+    public Long getVoteCount() {
         return voteCount;
     }
 
     @Override
-    public float getPopularity() {
+    public Float getPopularity() {
         return popularity;
     }
 
@@ -169,20 +169,20 @@ public class MovieTMDb implements Parcelable, Movie {
         this.originalTitle = originalTitle;
     }
 
-    public void setVoteAverage(double voteAverage) {
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setVoteAverage(Double voteAverage) {
         this.voteAverage = voteAverage;
     }
 
-    public void setVoteCount(long voteCount) {
+    public void setVoteCount(Long voteCount) {
         this.voteCount = voteCount;
     }
 
-    public void setPopularity(float popularity) {
+    public void setPopularity(Float popularity) {
         this.popularity = popularity;
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
     }
 
     @Override
@@ -192,27 +192,27 @@ public class MovieTMDb implements Parcelable, Movie {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
         dest.writeString(this.posterSuffix);
         dest.writeString(this.title);
         dest.writeString(this.overview);
-        dest.writeString(this.id);
         dest.writeString(this.originalTitle);
-        dest.writeDouble(this.voteAverage);
-        dest.writeLong(this.voteCount);
-        dest.writeFloat(this.popularity);
+        dest.writeValue(this.voteAverage);
+        dest.writeValue(this.voteCount);
+        dest.writeValue(this.popularity);
         dest.writeString(this.releaseDate);
         dest.writeSerializable(this.dateFormat);
     }
 
-    private MovieTMDb(Parcel in) {
+    protected MovieTMDb(Parcel in) {
+        this.id = in.readString();
         this.posterSuffix = in.readString();
         this.title = in.readString();
         this.overview = in.readString();
-        this.id = in.readString();
         this.originalTitle = in.readString();
-        this.voteAverage = in.readDouble();
-        this.voteCount = in.readLong();
-        this.popularity = in.readFloat();
+        this.voteAverage = (Double) in.readValue(Double.class.getClassLoader());
+        this.voteCount = (Long) in.readValue(Long.class.getClassLoader());
+        this.popularity = (Float) in.readValue(Float.class.getClassLoader());
         this.releaseDate = in.readString();
         this.dateFormat = (DateFormat) in.readSerializable();
     }

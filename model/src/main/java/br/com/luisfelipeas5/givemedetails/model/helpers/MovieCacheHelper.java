@@ -1,7 +1,5 @@
 package br.com.luisfelipeas5.givemedetails.model.helpers;
 
-import android.os.AsyncTask;
-
 import java.util.Date;
 
 import br.com.luisfelipeas5.givemedetails.model.daos.MovieDao;
@@ -36,18 +34,8 @@ public class MovieCacheHelper implements MovieCacheMvpHelper {
         return Single.create(new SingleOnSubscribe<Movie>() {
             @Override
             public void subscribe(@NonNull final SingleEmitter<Movie> e) throws Exception {
-                new AsyncTask<Object, Object, MovieTMDb>() {
-                    @Override
-                    protected MovieTMDb doInBackground(Object... voids) {
-                        return movieDao.getMovieById(movieId);
-                    }
-
-                    @Override
-                    protected void onPostExecute(MovieTMDb movieTMDb) {
-                        super.onPostExecute(movieTMDb);
-                        e.onSuccess(movieTMDb);
-                    }
-                }.execute();
+                MovieTMDb movieById = movieDao.getMovieById(movieId);
+                e.onSuccess(movieById);
             }
         }).cast(Movie.class);
     }
@@ -72,11 +60,6 @@ public class MovieCacheHelper implements MovieCacheMvpHelper {
                         return isDataValid(movie.getTitle());
                     }
                 });
-    }
-
-    @Override
-    public Single<Movie> getMovieSummary(final String movieId) {
-        return getMovie(movieId);
     }
 
     @Override
@@ -111,12 +94,23 @@ public class MovieCacheHelper implements MovieCacheMvpHelper {
 
     @Override
     public Single<Boolean> hasMovieSocialOnCache(String movieId) {
-        return null;
+        return getMovie(movieId)
+                .map(new Function<Movie, Boolean>() {
+                    @Override
+                    public Boolean apply(@NonNull Movie movie) throws Exception {
+                        return hasMovieSocialData(movie);
+                    }
+                });
     }
 
-    @Override
-    public Single<Movie> getMovieSocial(String movieId) {
-        return null;
+    private boolean hasMovieSocialData(@NonNull Movie movie) {
+        return isDataValid(movie.getVoteCount()) &&
+                isDataValid(movie.getVoteAverage()) &&
+                isDataValid(movie.getPopularity());
+    }
+
+    private boolean isDataValid(Object o) {
+        return o != null;
     }
 
     private boolean hasMovieSummaryData(@NonNull Movie movie) {
@@ -131,18 +125,7 @@ public class MovieCacheHelper implements MovieCacheMvpHelper {
         return Single.create(new SingleOnSubscribe<Integer>() {
             @Override
             public void subscribe(@NonNull final SingleEmitter<Integer> e) throws Exception {
-                new AsyncTask<Object, Object, Integer>() {
-                    @Override
-                    protected Integer doInBackground(Object... objects) {
-                        return movieDao.getMovieByIdCount(movieId);
-                    }
-
-                    @Override
-                    protected void onPostExecute(Integer movieByIdCount) {
-                        super.onPostExecute(movieByIdCount);
-                        e.onSuccess(movieByIdCount);
-                    }
-                }.execute();
+                e.onSuccess(movieDao.getMovieByIdCount(movieId));
             }
         }).map(new Function<Integer, Boolean>() {
                     @Override

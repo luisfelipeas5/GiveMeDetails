@@ -15,11 +15,11 @@ public interface Movie extends Parcelable {
 
     String getOriginalTitle();
 
-    double getVoteAverage();
+    Double getVoteAverage();
 
-    long getVoteCount();
+    Long getVoteCount();
 
-    float getPopularity();
+    Float getPopularity();
 
     String getId();
 

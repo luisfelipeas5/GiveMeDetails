@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.model.helpers;
+package br.com.luisfelipeas5.givemedetails.model.helpers.cache;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
@@ -11,15 +11,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieCacheDatabase;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheHelper;
+import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
 import io.reactivex.Single;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Predicate;
 import io.reactivex.observers.TestObserver;
 
 @RunWith(AndroidJUnit4.class)
-public class MovieCacheHelperIntegrationTest {
+public class MovieCacheHelperPosterIntegrationTest {
+
     private MovieCacheMvpHelper mMovieCacheMvpHelper;
     private MovieCacheDatabase mMovieCacheDatabase;
 
@@ -40,36 +40,8 @@ public class MovieCacheHelperIntegrationTest {
     }
 
     @Test
-    public void whenInsertMovie_success() {
-        final MovieTMDb movieMocked = new MovieTMDb();
-        movieMocked.setId("Movie Id Mocked" + System.currentTimeMillis());
-        Single<Boolean> saveMovieSingle = mMovieCacheMvpHelper.saveMovie(movieMocked);
-        TestObserver<Boolean> testObserver = saveMovieSingle.test();
-        testObserver.assertComplete();
-        testObserver.assertNoErrors();
-        testObserver.assertValue(true);
-    }
-
-    @Test
-    public void whenSaveMovie_getMovieById_success() {
-        final MovieTMDb movieMocked = new MovieTMDb();
-        movieMocked.setId("Movie Id Mocked" + System.currentTimeMillis());
-        mMovieCacheMvpHelper.saveMovie(movieMocked);
-
-        Single<Movie> movieSingle = mMovieCacheMvpHelper.getMovie(movieMocked.getId());
-        TestObserver<Movie> testObserver = movieSingle.test();
-        testObserver.assertValue(new Predicate<Movie>() {
-            @Override
-            public boolean test(@NonNull Movie movie) throws Exception {
-                return movie.getId().equals(movieMocked.getId());
-            }
-        });
-        testObserver.assertNoErrors();
-    }
-
-    @Test
     public void whenHasMoviePosterOnCache_returnFalse_success() {
-        final MovieTMDb movieMocked = new MovieTMDb();
+        MovieTMDb movieMocked = new MovieTMDb();
         movieMocked.setId("Movie Id Mocked" + System.currentTimeMillis());
         movieMocked.setPosterSuffix(null);
         mMovieCacheMvpHelper.saveMovie(movieMocked);
@@ -83,7 +55,7 @@ public class MovieCacheHelperIntegrationTest {
 
     @Test
     public void whenHasMoviePosterOnCache_returnTrue_success() {
-        final MovieTMDb movieMocked = new MovieTMDb();
+        MovieTMDb movieMocked = new MovieTMDb();
         movieMocked.setId("Movie Id Mocked" + System.currentTimeMillis());
         movieMocked.setPosterSuffix("posterSuffixMocked");
         mMovieCacheMvpHelper.saveMovie(movieMocked);
@@ -96,8 +68,22 @@ public class MovieCacheHelperIntegrationTest {
     }
 
     @Test
+    public void whenHasMovieTitleOnCache_returnFalse_success() {
+        MovieTMDb movieMocked = new MovieTMDb();
+        movieMocked.setId("Movie Id Mocked" + System.currentTimeMillis());
+        movieMocked.setTitle(null);
+        mMovieCacheMvpHelper.saveMovie(movieMocked);
+
+        Single<Boolean> hasTitleSingle = mMovieCacheMvpHelper.hasMovieTitleOnCache(movieMocked.getId());
+        TestObserver<Boolean> test = hasTitleSingle.test();
+        test.assertComplete();
+        test.assertValue(false);
+        test.assertNoErrors();
+    }
+
+    @Test
     public void whenHasMovieTitleOnCache_returnTrue_success() {
-        final MovieTMDb movieMocked = new MovieTMDb();
+        MovieTMDb movieMocked = new MovieTMDb();
         movieMocked.setId("Movie Id Mocked" + System.currentTimeMillis());
         movieMocked.setTitle("Title Mocked");
         mMovieCacheMvpHelper.saveMovie(movieMocked);
@@ -108,4 +94,5 @@ public class MovieCacheHelperIntegrationTest {
         test.assertValue(true);
         test.assertNoErrors();
     }
+
 }
