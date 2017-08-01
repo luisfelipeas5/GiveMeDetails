@@ -12,6 +12,11 @@
 
     </style>
 
+    <style name="AppTheme.DetailActivity" parent="AppTheme.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <style name="TxtDetailSessionTitle">
         <item name="android:textSize">@dimen/details_small_text</item>
         <item name="android:textColor">@color/colorAccent</item>

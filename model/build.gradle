@@ -1,0 +1,52 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion project.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:' + project.ext.espressoVersion, {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:' + project.ext.junitVersion
+    androidTestCompile 'junit:junit:' + project.ext.junitVersion
+    testCompile "org.mockito:mockito-core:" + project.ext.mockitoVersion
+    androidTestCompile "org.mockito:mockito-core:" + project.ext.mockitoVersion
+
+    compile 'com.android.support:appcompat-v7:' + project.ext.androidLibrariesVersion
+
+    compile 'com.google.code.gson:gson:' + project.ext.gsonVersion
+
+    compile "io.reactivex.rxjava2:rxjava:" + project.ext.rxjavaVersion
+
+    compile 'com.google.dagger:dagger:' + project.ext.daggerVersion
+    annotationProcessor "com.google.dagger:dagger-compiler:" + project.ext.daggerVersion
+
+    compile 'com.squareup.retrofit2:retrofit:' + project.ext.retrofitVersion
+    compile 'com.squareup.retrofit2:adapter-rxjava2:' + project.ext.retrofitVersion
+    compile 'com.squareup.retrofit2:converter-gson:' + project.ext.retrofitVersion
+
+    compile 'com.google.code.gson:gson:' + project.ext.gsonVersion
+
+    compile "android.arch.persistence.room:runtime:" + project.ext.roomVersion
+    annotationProcessor "android.arch.persistence.room:compiler:" + project.ext.roomVersion
+    compile "android.arch.persistence.room:rxjava2:" + project.ext.roomVersion
+}
