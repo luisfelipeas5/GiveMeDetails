@@ -48,7 +48,7 @@ public class SocialInstrumentedTest {
 
     @Test
     public void whenLoadSocial_appearVoteAverage_success() {
-        String voteAverageAsString = Double.toString(mMovie.getVoteAverage());
+        String voteAverageAsString = mContext.getString(R.string.value, mMovie.getVoteAverage());
         onView(withId(R.id.txt_vote_average)).check(getTextMatcher(voteAverageAsString));
     }
 
@@ -57,6 +57,13 @@ public class SocialInstrumentedTest {
         long voteCount = mMovie.getVoteCount();
         String voteCountWithLabel = mContext.getString(R.string.vote_count, voteCount);
         onView(withId(R.id.txt_vote_count)).check(getTextMatcher(voteCountWithLabel));
+    }
+
+    @Test
+    public void whenLoadSocial_appearPopularity_success() {
+        Float popularity = mMovie.getPopularity();
+        String popularityAsString = mContext.getString(R.string.value, popularity);
+        onView(withId(R.id.txt_popularity)).check(getTextMatcher(popularityAsString));
     }
 
     @NonNull
