@@ -4,7 +4,8 @@ import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.annotations.NonNull;
@@ -84,6 +85,15 @@ public class MovieDataManager implements MovieMvpDataManager {
     public Single<Movie> getMovieSocial(String movieId) {
         return movieCacheMvpHelper.hasMovieSocialOnCache(movieId)
                 .flatMap(getMovieSocialCacheMapper(movieId));
+    }
+
+    @Override
+    public Single<List<Trailer>> getMovieTrailers(String movieId) {
+        if (movieId != null) {
+            return movieApiMvpHelper.getTrailers(movieId)
+                    .singleOrError();
+        }
+        return null;
     }
 
     @android.support.annotation.NonNull

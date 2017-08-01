@@ -4,7 +4,7 @@
     <data>
         <variable
             name="movie"
-            type="br.com.luisfelipeas5.givemedetails.model.model.Movie"/>
+            type="br.com.luisfelipeas5.givemedetails.model.model.movie.Movie"/>
         <import type="android.view.View"/>
     </data>
     <android.support.v7.widget.CardView

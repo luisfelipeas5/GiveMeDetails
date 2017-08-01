@@ -8,8 +8,9 @@ import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
-import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
+import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.Observable;
@@ -47,6 +48,11 @@ public class ModelTestModule {
             @Override
             public Observable<Movie> getMovieSocial(String movieId) {
                 return Observable.just(getMovieMocked());
+            }
+
+            @Override
+            public Observable<List<Trailer>> getTrailers(String movieId) {
+                return null;
             }
         };
     }

@@ -6,10 +6,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.R;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
-import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
-import br.com.luisfelipeas5.givemedetails.model.model.MoviesResponseBody;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
+import br.com.luisfelipeas5.givemedetails.model.model.responsebodies.MoviesResponseBody;
+import br.com.luisfelipeas5.givemedetails.model.model.responsebodies.TrailersResponseBody;
+import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
+import br.com.luisfelipeas5.givemedetails.model.model.trailer.TrailerTMDb;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 import retrofit2.Retrofit;
@@ -28,6 +32,7 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
 
     private static final String MOVIE_ID_PATH = "movieId";
     private static final String GET_MOVIE_PATH = "3/movie/{" + MOVIE_ID_PATH + "}";
+    private static final String GET_TRAILERS_PATH = GET_MOVIE_PATH + "/videos";
 
     private static final String KEY_QUERY_API_KEY = "api_key";
 
@@ -78,8 +83,25 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
 
     @Override
     public Observable<Movie> getMovieSocial(String movieId) {
-        return null;
+        return getMovie(movieId);
     }
+
+    @Override
+    public Observable<List<Trailer>> getTrailers(String movieId) {
+        return mTheMovieDbApi.getTrailers(movieId, mApiKey)
+                .flatMap(getTrailerResponseMapper());
+    }
+
+    private Function<TrailersResponseBody, Observable<List<Trailer>>> getTrailerResponseMapper() {
+        return new Function<TrailersResponseBody, Observable<List<Trailer>>>() {
+            @Override
+            public Observable<List<Trailer>> apply(@NonNull TrailersResponseBody trailersResponseBody) throws Exception {
+                List<Trailer> trailers = new LinkedList<Trailer>(trailersResponseBody.getTrailers());
+                return Observable.just(trailers);
+            }
+        };
+    }
+
 
     @android.support.annotation.NonNull
     private Function<MoviesResponseBody, Observable<List<Movie>>> getMovieResponseMapper() {
@@ -104,6 +126,10 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
         @GET(GET_MOVIE_PATH)
         Observable<MovieTMDb> getMovie(@Path(MOVIE_ID_PATH) String movieId,
                                        @Query(KEY_QUERY_API_KEY) String apiKey);
+
+        @GET(GET_TRAILERS_PATH)
+        Observable<TrailersResponseBody> getTrailers(@Path(MOVIE_ID_PATH) String movieId,
+                                                     @Query(KEY_QUERY_API_KEY) String apiKey);
     }
 
 }

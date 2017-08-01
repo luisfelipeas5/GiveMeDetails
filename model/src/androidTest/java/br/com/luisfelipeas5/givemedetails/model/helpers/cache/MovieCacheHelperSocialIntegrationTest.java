@@ -15,7 +15,7 @@ import java.util.Random;
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieCacheDatabase;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
-import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 

@@ -8,7 +8,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.Date;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import br.com.luisfelipeas5.givemedetails.presenter.schedulers.SchedulerProvider;
 import br.com.luisfelipeas5.givemedetails.presenter.schedulers.TestSchedulerProvider;
 import br.com.luisfelipeas5.givemedetails.view.details.SummaryMvpView;
