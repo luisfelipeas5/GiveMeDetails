@@ -6,14 +6,14 @@ import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
 import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
 import br.com.luisfelipeas5.givemedetails.presenter.BasePresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.schedulers.SchedulerProvider;
-import br.com.luisfelipeas5.givemedetails.view.details.TrailerMvpView;
+import br.com.luisfelipeas5.givemedetails.view.details.TrailersMvpView;
 import io.reactivex.SingleObserver;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 
-public class TrailerPresenter extends BasePresenter<TrailerMvpView> implements TrailerMvpPresenter {
+public class TrailerPresenter extends BasePresenter<TrailersMvpView> implements TrailerMvpPresenter {
     private final MovieMvpDataManager mMovieMvpDataManager;
-    private TrailerMvpView mTrailerMvpView;
+    private TrailersMvpView mTrailersMvpView;
 
     public TrailerPresenter(SchedulerProvider schedulerProvider, MovieMvpDataManager movieMvpDataManager) {
         super(schedulerProvider);
@@ -21,8 +21,8 @@ public class TrailerPresenter extends BasePresenter<TrailerMvpView> implements T
     }
 
     @Override
-    public void attach(TrailerMvpView trailerMvpView) {
-        mTrailerMvpView = trailerMvpView;
+    public void attach(TrailersMvpView trailersMvpView) {
+        mTrailersMvpView = trailersMvpView;
     }
 
     @Override
@@ -38,19 +38,19 @@ public class TrailerPresenter extends BasePresenter<TrailerMvpView> implements T
 
                     @Override
                     public void onSuccess(@NonNull List<Trailer> trailers) {
-                        mTrailerMvpView.onTrailersReady(trailers);
+                        mTrailersMvpView.onTrailersReady(trailers);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        mTrailerMvpView.onGetTrailersFailed();
+                        mTrailersMvpView.onGetTrailersFailed();
                     }
                 });
     }
 
     @Override
     public void detachView() {
-        mTrailerMvpView = new TrailerMvpView() {
+        mTrailersMvpView = new TrailersMvpView() {
             @Override
             public void onTrailersReady(List<Trailer> trailers) {
 
@@ -58,6 +58,11 @@ public class TrailerPresenter extends BasePresenter<TrailerMvpView> implements T
 
             @Override
             public void onGetTrailersFailed() {
+
+            }
+
+            @Override
+            public void setMovieId(String movieId) {
 
             }
         };

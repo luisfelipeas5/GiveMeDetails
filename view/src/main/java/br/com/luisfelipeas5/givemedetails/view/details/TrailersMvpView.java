@@ -5,7 +5,8 @@ import java.util.List;
 import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
 import br.com.luisfelipeas5.givemedetails.view.MvpView;
 
-public interface TrailerMvpView extends MvpView {
+public interface TrailersMvpView extends MvpView {
     void onTrailersReady(List<Trailer> trailers);
     void onGetTrailersFailed();
+    void setMovieId(String movieId);
 }

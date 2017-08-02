@@ -12,7 +12,7 @@ import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
 import br.com.luisfelipeas5.givemedetails.presenter.schedulers.SchedulerProvider;
 import br.com.luisfelipeas5.givemedetails.presenter.schedulers.TestSchedulerProvider;
-import br.com.luisfelipeas5.givemedetails.view.details.TrailerMvpView;
+import br.com.luisfelipeas5.givemedetails.view.details.TrailersMvpView;
 import io.reactivex.Single;
 import io.reactivex.schedulers.TestScheduler;
 
@@ -27,7 +27,7 @@ public class TrailerPresenterTest {
     private TestScheduler mTestScheduler;
 
     @Mock
-    private TrailerMvpView mTrailerMvpView;
+    private TrailersMvpView mTrailersMvpView;
     @Mock
     private MovieMvpDataManager mMovieMvpDataManager;
     @Mock
@@ -46,7 +46,7 @@ public class TrailerPresenterTest {
         mTestScheduler = new TestScheduler();
         SchedulerProvider schedulerProvider = new TestSchedulerProvider(mTestScheduler);
         mTrailerMvpPresenter = new TrailerPresenter(schedulerProvider, mMovieMvpDataManager);
-        mTrailerMvpPresenter.attach(mTrailerMvpView);
+        mTrailerMvpPresenter.attach(mTrailersMvpView);
     }
 
     @Test
@@ -56,8 +56,8 @@ public class TrailerPresenterTest {
         mTestScheduler.triggerActions();
 
         verify(mMovieMvpDataManager).getMovieTrailers(movieId);
-        verify(mTrailerMvpView).onTrailersReady(mTrailers);
-        verify(mTrailerMvpView, never()).onGetTrailersFailed();
+        verify(mTrailersMvpView).onTrailersReady(mTrailers);
+        verify(mTrailersMvpView, never()).onGetTrailersFailed();
     }
 
     @Test
@@ -70,8 +70,8 @@ public class TrailerPresenterTest {
         mTestScheduler.triggerActions();
 
         verify(mMovieMvpDataManager).getMovieTrailers(movieId);
-        verify(mTrailerMvpView, never()).onTrailersReady(anyListOf(Trailer.class));
-        verify(mTrailerMvpView).onGetTrailersFailed();
+        verify(mTrailersMvpView, never()).onTrailersReady(anyListOf(Trailer.class));
+        verify(mTrailersMvpView).onGetTrailersFailed();
     }
 
 }
