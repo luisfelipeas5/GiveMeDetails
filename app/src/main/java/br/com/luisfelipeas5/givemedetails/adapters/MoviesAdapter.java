@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.List;
 
@@ -39,9 +40,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         Context context = holder.binding.getRoot().getContext();
         Glide.with(context)
                 .load(movie.getPoster(mPosterWidth))
-                .asBitmap()
-                .centerCrop()
-                .placeholder(R.color.transparent)
+                .apply(RequestOptions.centerCropTransform())
+                .apply(RequestOptions.placeholderOf(R.color.transparent))
                 .into(holder.binding.imgMovie);
     }
 
