@@ -12,4 +12,5 @@
     <dimen name="page_indicator_line_width">100dp</dimen>
     <dimen name="page_indicator_stroke_width">2dp</dimen>
     <dimen name="movie_poster_size_median">200dp</dimen>
+    <dimen name="trailer_thumb_img">80dp</dimen>
 </resources>

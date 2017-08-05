@@ -28,8 +28,9 @@ allprojects {
         targetSdkVersion = 26
 
         androidLibrariesVersion = "26.0.0-alpha1"
+        constraintLayoutVersion = "1.0.2"
 
-        espressoVersion = "2.2.2"
+        espressoVersion = "3.0.0"
         junitVersion = "4.12"
         daggerMockVersion = "0.7.0"
         dexmakerVersion = "1.2"
@@ -45,7 +46,9 @@ allprojects {
 
         retrofitVersion = "2.3.0"
 
-        roomVersion = "1.0.0-alpha4"
+        roomVersion = "1.0.0-alpha7"
+
+        glideVersion = "4.0.0"
     }
 }
 

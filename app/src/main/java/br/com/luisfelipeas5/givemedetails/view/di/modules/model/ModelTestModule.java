@@ -2,6 +2,7 @@ package br.com.luisfelipeas5.givemedetails.view.di.modules.model;
 
 import com.google.gson.Gson;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
@@ -10,6 +11,7 @@ import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
+import br.com.luisfelipeas5.givemedetails.model.model.responsebodies.TrailersResponseBody;
 import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
 import dagger.Module;
 import dagger.Provides;
@@ -52,9 +54,80 @@ public class ModelTestModule {
 
             @Override
             public Observable<List<Trailer>> getTrailers(String movieId) {
-                return null;
+                return Observable.just(getTrailersMocked());
             }
         };
+    }
+
+    public static List<Trailer> getTrailersMocked() {
+        String trailersJsonString = "{\n" +
+                "    \"id\": 315635,\n" +
+                "    \"results\": [\n" +
+                "        {\n" +
+                "            \"id\": \"58f142879251415536004a66\",\n" +
+                "            \"iso_639_1\": \"en\",\n" +
+                "            \"iso_3166_1\": \"US\",\n" +
+                "            \"key\": \"rk-dF1lIbIg\",\n" +
+                "            \"name\": \"Official Trailer\",\n" +
+                "            \"site\": \"YouTube\",\n" +
+                "            \"size\": 1080,\n" +
+                "            \"type\": \"Trailer\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": \"58f142cd9251415556004851\",\n" +
+                "            \"iso_639_1\": \"en\",\n" +
+                "            \"iso_3166_1\": \"US\",\n" +
+                "            \"key\": \"DiTECkLZ8HM\",\n" +
+                "            \"name\": \"Official Trailer #2\",\n" +
+                "            \"site\": \"YouTube\",\n" +
+                "            \"size\": 1080,\n" +
+                "            \"type\": \"Trailer\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": \"58f1430ac3a3681a52004703\",\n" +
+                "            \"iso_639_1\": \"en\",\n" +
+                "            \"iso_3166_1\": \"US\",\n" +
+                "            \"key\": \"xpu9yRO_rvU\",\n" +
+                "            \"name\": \"Official International Trailer #2\",\n" +
+                "            \"site\": \"YouTube\",\n" +
+                "            \"size\": 1080,\n" +
+                "            \"type\": \"Trailer\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": \"58f14331c3a36819db004235\",\n" +
+                "            \"iso_639_1\": \"en\",\n" +
+                "            \"iso_3166_1\": \"US\",\n" +
+                "            \"key\": \"lCkVr1n1eCA\",\n" +
+                "            \"name\": \"Official International Trailer\",\n" +
+                "            \"site\": \"YouTube\",\n" +
+                "            \"size\": 1080,\n" +
+                "            \"type\": \"Trailer\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": \"592540c4c3a36877bc00dacd\",\n" +
+                "            \"iso_639_1\": \"en\",\n" +
+                "            \"iso_3166_1\": \"US\",\n" +
+                "            \"key\": \"xEvV3OsE2WM\",\n" +
+                "            \"name\": \"Official Trailer #3\",\n" +
+                "            \"site\": \"YouTube\",\n" +
+                "            \"size\": 1080,\n" +
+                "            \"type\": \"Trailer\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": \"5925cde9c3a36877bc014de4\",\n" +
+                "            \"iso_639_1\": \"en\",\n" +
+                "            \"iso_3166_1\": \"US\",\n" +
+                "            \"key\": \"xbQdPBiF3Co\",\n" +
+                "            \"name\": \"International Trailer #3\",\n" +
+                "            \"site\": \"YouTube\",\n" +
+                "            \"size\": 1080,\n" +
+                "            \"type\": \"Trailer\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
+        TrailersResponseBody trailersResponseBody = new Gson()
+                .fromJson(trailersJsonString, TrailersResponseBody.class);
+        return new LinkedList<Trailer>(trailersResponseBody.getTrailers());
     }
 
     public static Movie getMovieMocked() {
@@ -122,5 +195,4 @@ public class ModelTestModule {
                                                    MovieCacheMvpHelper movieCacheMvpHelper) {
         return new MovieDataManager(movieApiMvpHelper, movieCacheMvpHelper);
     }
-
 }

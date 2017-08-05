@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="trailer"
+            type="br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer"/>
+    </data>
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <ImageView android:id="@+id/img_trailer_thumb"
+            android:contentDescription="@string/img_trailer"
+            android:background="@color/colorAccent"
+            android:layout_width="@dimen/trailer_thumb_img"
+            android:layout_height="@dimen/trailer_thumb_img" />
+
+        <TextView android:id="@+id/txt_trailer_name"
+            tools:text="Trailer's name"
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:text="@{trailer.name}"
+            app:layout_constraintLeft_toRightOf="@id/img_trailer_thumb"
+            app:layout_constraintTop_toTopOf="@id/img_trailer_thumb"
+            app:layout_constraintBottom_toBottomOf="@id/img_trailer_thumb"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </android.support.constraint.ConstraintLayout>
+</layout>
