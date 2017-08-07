@@ -19,6 +19,7 @@ import br.com.luisfelipeas5.givemedetails.view.di.components.BaseComponent;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.SummaryFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.PosterFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.SocialFragment;
+import br.com.luisfelipeas5.givemedetails.view.fragments.details.TrailersFragment;
 
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener, MovieMvpView {
 
@@ -43,21 +44,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private SocialFragment getSocialFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        return (SocialFragment) fragmentManager.findFragmentById(R.id.fragment_social);
-    }
-
-    private SummaryFragment getSummaryFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        return (SummaryFragment) fragmentManager.findFragmentById(R.id.fragment_detail);
-    }
-
-    private PosterFragment getDetailPosterFragment() {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        return (PosterFragment) fragmentManager.findFragmentById(R.id.fragment_poster);
-    }
-
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -70,16 +56,20 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onMovieReady(Movie movie) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
         String movieId = movie.getId();
 
-        PosterFragment posterFragment = getDetailPosterFragment();
+        PosterFragment posterFragment = (PosterFragment) fragmentManager.findFragmentById(R.id.fragment_poster);
         posterFragment.setMovieId(movieId);
 
-        SummaryFragment summaryFragment = getSummaryFragment();
+        SummaryFragment summaryFragment = (SummaryFragment) fragmentManager.findFragmentById(R.id.fragment_detail);
         summaryFragment.setMovieId(movieId);
 
-        SocialFragment socialFragment = getSocialFragment();
+        SocialFragment socialFragment = (SocialFragment) fragmentManager.findFragmentById(R.id.fragment_social);
         socialFragment.setMovieId(movieId);
+
+        TrailersFragment trailersFragment = (TrailersFragment) fragmentManager.findFragmentById(R.id.fragment_trailers);
+        trailersFragment.setMovieId(movieId);
     }
 
     @Override
