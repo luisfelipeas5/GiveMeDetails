@@ -3,7 +3,7 @@
     <dimen name="img_movie_height">260dp</dimen>
 
     <dimen name="detail_big_text">24sp</dimen>
-    <dimen name="detail_normal_text">16sp</dimen>
+    <dimen name="details_normal_text">16sp</dimen>
     <dimen name="details_small_text">14sp</dimen>
     <dimen name="details_card_layout_padding">16dp</dimen>
     <dimen name="detail_really_big_text">30sp</dimen>
@@ -12,5 +12,6 @@
     <dimen name="page_indicator_line_width">100dp</dimen>
     <dimen name="page_indicator_stroke_width">2dp</dimen>
     <dimen name="movie_poster_size_median">200dp</dimen>
-    <dimen name="trailer_thumb_img">80dp</dimen>
+    <dimen name="trailer_thumb_img_width">100dp</dimen>
+    <dimen name="trailer_thumb_img_height">70dp</dimen>
 </resources>

@@ -13,6 +13,7 @@ import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
 import br.com.luisfelipeas5.givemedetails.model.model.responsebodies.TrailersResponseBody;
 import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
+import br.com.luisfelipeas5.givemedetails.model.model.trailer.TrailerTMDb;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.Observable;
@@ -21,7 +22,12 @@ import io.reactivex.Single;
 @Module
 public class ModelTestModule {
 
+    private List<Trailer> trailers;
+    private Movie movie;
+
     public ModelTestModule() {
+        setMovie(getMovieMocked());
+        setTrailers(getTrailersMocked());
     }
 
     @Provides
@@ -39,22 +45,22 @@ public class ModelTestModule {
 
             @Override
             public Observable<Movie> getMovie(String movieId) {
-                return Observable.just(getMovieMocked());
+                return Observable.just(movie);
             }
 
             @Override
             public Observable<Movie> getMovieSummary(String movieId) {
-                return Observable.just(getMovieMocked());
+                return Observable.just(movie);
             }
 
             @Override
             public Observable<Movie> getMovieSocial(String movieId) {
-                return Observable.just(getMovieMocked());
+                return Observable.just(movie);
             }
 
             @Override
             public Observable<List<Trailer>> getTrailers(String movieId) {
-                return Observable.just(getTrailersMocked());
+                return Observable.just(trailers);
             }
         };
     }
@@ -194,5 +200,13 @@ public class ModelTestModule {
     MovieMvpDataManager provideMovieMvpDataManager(MovieApiMvpHelper movieApiMvpHelper,
                                                    MovieCacheMvpHelper movieCacheMvpHelper) {
         return new MovieDataManager(movieApiMvpHelper, movieCacheMvpHelper);
+    }
+
+    public void setTrailers(List<Trailer> trailers) {
+        this.trailers = trailers;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 }

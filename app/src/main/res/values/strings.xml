@@ -20,5 +20,7 @@
     <string name="no_summary">Failed to load summary</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet ultricies nisi. Pellentesque pellentesque porta sapien eget congue. Nunc sed nisi eu libero ornare feugiat tristique sit amet libero. Aliquam condimentum fringilla diam, nec pulvinar orci placerat eu. Etiam non urna leo. Pellentesque finibus lacus dui, ac ultricies mi consectetur eu. Sed lacinia sem vel iaculis faucibus. Nunc dictum turpis a libero egestas, ut dignissim velit commodo. In aliquet nec purus in finibus.</string>
     <string name="img_trailer">Trailer\'s thumb</string>
+    <string name="trailers">Trailers</string>
+    <string name="no_trailers">No trailers</string>
 
 </resources>

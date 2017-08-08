@@ -5,4 +5,6 @@ public interface Trailer {
     String getName();
 
     String getThumbUrl();
+
+    String getIntentUri();
 }

@@ -1,5 +1,7 @@
 package br.com.luisfelipeas5.givemedetails.view.fragments.details;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,7 +23,7 @@ import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.details.TrailersMvpView;
 import br.com.luisfelipeas5.givemedetails.view.di.components.BaseComponent;
 
-public class TrailersFragment extends Fragment implements TrailersMvpView {
+public class TrailersFragment extends Fragment implements TrailersMvpView, TrailersAdapter.OnTrailerClickListener {
 
     private FragmentTrailersBinding mBinding;
     private TrailerMvpPresenter mTrailerMvpPresenter;
@@ -53,8 +55,19 @@ public class TrailersFragment extends Fragment implements TrailersMvpView {
 
     @Override
     public void onTrailersReady(List<Trailer> trailers) {
-        TrailersAdapter trailersAdapter = new TrailersAdapter(trailers);
-        mBinding.recyclerTrailers.setAdapter(trailersAdapter);
+        int recyclerTrailersVisibility = View.GONE;
+        int txtWarningVisibility = View.VISIBLE;
+        if (trailers != null && !trailers.isEmpty()) {
+            TrailersAdapter trailersAdapter = new TrailersAdapter(trailers);
+            trailersAdapter.setListener(this);
+            mBinding.recyclerTrailers.setAdapter(trailersAdapter);
+
+            recyclerTrailersVisibility = View.VISIBLE;
+            txtWarningVisibility = View.GONE;
+        }
+        mBinding.progressBar.setVisibility(View.GONE);
+        mBinding.recyclerTrailers.setVisibility(recyclerTrailersVisibility);
+        mBinding.txtNoTrailers.setVisibility(txtWarningVisibility);
     }
 
     @Override
@@ -66,5 +79,12 @@ public class TrailersFragment extends Fragment implements TrailersMvpView {
     public void onStop() {
         mTrailerMvpPresenter.detachView();
         super.onStop();
+    }
+
+    @Override
+    public void onTrailerClick(Trailer trailer) {
+        Uri trailerUri = Uri.parse(trailer.getIntentUri());
+        Intent intent = new Intent(Intent.ACTION_VIEW, trailerUri);
+        startActivity(intent);
     }
 }
