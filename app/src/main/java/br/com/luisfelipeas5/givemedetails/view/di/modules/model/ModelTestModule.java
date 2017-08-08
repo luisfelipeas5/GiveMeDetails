@@ -11,9 +11,10 @@ import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
+import br.com.luisfelipeas5.givemedetails.model.model.responsebodies.ReviewsResponseBody;
 import br.com.luisfelipeas5.givemedetails.model.model.responsebodies.TrailersResponseBody;
+import br.com.luisfelipeas5.givemedetails.model.model.reviews.Review;
 import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
-import br.com.luisfelipeas5.givemedetails.model.model.trailer.TrailerTMDb;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.Observable;
@@ -24,10 +25,37 @@ public class ModelTestModule {
 
     private List<Trailer> trailers;
     private Movie movie;
+    private List<Review> reviews;
 
     public ModelTestModule() {
         setMovie(getMovieMocked());
         setTrailers(getTrailersMocked());
+        setReviews(getReviewsMocked());
+    }
+
+    private List<Review> getReviewsMocked() {
+        String reviewsResponseBodyJson = "{\n" +
+                "    \"id\": 211672,\n" +
+                "    \"page\": 1,\n" +
+                "    \"results\": [\n" +
+                "        {\n" +
+                "            \"id\": \"55a58e46c3a3682bb2000065\",\n" +
+                "            \"author\": \"Andres Gomez\",\n" +
+                "            \"content\": \"The minions are a nice idea and the animation and London recreation is really good, but that's about it.\\r\\n\\r\\nThe script is boring and the jokes not really funny.\",\n" +
+                "            \"url\": \"https://www.themoviedb.org/review/55a58e46c3a3682bb2000065\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": \"55e108c89251416c0b0006dd\",\n" +
+                "            \"author\": \"movizonline.com\",\n" +
+                "            \"content\": \"a nice idea and the animation.the new thing in animation field.a movie that every one should like an kid or old man.\",\n" +
+                "            \"url\": \"https://www.themoviedb.org/review/55e108c89251416c0b0006dd\"\n" +
+                "        }\n" +
+                "    ],\n" +
+                "    \"total_pages\": 1,\n" +
+                "    \"total_results\": 2\n" +
+                "}";
+        ReviewsResponseBody reviewsResponseBody = new Gson().fromJson(reviewsResponseBodyJson, ReviewsResponseBody.class);
+        return new LinkedList<Review>(reviewsResponseBody.getReviews());
     }
 
     @Provides
@@ -61,6 +89,11 @@ public class ModelTestModule {
             @Override
             public Observable<List<Trailer>> getTrailers(String movieId) {
                 return Observable.just(trailers);
+            }
+
+            @Override
+            public Observable<List<Review>> getReviews(String movieId, int pageIndex) {
+                return Observable.just(reviews);
             }
         };
     }
@@ -208,5 +241,9 @@ public class ModelTestModule {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    private void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }
