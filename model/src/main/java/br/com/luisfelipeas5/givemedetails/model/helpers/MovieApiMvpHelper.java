@@ -3,6 +3,7 @@ package br.com.luisfelipeas5.givemedetails.model.helpers;
 import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.reviews.Review;
 import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
 import io.reactivex.Observable;
 
@@ -18,4 +19,6 @@ public interface MovieApiMvpHelper {
     Observable<Movie> getMovieSocial(String movieId);
 
     Observable<List<Trailer>> getTrailers(String movieId);
+
+    Observable<List<Review>> getReviews(String movieId, int pageIndex);
 }

@@ -10,6 +10,7 @@ import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
 import br.com.luisfelipeas5.givemedetails.model.model.responsebodies.MoviesResponseBody;
 import br.com.luisfelipeas5.givemedetails.model.model.responsebodies.TrailersResponseBody;
+import br.com.luisfelipeas5.givemedetails.model.model.reviews.Review;
 import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
@@ -88,6 +89,11 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
     public Observable<List<Trailer>> getTrailers(String movieId) {
         return mTheMovieDbApi.getTrailers(movieId, mApiKey)
                 .flatMap(getTrailerResponseMapper());
+    }
+
+    @Override
+    public Observable<List<Review>> getReviews(String movieId, int pageIndex) {
+        return null;
     }
 
     private Function<TrailersResponseBody, Observable<List<Trailer>>> getTrailerResponseMapper() {

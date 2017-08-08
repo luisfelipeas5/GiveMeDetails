@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.reviews.Review;
 import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
@@ -93,6 +94,16 @@ public class MovieDataManager implements MovieMvpDataManager {
             return movieApiMvpHelper.getTrailers(movieId)
                     .singleOrError();
         }
+        return null;
+    }
+
+    @Override
+    public Single<List<Review>> getMovieReviews(String movieId) {
+        return null;
+    }
+
+    @Override
+    public Single<List<Review>> getMovieReviewsByPage(String movieId, int pageIndex) {
         return null;
     }
 
