@@ -33,7 +33,7 @@ public class ModelTestModule {
         setReviews(getReviewsMocked());
     }
 
-    private List<Review> getReviewsMocked() {
+    public static List<Review> getReviewsMocked() {
         String reviewsResponseBodyJson = "{\n" +
                 "    \"id\": 211672,\n" +
                 "    \"page\": 1,\n" +

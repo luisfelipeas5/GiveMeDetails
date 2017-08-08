@@ -34,6 +34,7 @@ public class TrailersFragment extends Fragment implements TrailersMvpView, Trail
         mBinding = FragmentTrailersBinding.inflate(inflater, container, false);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mBinding.recyclerTrailers.setLayoutManager(layoutManager);
+        mBinding.recyclerTrailers.setNestedScrollingEnabled(false);
 
         MoviesApp moviesApp = (MoviesApp) getContext().getApplicationContext();
         BaseComponent baseComponent = moviesApp.getDiComponent();

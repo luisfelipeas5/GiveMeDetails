@@ -22,5 +22,7 @@
     <string name="img_trailer">Trailer\'s thumb</string>
     <string name="trailers">Trailers</string>
     <string name="no_trailers">No trailers</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_reviews">No reviews</string>
 
 </resources>

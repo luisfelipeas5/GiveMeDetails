@@ -9,4 +9,6 @@ public interface ReviewsMvpView extends MvpView {
     void onReviewsReady(List<Review> reviews);
 
     void onGetReviewsFailed();
+
+    void setMovieId(String movieId);
 }
