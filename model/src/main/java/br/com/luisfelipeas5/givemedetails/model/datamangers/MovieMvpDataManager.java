@@ -24,7 +24,5 @@ public interface MovieMvpDataManager {
 
     Single<List<Trailer>> getMovieTrailers(String movieId);
 
-    Single<List<Review>> getMovieReviews(String movieId);
-
     Single<List<Review>> getMovieReviewsByPage(String movieId, int pageIndex);
 }

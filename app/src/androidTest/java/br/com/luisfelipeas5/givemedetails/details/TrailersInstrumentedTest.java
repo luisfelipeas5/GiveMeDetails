@@ -90,4 +90,22 @@ public class TrailersInstrumentedTest {
                 .check(matches(withText(R.string.no_trailers)));
     }
 
+    @Test
+    public void whenLoadTrailersError_showMessage_success() {
+        ModelTestModule modelTestModule = new ModelTestModule();
+        modelTestModule.setTrailers(null);
+        AppTestComponentTestRule.setAppTestComponent(modelTestModule);
+        mActivityRule.launchActivity(intent);
+
+        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_trailers))))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+
+        onView(withId(R.id.recycler_trailers))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+
+        onView(withId(R.id.txt_no_trailers))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
+                .check(matches(withText(R.string.no_trailers)));
+    }
+
 }

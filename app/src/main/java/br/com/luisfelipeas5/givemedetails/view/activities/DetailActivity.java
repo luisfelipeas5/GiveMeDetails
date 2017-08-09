@@ -16,6 +16,7 @@ import br.com.luisfelipeas5.givemedetails.presenter.details.MovieDetailMvpPresen
 import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.details.MovieMvpView;
 import br.com.luisfelipeas5.givemedetails.view.di.components.BaseComponent;
+import br.com.luisfelipeas5.givemedetails.view.fragments.details.ReviewsFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.SummaryFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.PosterFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.SocialFragment;
@@ -70,6 +71,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         TrailersFragment trailersFragment = (TrailersFragment) fragmentManager.findFragmentById(R.id.fragment_trailers);
         trailersFragment.setMovieId(movieId);
+
+        ReviewsFragment reviewsFragment = (ReviewsFragment) fragmentManager.findFragmentById(R.id.fragment_reviews);
+        reviewsFragment.setMovieId(movieId);
     }
 
     @Override

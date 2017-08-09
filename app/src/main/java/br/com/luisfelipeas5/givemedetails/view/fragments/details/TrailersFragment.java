@@ -73,7 +73,9 @@ public class TrailersFragment extends Fragment implements TrailersMvpView, Trail
 
     @Override
     public void onGetTrailersFailed() {
-
+        mBinding.progressBar.setVisibility(View.GONE);
+        mBinding.recyclerTrailers.setVisibility(View.GONE);
+        mBinding.txtNoTrailers.setVisibility(View.VISIBLE);
     }
 
     @Override

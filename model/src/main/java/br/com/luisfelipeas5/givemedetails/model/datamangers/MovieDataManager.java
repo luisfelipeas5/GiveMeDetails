@@ -98,13 +98,8 @@ public class MovieDataManager implements MovieMvpDataManager {
     }
 
     @Override
-    public Single<List<Review>> getMovieReviews(String movieId) {
-        return null;
-    }
-
-    @Override
     public Single<List<Review>> getMovieReviewsByPage(String movieId, int pageIndex) {
-        return null;
+        return movieApiMvpHelper.getReviews(movieId, pageIndex).singleOrError();
     }
 
     @android.support.annotation.NonNull

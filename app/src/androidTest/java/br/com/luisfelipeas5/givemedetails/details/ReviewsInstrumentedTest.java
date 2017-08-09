@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.R;
@@ -61,14 +62,42 @@ public class ReviewsInstrumentedTest {
         for (Review review : mReviews) {
             onView(withText(review.getAuthor()))
                     .perform(ViewActions.scrollTo())
-                    .check(
-                            matches(allOf(withId(R.id.txt_author), withText(review.getAuthor())))
-                    )
-                    .check(
-                            matches(allOf(withId(R.id.txt_content), withText(review.getContent())))
-                    );
+                    .check(matches(allOf(withId(R.id.txt_author), withText(review.getAuthor()))));
 
+            onView(withText(review.getContent()))
+                    .perform(ViewActions.scrollTo())
+                    .check(matches(allOf(withId(R.id.txt_content), withText(review.getContent()))));
         }
+    }
+
+    @Test
+    public void whenGetReviewsReturnEmpty_showMessage_success() {
+        ModelTestModule modelTestModule = new ModelTestModule();
+        modelTestModule.setReviews(new LinkedList<Review>());
+        AppTestComponentTestRule.setAppTestComponent(modelTestModule);
+        mActivityRule.launchActivity(intent);
+
+        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_reviews))))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+
+        onView(withId(R.id.txt_no_reviews))
+                .check(matches(withText(R.string.no_reviews)))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    @Test
+    public void whenGetReviewsReturnError_showMessage_success() {
+        ModelTestModule modelTestModule = new ModelTestModule();
+        modelTestModule.setReviews(null);
+        AppTestComponentTestRule.setAppTestComponent(modelTestModule);
+        mActivityRule.launchActivity(intent);
+
+        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_reviews))))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+
+        onView(withId(R.id.txt_no_reviews))
+                .check(matches(withText(R.string.no_reviews)))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 
 }

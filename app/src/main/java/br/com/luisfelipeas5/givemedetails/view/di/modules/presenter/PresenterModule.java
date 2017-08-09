@@ -5,6 +5,8 @@ import br.com.luisfelipeas5.givemedetails.presenter.details.MovieDetailMvpPresen
 import br.com.luisfelipeas5.givemedetails.presenter.details.MovieDetailPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.details.PosterMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.details.PosterPresenter;
+import br.com.luisfelipeas5.givemedetails.presenter.details.ReviewsMvpPresenter;
+import br.com.luisfelipeas5.givemedetails.presenter.details.ReviewsPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.details.SocialMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.details.SocialPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.details.SummaryMvpPresenter;
@@ -60,4 +62,8 @@ public class PresenterModule {
         return new TrailerPresenter(schedulerProvider, movieMvpDataManager);
     }
 
+    @Provides
+    static ReviewsMvpPresenter provideReviewsMvpPresenter(SchedulerProvider schedulerProvider, MovieMvpDataManager movieMvpDataManager) {
+        return new ReviewsPresenter(schedulerProvider, movieMvpDataManager);
+    }
 }

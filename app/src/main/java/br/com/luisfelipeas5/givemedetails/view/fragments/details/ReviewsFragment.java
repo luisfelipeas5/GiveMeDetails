@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.com.luisfelipeas5.givemedetails.adapters.recyclers.ReviewsAdapter;
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentReviewsBinding;
 import br.com.luisfelipeas5.givemedetails.model.model.reviews.Review;
 import br.com.luisfelipeas5.givemedetails.presenter.details.ReviewsMvpPresenter;
@@ -43,11 +44,25 @@ public class ReviewsFragment extends Fragment implements ReviewsMvpView {
 
     @Override
     public void onReviewsReady(List<Review> reviews) {
+        int warningVisibility = View.VISIBLE;
+        int recyclerVisibility = View.GONE;
+
+        if (reviews.size() > 0) {
+            ReviewsAdapter reviewsAdapter = new ReviewsAdapter(reviews);
+            binding.recyclerReviews.setAdapter(reviewsAdapter);
+
+            warningVisibility = View.GONE;
+            recyclerVisibility = View.VISIBLE;
+        }
+
+        binding.recyclerReviews.setVisibility(recyclerVisibility);
+        binding.txtNoReviews.setVisibility(warningVisibility);
     }
 
     @Override
     public void onGetReviewsFailed() {
-
+        binding.recyclerReviews.setVisibility(View.GONE);
+        binding.txtNoReviews.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -55,8 +70,18 @@ public class ReviewsFragment extends Fragment implements ReviewsMvpView {
         presenter.getNextReviews(movieId);
     }
 
+    @Override
+    public void onGettingReviews(boolean isGetting) {
+        int progressBarVisibility = View.GONE;
+        if (isGetting) {
+            progressBarVisibility = View.VISIBLE;
+        }
+        binding.progressBar.setVisibility(progressBarVisibility);
+    }
+
     @Inject
     public void setPresenter(ReviewsMvpPresenter presenter) {
         this.presenter = presenter;
+        presenter.attach(this);
     }
 }

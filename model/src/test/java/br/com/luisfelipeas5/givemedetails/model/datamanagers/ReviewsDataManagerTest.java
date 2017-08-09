@@ -57,18 +57,6 @@ public class ReviewsDataManagerTest {
     }
 
     @Test
-    public void whenGetReviews_returnFirstPage_success() {
-        String movieId = mMovie.getId();
-        Single<List<Review>> reviewsSingle = mDataManager.getMovieReviews(movieId);
-        TestObserver<List<Review>> testObserver = reviewsSingle.test();
-        testObserver.assertComplete();
-        testObserver.assertNoErrors();
-        testObserver.assertValue(mReviews);
-
-        verify(mApiMvpHelper).getReviews(movieId, 0);
-    }
-
-    @Test
     public void whenGetReviewsByPage_returnThatPage_success() {
         for (int i = 0; i < mReviewsPages.size(); i++) {
             List<Review> reviews = mReviewsPages.get(i);

@@ -24,6 +24,7 @@ public class ReviewsViewTest {
         MockitoAnnotations.initMocks(this);
         mReviewsMvpView = new ReviewsFragment();
         ((ReviewsFragment) mReviewsMvpView).setPresenter(mReviewsMvpPresenter);
+        verify(mReviewsMvpPresenter).attach(mReviewsMvpView);
     }
 
     @Test

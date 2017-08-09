@@ -33,31 +33,6 @@ public class ModelTestModule {
         setReviews(getReviewsMocked());
     }
 
-    public static List<Review> getReviewsMocked() {
-        String reviewsResponseBodyJson = "{\n" +
-                "    \"id\": 211672,\n" +
-                "    \"page\": 1,\n" +
-                "    \"results\": [\n" +
-                "        {\n" +
-                "            \"id\": \"55a58e46c3a3682bb2000065\",\n" +
-                "            \"author\": \"Andres Gomez\",\n" +
-                "            \"content\": \"The minions are a nice idea and the animation and London recreation is really good, but that's about it.\\r\\n\\r\\nThe script is boring and the jokes not really funny.\",\n" +
-                "            \"url\": \"https://www.themoviedb.org/review/55a58e46c3a3682bb2000065\"\n" +
-                "        },\n" +
-                "        {\n" +
-                "            \"id\": \"55e108c89251416c0b0006dd\",\n" +
-                "            \"author\": \"movizonline.com\",\n" +
-                "            \"content\": \"a nice idea and the animation.the new thing in animation field.a movie that every one should like an kid or old man.\",\n" +
-                "            \"url\": \"https://www.themoviedb.org/review/55e108c89251416c0b0006dd\"\n" +
-                "        }\n" +
-                "    ],\n" +
-                "    \"total_pages\": 1,\n" +
-                "    \"total_results\": 2\n" +
-                "}";
-        ReviewsResponseBody reviewsResponseBody = new Gson().fromJson(reviewsResponseBodyJson, ReviewsResponseBody.class);
-        return new LinkedList<Review>(reviewsResponseBody.getReviews());
-    }
-
     @Provides
     MovieApiMvpHelper provideMovieApiMvpHelper() {
         return new MovieApiMvpHelper() {
@@ -73,29 +48,98 @@ public class ModelTestModule {
 
             @Override
             public Observable<Movie> getMovie(String movieId) {
+                if (movie == null) {
+                    return Observable.error(new Exception("Mocked error loading movie"));
+                }
                 return Observable.just(movie);
             }
 
             @Override
             public Observable<Movie> getMovieSummary(String movieId) {
+                if (movie == null) {
+                    return Observable.error(new Exception("Mocked error loading movie's social summary"));
+                }
                 return Observable.just(movie);
             }
 
             @Override
             public Observable<Movie> getMovieSocial(String movieId) {
+                if (movie == null) {
+                    return Observable.error(new Exception("Mocked error loading movie's social info"));
+                }
                 return Observable.just(movie);
             }
 
             @Override
             public Observable<List<Trailer>> getTrailers(String movieId) {
+                if (trailers == null) {
+                    return Observable.error(new Exception("Mocked error loading trailers"));
+                }
                 return Observable.just(trailers);
             }
 
             @Override
             public Observable<List<Review>> getReviews(String movieId, int pageIndex) {
+                if (reviews == null) {
+                    return Observable.error(new Exception("Mocked error loading reviewss"));
+                }
                 return Observable.just(reviews);
             }
         };
+    }
+
+    @Provides
+    MovieCacheMvpHelper provideMovieCacheMvpHelper() {
+        return new MovieCacheMvpHelper() {
+            @Override
+            public Single<Movie> getMovie(String movieId) {
+                return Single.just(getMovieMocked());
+            }
+
+            @Override
+            public Single<Boolean> hasMoviePosterOnCache(String movieId) {
+                return Single.just(true);
+            }
+
+            @Override
+            public Single<Boolean> hasMovieTitleOnCache(String movieId) {
+                return Single.just(true);
+            }
+
+            @Override
+            public Single<Boolean> hasMovieSummaryOnCache(String movieId) {
+                return Single.just(true);
+            }
+
+            @Override
+            public Single<Boolean> saveMovie(Movie movie) {
+                return Single.just(true);
+            }
+
+            @Override
+            public Single<Boolean> hasMovieSocialOnCache(String movieId) {
+                return Single.just(true);
+            }
+
+        };
+    }
+
+    @Provides
+    MovieMvpDataManager provideMovieMvpDataManager(MovieApiMvpHelper movieApiMvpHelper,
+                                                   MovieCacheMvpHelper movieCacheMvpHelper) {
+        return new MovieDataManager(movieApiMvpHelper, movieCacheMvpHelper);
+    }
+
+    public void setTrailers(List<Trailer> trailers) {
+        this.trailers = trailers;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public static List<Trailer> getTrailersMocked() {
@@ -193,57 +237,29 @@ public class ModelTestModule {
         return new Gson().fromJson(movieJsonString, MovieTMDb.class);
     }
 
-    @Provides
-    MovieCacheMvpHelper provideMovieCacheMvpHelper() {
-        return new MovieCacheMvpHelper() {
-            @Override
-            public Single<Movie> getMovie(String movieId) {
-                return Single.just(getMovieMocked());
-            }
-
-            @Override
-            public Single<Boolean> hasMoviePosterOnCache(String movieId) {
-                return Single.just(true);
-            }
-
-            @Override
-            public Single<Boolean> hasMovieTitleOnCache(String movieId) {
-                return Single.just(true);
-            }
-
-            @Override
-            public Single<Boolean> hasMovieSummaryOnCache(String movieId) {
-                return Single.just(true);
-            }
-
-            @Override
-            public Single<Boolean> saveMovie(Movie movie) {
-                return Single.just(true);
-            }
-
-            @Override
-            public Single<Boolean> hasMovieSocialOnCache(String movieId) {
-                return Single.just(true);
-            }
-
-        };
+    public static List<Review> getReviewsMocked() {
+        String reviewsResponseBodyJson = "{\n" +
+                "    \"id\": 211672,\n" +
+                "    \"page\": 1,\n" +
+                "    \"results\": [\n" +
+                "        {\n" +
+                "            \"id\": \"55a58e46c3a3682bb2000065\",\n" +
+                "            \"author\": \"Andres Gomez\",\n" +
+                "            \"content\": \"The minions are a nice idea and the animation and London recreation is really good, but that's about it.\\r\\n\\r\\nThe script is boring and the jokes not really funny.\",\n" +
+                "            \"url\": \"https://www.themoviedb.org/review/55a58e46c3a3682bb2000065\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": \"55e108c89251416c0b0006dd\",\n" +
+                "            \"author\": \"movizonline.com\",\n" +
+                "            \"content\": \"a nice idea and the animation.the new thing in animation field.a movie that every one should like an kid or old man.\",\n" +
+                "            \"url\": \"https://www.themoviedb.org/review/55e108c89251416c0b0006dd\"\n" +
+                "        }\n" +
+                "    ],\n" +
+                "    \"total_pages\": 1,\n" +
+                "    \"total_results\": 2\n" +
+                "}";
+        ReviewsResponseBody reviewsResponseBody = new Gson().fromJson(reviewsResponseBodyJson, ReviewsResponseBody.class);
+        return new LinkedList<Review>(reviewsResponseBody.getReviews());
     }
 
-    @Provides
-    MovieMvpDataManager provideMovieMvpDataManager(MovieApiMvpHelper movieApiMvpHelper,
-                                                   MovieCacheMvpHelper movieCacheMvpHelper) {
-        return new MovieDataManager(movieApiMvpHelper, movieCacheMvpHelper);
-    }
-
-    public void setTrailers(List<Trailer> trailers) {
-        this.trailers = trailers;
-    }
-
-    public void setMovie(Movie movie) {
-        this.movie = movie;
-    }
-
-    private void setReviews(List<Review> reviews) {
-        this.reviews = reviews;
-    }
 }
