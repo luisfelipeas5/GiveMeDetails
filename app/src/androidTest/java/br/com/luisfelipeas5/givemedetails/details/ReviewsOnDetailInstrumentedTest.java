@@ -58,63 +58,63 @@ public class ReviewsOnDetailInstrumentedTest {
     public void whenGetReviews_showPreviewOfReviews_success() {
         mActivityRule.launchActivity(intent);
 
-        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_reviews))))
+        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
-        onView(withId(R.id.txt_no_reviews))
+        onView(allOf(withId(R.id.txt_no_reviews), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
         for (int i = 0; i < REVIEWS_COUNT_MAX; i++) {
             Review review = mReviews.get(i);
-            onView(withText(review.getAuthor()))
+            onView(allOf(withText(review.getAuthor()), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                     .perform(ViewActions.scrollTo())
                     .check(matches(allOf(withId(R.id.txt_author), withText(review.getAuthor()))));
 
-            onView(withText(review.getContent()))
+            onView(allOf(withText(review.getContent()), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                     .perform(ViewActions.scrollTo())
                     .check(matches(allOf(withId(R.id.txt_content), withText(review.getContent()))));
         }
 
         for (int i = REVIEWS_COUNT_MAX; i < mReviews.size(); i++) {
             Review review = mReviews.get(i);
-            onView(withText(review.getAuthor()))
+            onView(allOf(withText(review.getAuthor()), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                     .check(doesNotExist());
 
-            onView(withText(review.getContent()))
+            onView(allOf(withText(review.getContent()), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                     .check(doesNotExist());
         }
 
-        onView(withId(R.id.button_see_all_reviews))
+        onView(allOf(withId(R.id.button_see_all_reviews), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                 .check(
                         matches(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), withText(R.string.see_all_reviews)))
                 );
     }
 
     @Test
-    public void whenGetReviews_showAllReviews_success() {
+    public void whenGetReviews_withShortList_showPreviewOfReviews_success() {
         ModelTestModule modelTestModule = new ModelTestModule();
         List<Review> reviews = mReviews.subList(0, 3);
         modelTestModule.setReviews(reviews);
         AppTestComponentTestRule.setAppTestComponent(modelTestModule);
         mActivityRule.launchActivity(intent);
 
-        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_reviews))))
+        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
-        onView(withId(R.id.txt_no_reviews))
+        onView(allOf(withId(R.id.txt_no_reviews), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
         for (Review review: reviews) {
-            onView(withText(review.getAuthor()))
+            onView(allOf(withText(review.getAuthor()), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                     .perform(ViewActions.scrollTo())
                     .check(matches(allOf(withId(R.id.txt_author), withText(review.getAuthor()))));
 
-            onView(withText(review.getContent()))
+            onView(allOf(withText(review.getContent()), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                     .perform(ViewActions.scrollTo())
                     .check(matches(allOf(withId(R.id.txt_content), withText(review.getContent()))));
         }
 
-        onView(withId(R.id.button_see_all_reviews))
+        onView(allOf(withId(R.id.button_see_all_reviews), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                 .check(
                         matches(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), withText(R.string.see_all_reviews)))
                 );
@@ -127,10 +127,10 @@ public class ReviewsOnDetailInstrumentedTest {
         AppTestComponentTestRule.setAppTestComponent(modelTestModule);
         mActivityRule.launchActivity(intent);
 
-        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_reviews))))
+        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
-        onView(withId(R.id.txt_no_reviews))
+        onView(allOf(withId(R.id.txt_no_reviews), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
                 .check(matches(withText(R.string.no_reviews)))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
@@ -142,12 +142,42 @@ public class ReviewsOnDetailInstrumentedTest {
         AppTestComponentTestRule.setAppTestComponent(modelTestModule);
         mActivityRule.launchActivity(intent);
 
+        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+
+        onView(allOf(withId(R.id.txt_no_reviews), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
+                .check(matches(withText(R.string.no_reviews)))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+    }
+
+    @Test
+    public void whenGetReviews_showAllReviews_success() {
+        mActivityRule.launchActivity(intent);
+
+        onView(allOf(withId(R.id.button_see_all_reviews), isDescendantOfA(withId(R.id.fragment_reviews_preview))))
+                .perform(ViewActions.scrollTo())
+                .perform(ViewActions.click());
+
         onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_reviews))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
-        onView(withId(R.id.txt_no_reviews))
-                .check(matches(withText(R.string.no_reviews)))
-                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
+        onView(allOf(withId(R.id.txt_no_reviews), isDescendantOfA(withId(R.id.fragment_reviews))))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+
+        for (int i = 0; i < mReviews.size(); i++) {
+            Review review = mReviews.get(i);
+
+            onView(allOf(withText(review.getAuthor()), isDescendantOfA(withId(R.id.fragment_reviews))))
+                    .perform(ViewActions.scrollTo())
+                    .check(matches(allOf(withId(R.id.txt_author), withText(review.getAuthor()))));
+
+            onView(allOf(withText(review.getContent()), isDescendantOfA(withId(R.id.fragment_reviews))))
+                    .perform(ViewActions.scrollTo())
+                    .check(matches(allOf(withId(R.id.txt_content), withText(review.getContent()))));
+        }
+
+        onView(allOf(withId(R.id.button_see_all_reviews), isDescendantOfA(withId(R.id.fragment_reviews))))
+                .check(matches(not(isDisplayed())));
     }
 
 }

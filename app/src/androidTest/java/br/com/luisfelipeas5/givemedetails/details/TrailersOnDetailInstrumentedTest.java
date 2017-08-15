@@ -61,58 +61,51 @@ public class TrailersOnDetailInstrumentedTest {
     public void whenLoadTrailers_showPreviewOfTrailers_success() {
         mActivityRule.launchActivity(intent);
 
-        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_trailers))))
+        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
-        onView(withId(R.id.txt_no_trailers))
+        onView(allOf(withId(R.id.txt_no_trailers), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
         for (int i = 0; i < TRAILERS_COUNT_MAX; i++) {
             Trailer trailer = mTrailers.get(i);
-            onView(withText(trailer.getName()))
+            onView(allOf(withText(trailer.getName()), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
                     .perform(ViewActions.scrollTo())
-                    .check(
-                            matches(allOf(withId(R.id.txt_trailer_name), withText(trailer.getName())))
-                    );
+                    .check(matches(allOf(withId(R.id.txt_trailer_name), withText(trailer.getName()))));
         }
 
         for (int i = TRAILERS_COUNT_MAX; i < mTrailers.size(); i++) {
             Trailer trailer = mTrailers.get(i);
-
-            onView(withText(trailer.getName()))
+            onView(allOf(withText(trailer.getName()), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
                     .check(doesNotExist());
         }
 
-        onView(withId(R.id.button_see_all_trailers))
-                .check(
-                        matches(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), withText(R.string.see_all_trailers)))
-                );
+        onView(allOf(withId(R.id.button_see_all_trailers), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
+                .check(matches(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), withText(R.string.see_all_trailers))));
     }
 
     @Test
-    public void whenLoadTrailers_showAllTrailers_success() {
+    public void whenLoadTrailers_andListIsShort_showPreviewAllTrailers_success() {
         ModelTestModule modelTestModule = new ModelTestModule();
         List<Trailer> trailers = mTrailers.subList(0, 3);
         modelTestModule.setTrailers(trailers);
         AppTestComponentTestRule.setAppTestComponent(modelTestModule);
         mActivityRule.launchActivity(intent);
 
-        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_trailers))))
+        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
-        onView(withId(R.id.txt_no_trailers))
+        onView(allOf(withId(R.id.txt_no_trailers), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
         for (Trailer trailer : trailers) {
-            onView(withText(trailer.getName()))
+            onView(allOf(withText(trailer.getName()), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
                     .perform(ViewActions.scrollTo())
                     .check(matches(allOf(withId(R.id.txt_trailer_name), withText(trailer.getName()))));
         }
 
-        onView(withId(R.id.button_see_all_trailers))
-                .check(
-                        matches(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), withText(R.string.see_all_trailers)))
-                );
+        onView(allOf(withId(R.id.button_see_all_trailers), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
+                .check(matches(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), withText(R.string.see_all_trailers))));
     }
 
     @Test
@@ -122,13 +115,13 @@ public class TrailersOnDetailInstrumentedTest {
         AppTestComponentTestRule.setAppTestComponent(modelTestModule);
         mActivityRule.launchActivity(intent);
 
-        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_trailers))))
+        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
-        onView(withId(R.id.recycler_trailers))
+        onView(allOf(withId(R.id.recycler_trailers), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
-        onView(withId(R.id.txt_no_trailers))
+        onView(allOf(withId(R.id.txt_no_trailers), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
                 .check(matches(withText(R.string.no_trailers)));
     }
@@ -140,15 +133,40 @@ public class TrailersOnDetailInstrumentedTest {
         AppTestComponentTestRule.setAppTestComponent(modelTestModule);
         mActivityRule.launchActivity(intent);
 
+        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+
+        onView(allOf(withId(R.id.recycler_trailers), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+
+        onView(allOf(withId(R.id.txt_no_trailers), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
+                .check(matches(withText(R.string.no_trailers)));
+    }
+
+    @Test
+    public void whenLoadTrailers_showAllOfTrailers_success() {
+        mActivityRule.launchActivity(intent);
+
+        onView(allOf(withId(R.id.button_see_all_trailers), isDescendantOfA(withId(R.id.fragment_trailers_preview))))
+                .perform(ViewActions.scrollTo())
+                .perform(ViewActions.click());
+
         onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_trailers))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
-        onView(withId(R.id.recycler_trailers))
+        onView(allOf(withId(R.id.txt_no_trailers), isDescendantOfA(withId(R.id.fragment_trailers))))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
-        onView(withId(R.id.txt_no_trailers))
-                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)))
-                .check(matches(withText(R.string.no_trailers)));
+        for (int i = 0; i < mTrailers.size(); i++) {
+            Trailer trailer = mTrailers.get(i);
+            onView(allOf(withText(trailer.getName()), isDescendantOfA(withId(R.id.fragment_trailers))))
+                    .perform(ViewActions.scrollTo())
+                    .check(matches(allOf(withId(R.id.txt_trailer_name), withText(trailer.getName()))));
+        }
+
+        onView(allOf(withId(R.id.button_see_all_trailers), isDescendantOfA(withId(R.id.fragment_trailers))))
+                .check(matches(not(isDisplayed())));
     }
 
 }
