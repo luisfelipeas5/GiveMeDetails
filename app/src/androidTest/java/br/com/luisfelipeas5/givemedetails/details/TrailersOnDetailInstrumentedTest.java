@@ -24,15 +24,20 @@ import br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity;
 import br.com.luisfelipeas5.givemedetails.view.di.modules.model.ModelTestModule;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.core.IsNot.not;
 
 @RunWith(AndroidJUnit4.class)
-public class TrailersInstrumentedTest {
+public class TrailersOnDetailInstrumentedTest {
+
+    private static final int TRAILERS_COUNT_MAX = 3;
 
     @Rule
     public ActivityTestRule<DetailActivity> mActivityRule = new ActivityTestRule<>(DetailActivity.class, true, false);
@@ -53,7 +58,7 @@ public class TrailersInstrumentedTest {
     }
 
     @Test
-    public void whenLoadTrailers_showNameForEachTrailer_success() {
+    public void whenLoadTrailers_showPreviewOfTrailers_success() {
         mActivityRule.launchActivity(intent);
 
         onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_trailers))))
@@ -62,14 +67,50 @@ public class TrailersInstrumentedTest {
         onView(withId(R.id.txt_no_trailers))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
-        for (Trailer trailer : mTrailers) {
+        for (int i = 0; i < TRAILERS_COUNT_MAX; i++) {
+            Trailer trailer = mTrailers.get(i);
             onView(withText(trailer.getName()))
                     .perform(ViewActions.scrollTo())
                     .check(
                             matches(allOf(withId(R.id.txt_trailer_name), withText(trailer.getName())))
                     );
-
         }
+
+        for (int i = TRAILERS_COUNT_MAX; i < mTrailers.size(); i++) {
+            Trailer trailer = mTrailers.get(i);
+
+            onView(withText(trailer.getName()))
+                    .check(doesNotExist());
+        }
+
+        onView(withId(R.id.button_see_all_trailers))
+                .check(
+                        matches(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), withText(R.string.see_all_trailers)))
+                );
+    }
+
+    @Test
+    public void whenLoadTrailers_showAllTrailers_success() {
+        ModelTestModule modelTestModule = new ModelTestModule();
+        List<Trailer> trailers = mTrailers.subList(0, 3);
+        modelTestModule.setTrailers(trailers);
+        AppTestComponentTestRule.setAppTestComponent(modelTestModule);
+        mActivityRule.launchActivity(intent);
+
+        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_trailers))))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+
+        onView(withId(R.id.txt_no_trailers))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+
+        for (Trailer trailer : trailers) {
+            onView(withText(trailer.getName()))
+                    .perform(ViewActions.scrollTo())
+                    .check(matches(allOf(withId(R.id.txt_trailer_name), withText(trailer.getName()))));
+        }
+
+        onView(withId(R.id.button_see_all_trailers))
+                .check(matches(not(isDisplayed())));
     }
 
     @Test

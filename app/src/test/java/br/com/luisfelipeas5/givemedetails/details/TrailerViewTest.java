@@ -27,10 +27,17 @@ public class TrailerViewTest {
     }
 
     @Test
-    public void whenSetMovieId_callPresenter_success() {
+    public void whenSetMovieId_callGetTrailerOfPresenter_success() {
         String movieId = "Movie Id mocked";
-        mTrailersMvpView.setMovieId(movieId);
+        mTrailersMvpView.setMovieId(movieId, false);
         verify(mTrailersMvpPresenter).getTrailers(movieId);
+    }
+
+    @Test
+    public void whenSetMovieId_callGetTrailerPreviewOfPresenter_success() {
+        String movieId = "Movie Id mocked";
+        mTrailersMvpView.setMovieId(movieId, true);
+        verify(mTrailersMvpPresenter).getTrailersPreview(movieId);
     }
 
     @Test

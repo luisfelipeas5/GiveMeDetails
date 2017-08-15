@@ -11,7 +11,7 @@
         <android.support.constraint.ConstraintLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView android:id="@+id/txt_reviews_label"
                 android:text="@string/reviews"
@@ -48,13 +48,21 @@
 
             <android.support.v7.widget.RecyclerView android:id="@+id/recycler_reviews"
                 app:layout_constraintTop_toBottomOf="@id/txt_reviews_label"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintVertical_bias="0"
                 android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"/>
+
+            <Button android:id="@+id/button_see_all_reviews"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recycler_reviews"
+                style="@style/ButtonSeeAll"
+                android:text="@string/see_all_reviews"
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
 
         </android.support.constraint.ConstraintLayout>
 

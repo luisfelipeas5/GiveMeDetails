@@ -10,7 +10,9 @@ public interface ReviewsMvpView extends MvpView {
 
     void onGetReviewsFailed();
 
-    void setMovieId(String movieId);
+    void setMovieId(String movieId, boolean showPreview);
 
     void onGettingReviews(boolean isGetting);
+
+    void showSeeAllReviewsButton();
 }

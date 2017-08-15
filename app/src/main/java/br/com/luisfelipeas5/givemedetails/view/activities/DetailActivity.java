@@ -70,10 +70,10 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         socialFragment.setMovieId(movieId);
 
         TrailersFragment trailersFragment = (TrailersFragment) fragmentManager.findFragmentById(R.id.fragment_trailers);
-        trailersFragment.setMovieId(movieId);
+        trailersFragment.setMovieId(movieId, true);
 
         ReviewsFragment reviewsFragment = (ReviewsFragment) fragmentManager.findFragmentById(R.id.fragment_reviews);
-        reviewsFragment.setMovieId(movieId);
+        reviewsFragment.setMovieId(movieId, true);
     }
 
     @Override

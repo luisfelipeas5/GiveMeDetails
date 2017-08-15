@@ -50,8 +50,12 @@ public class TrailersFragment extends Fragment implements TrailersMvpView, Trail
     }
 
     @Override
-    public void setMovieId(String movieId) {
-        mTrailerMvpPresenter.getTrailers(movieId);
+    public void setMovieId(String movieId, boolean showPreview) {
+        if (showPreview) {
+            mTrailerMvpPresenter.getTrailersPreview(movieId);
+        } else {
+            mTrailerMvpPresenter.getTrailers(movieId);
+        }
     }
 
     @Override
@@ -76,6 +80,11 @@ public class TrailersFragment extends Fragment implements TrailersMvpView, Trail
         mBinding.progressBar.setVisibility(View.GONE);
         mBinding.recyclerTrailers.setVisibility(View.GONE);
         mBinding.txtNoTrailers.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showSeeAllTrailersButton() {
+        mBinding.buttonSeeAllTrailers.setVisibility(View.VISIBLE);
     }
 
     @Override

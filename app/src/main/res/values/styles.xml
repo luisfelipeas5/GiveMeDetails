@@ -27,4 +27,8 @@
         <item name="android:textSize">@dimen/details_normal_text</item>
     </style>
 
+    <style name="ButtonSeeAll" parent="TxtDetailSessionSmallTitle">
+        <item name="android:background">@drawable/transparent_clickable</item>
+    </style>
+
 </resources>

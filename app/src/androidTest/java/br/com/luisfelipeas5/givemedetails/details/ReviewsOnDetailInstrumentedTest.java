@@ -22,14 +22,19 @@ import br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity;
 import br.com.luisfelipeas5.givemedetails.view.di.modules.model.ModelTestModule;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDescendantOfA;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.core.IsNot.not;
 
-public class ReviewsInstrumentedTest {
+public class ReviewsOnDetailInstrumentedTest {
+
+    private static final int REVIEWS_COUNT_MAX = 3;
 
     @Rule
     public ActivityTestRule<DetailActivity> mActivityRule = new ActivityTestRule<>(DetailActivity.class, true, false);
@@ -50,7 +55,7 @@ public class ReviewsInstrumentedTest {
     }
 
     @Test
-    public void whenGetReviews_showList_success() {
+    public void whenGetReviews_showPreviewOfReviews_success() {
         mActivityRule.launchActivity(intent);
 
         onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_reviews))))
@@ -59,7 +64,8 @@ public class ReviewsInstrumentedTest {
         onView(withId(R.id.txt_no_reviews))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
 
-        for (Review review : mReviews) {
+        for (int i = 0; i < REVIEWS_COUNT_MAX; i++) {
+            Review review = mReviews.get(i);
             onView(withText(review.getAuthor()))
                     .perform(ViewActions.scrollTo())
                     .check(matches(allOf(withId(R.id.txt_author), withText(review.getAuthor()))));
@@ -68,6 +74,48 @@ public class ReviewsInstrumentedTest {
                     .perform(ViewActions.scrollTo())
                     .check(matches(allOf(withId(R.id.txt_content), withText(review.getContent()))));
         }
+
+        for (int i = REVIEWS_COUNT_MAX; i < mReviews.size(); i++) {
+            Review review = mReviews.get(i);
+            onView(withText(review.getAuthor()))
+                    .check(doesNotExist());
+
+            onView(withText(review.getContent()))
+                    .check(doesNotExist());
+        }
+
+        onView(withId(R.id.button_see_all_reviews))
+                .check(
+                        matches(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), withText(R.string.see_all_reviews)))
+                );
+    }
+
+    @Test
+    public void whenGetReviews_showAllReviews_success() {
+        ModelTestModule modelTestModule = new ModelTestModule();
+        List<Review> reviews = mReviews.subList(0, 3);
+        modelTestModule.setReviews(reviews);
+        AppTestComponentTestRule.setAppTestComponent(modelTestModule);
+        mActivityRule.launchActivity(intent);
+
+        onView(allOf(withId(R.id.progress_bar), isDescendantOfA(withId(R.id.fragment_reviews))))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+
+        onView(withId(R.id.txt_no_reviews))
+                .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.GONE)));
+
+        for (Review review: reviews) {
+            onView(withText(review.getAuthor()))
+                    .perform(ViewActions.scrollTo())
+                    .check(matches(allOf(withId(R.id.txt_author), withText(review.getAuthor()))));
+
+            onView(withText(review.getContent()))
+                    .perform(ViewActions.scrollTo())
+                    .check(matches(allOf(withId(R.id.txt_content), withText(review.getContent()))));
+        }
+
+        onView(withId(R.id.button_see_all_reviews))
+                .check(matches(not(isDisplayed())));
     }
 
     @Test

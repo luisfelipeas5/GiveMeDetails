@@ -66,8 +66,12 @@ public class ReviewsFragment extends Fragment implements ReviewsMvpView {
     }
 
     @Override
-    public void setMovieId(String movieId) {
-        presenter.getNextReviews(movieId);
+    public void setMovieId(String movieId, boolean showPreview) {
+        if (showPreview) {
+            presenter.getReviewsPreviews(movieId);
+        } else {
+            presenter.getNextReviews(movieId);
+        }
     }
 
     @Override
@@ -77,6 +81,11 @@ public class ReviewsFragment extends Fragment implements ReviewsMvpView {
             progressBarVisibility = View.VISIBLE;
         }
         binding.progressBar.setVisibility(progressBarVisibility);
+    }
+
+    @Override
+    public void showSeeAllReviewsButton() {
+        binding.buttonSeeAllReviews.setVisibility(View.VISIBLE);
     }
 
     @Inject

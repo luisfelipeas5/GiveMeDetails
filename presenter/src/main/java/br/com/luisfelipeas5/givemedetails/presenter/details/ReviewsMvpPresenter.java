@@ -7,4 +7,6 @@ public interface ReviewsMvpPresenter extends MvpPresenter<ReviewsMvpView> {
     void getNextReviews(String id);
 
     int getCurrentPage();
+
+    void getReviewsPreviews(String movieId);
 }

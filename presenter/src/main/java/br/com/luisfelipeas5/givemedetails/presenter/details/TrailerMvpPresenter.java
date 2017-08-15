@@ -5,4 +5,6 @@ import br.com.luisfelipeas5.givemedetails.view.details.TrailersMvpView;
 
 public interface TrailerMvpPresenter extends MvpPresenter<TrailersMvpView>{
     void getTrailers(String movieId);
+
+    void getTrailersPreview(String movieId);
 }

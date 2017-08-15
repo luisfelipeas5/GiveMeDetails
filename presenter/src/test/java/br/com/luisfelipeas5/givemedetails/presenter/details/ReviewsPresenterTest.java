@@ -38,8 +38,12 @@ public class ReviewsPresenterTest {
     private ReviewsMvpView mReviewsMvpView;
     @Mock
     private Movie mMovie;
-    @Mock
     private List<Review> mReviews;
+    @Mock private Review mReview0;
+    @Mock private Review mReview1;
+    @Mock private Review mReview2;
+    @Mock private Review mReview3;
+
     @Mock
     private List<Review> mReviewsSecondPage;
 
@@ -47,6 +51,12 @@ public class ReviewsPresenterTest {
 
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+
+        mReviews = new LinkedList<>();
+        mReviews.add(mReview0);
+        mReviews.add(mReview1);
+        mReviews.add(mReview2);
+        mReviews.add(mReview3);
 
         when(mMovie.getId()).thenReturn("Movie Id Mocked");
         when(mMovieMvpDataManager.getMovieReviewsByPage(mMovie.getId(), 0)).thenReturn(Single.just(mReviews));
@@ -149,6 +159,30 @@ public class ReviewsPresenterTest {
             mTestScheduler.triggerActions();
             Assert.assertEquals(i + 1, mReviewsMvpPresenter.getCurrentPage());
         }
+    }
+
+    @Test
+    public void whenGetReviewsPreview_callZeroPageOfDataManager_success() {
+        mReviewsMvpPresenter.getReviewsPreviews(mMovie.getId());
+        mTestScheduler.triggerActions();
+        verify(mMovieMvpDataManager).getMovieReviewsByPage(mMovie.getId(), 0);
+    }
+
+    @Test
+    public void whenGetReviewsPreview_callOnReviewReadyOfView_andCallSeeAllButton_success() {
+        mReviewsMvpPresenter.getReviewsPreviews(mMovie.getId());
+        mTestScheduler.triggerActions();
+        verify(mReviewsMvpView).onReviewsReady(mReviews.subList(0, 3));
+        verify(mReviewsMvpView).showSeeAllReviewsButton();
+    }
+
+    @Test
+    public void whenGetReviewsPreview_callOnReviewReadyOfView_success() {
+        when(mMovieMvpDataManager.getMovieReviewsByPage(mMovie.getId(), 0)).thenReturn(Single.just(mReviews.subList(0, 3)));
+        mReviewsMvpPresenter.getReviewsPreviews(mMovie.getId());
+        mTestScheduler.triggerActions();
+        verify(mReviewsMvpView).onReviewsReady(mReviews.subList(0, 3));
+        verify(mReviewsMvpView, never()).showSeeAllReviewsButton();
     }
 
 }

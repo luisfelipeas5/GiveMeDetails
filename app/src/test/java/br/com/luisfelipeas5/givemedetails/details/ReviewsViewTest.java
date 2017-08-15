@@ -28,8 +28,14 @@ public class ReviewsViewTest {
     }
 
     @Test
-    public void whenSetMovieId_callPresenter_success() {
-        mReviewsMvpView.setMovieId(MOVIE_ID);
+    public void whenSetMovieId_callGetPreviewOfPresenter_success() {
+        mReviewsMvpView.setMovieId(MOVIE_ID, true);
+        verify(mReviewsMvpPresenter).getReviewsPreviews(MOVIE_ID);
+    }
+
+    @Test
+    public void whenSetMovieId_callGetNextReviewsOfPresenter_success() {
+        mReviewsMvpView.setMovieId(MOVIE_ID, false);
         verify(mReviewsMvpPresenter).getNextReviews(MOVIE_ID);
     }
 
