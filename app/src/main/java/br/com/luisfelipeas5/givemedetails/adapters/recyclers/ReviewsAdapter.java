@@ -11,15 +11,22 @@ import br.com.luisfelipeas5.givemedetails.model.model.reviews.Review;
 
 public class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
     private final List<Review> mReviews;
+    private final boolean mShowAllLines;
 
-    public ReviewsAdapter(List<Review> reviews) {
+    public ReviewsAdapter(List<Review> reviews, boolean showAllLines) {
         mReviews = reviews;
+        mShowAllLines = showAllLines;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ReviewsAdapterItemBinding binding = ReviewsAdapterItemBinding.inflate(inflater, parent, false);
+        int maxLines = 3;
+        if (mShowAllLines) {
+            maxLines = Integer.MAX_VALUE;
+        }
+        binding.txtContent.setMaxLines(maxLines);
         return new ViewHolder(binding);
     }
 

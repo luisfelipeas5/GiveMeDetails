@@ -27,6 +27,7 @@ public class ReviewsFragment extends Fragment implements ReviewsMvpView, View.On
     private ReviewsMvpPresenter presenter;
     private FragmentReviewsBinding binding;
     private Listener listener;
+    private boolean mShowPreview;
 
     @Nullable
     @Override
@@ -52,7 +53,7 @@ public class ReviewsFragment extends Fragment implements ReviewsMvpView, View.On
         int recyclerVisibility = View.GONE;
 
         if (reviews.size() > 0) {
-            ReviewsAdapter reviewsAdapter = new ReviewsAdapter(reviews);
+            ReviewsAdapter reviewsAdapter = new ReviewsAdapter(reviews, !mShowPreview);
             binding.recyclerReviews.setAdapter(reviewsAdapter);
 
             warningVisibility = View.GONE;
@@ -71,6 +72,7 @@ public class ReviewsFragment extends Fragment implements ReviewsMvpView, View.On
 
     @Override
     public void setMovieId(String movieId, boolean showPreview) {
+        mShowPreview = showPreview;
         if (showPreview) {
             presenter.getReviewsPreviews(movieId);
         } else {

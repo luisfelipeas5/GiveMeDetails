@@ -26,9 +26,22 @@ import br.com.luisfelipeas5.givemedetails.view.di.components.BaseComponent;
 
 public class TrailersFragment extends Fragment implements TrailersMvpView, TrailersAdapter.OnTrailerClickListener, View.OnClickListener {
 
+    private static final String ARG_KEY_MOVIE_ID = "br.com.luisfelipeas5.givemedetails.view.fragments.details.ARG_KEY_MOVIE_ID";
+    private static final String ARG_KEY_SHOW_PREVIEW = "br.com.luisfelipeas5.givemedetails.view.fragments.details.ARG_KEY_SHOW_PREVIEW";
+
     private FragmentTrailersBinding mBinding;
     private TrailerMvpPresenter mTrailerMvpPresenter;
     private Listener listener;
+
+    public static TrailersFragment newInstance(String movieId, boolean showPreview) {
+        Bundle args = new Bundle();
+        args.putString(ARG_KEY_MOVIE_ID, movieId);
+        args.putBoolean(ARG_KEY_SHOW_PREVIEW, showPreview);
+
+        TrailersFragment fragment = new TrailersFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -43,6 +56,11 @@ public class TrailersFragment extends Fragment implements TrailersMvpView, Trail
         MoviesApp moviesApp = (MoviesApp) getContext().getApplicationContext();
         BaseComponent baseComponent = moviesApp.getDiComponent();
         baseComponent.inject(this);
+
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            setMovieId(arguments.getString(ARG_KEY_MOVIE_ID), arguments.getBoolean(ARG_KEY_SHOW_PREVIEW));
+        }
 
         return mBinding.getRoot();
     }
