@@ -115,7 +115,9 @@ public class ReviewsOnDetailInstrumentedTest {
         }
 
         onView(withId(R.id.button_see_all_reviews))
-                .check(matches(not(isDisplayed())));
+                .check(
+                        matches(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), withText(R.string.see_all_reviews)))
+                );
     }
 
     @Test

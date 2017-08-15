@@ -39,8 +39,8 @@ public class TrailerPresenter extends BasePresenter<TrailersMvpView> implements 
         Function<List<Trailer>, List<Trailer>> function = new Function<List<Trailer>, List<Trailer>>() {
             @Override
             public List<Trailer> apply(@NonNull List<Trailer> trailers) throws Exception {
+                showSeeAllTrailersButton = true;
                 if (trailers.size() > 3) {
-                    showSeeAllTrailersButton = true;
                     return trailers.subList(0, 3);
                 }
                 return trailers;

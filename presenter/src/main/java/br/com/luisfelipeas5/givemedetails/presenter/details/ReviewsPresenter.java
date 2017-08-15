@@ -52,8 +52,8 @@ public class ReviewsPresenter extends BasePresenter<ReviewsMvpView> implements R
         getReviews(movieId, 0, new Function<List<Review>, List<Review>>() {
             @Override
             public List<Review> apply(@NonNull List<Review> reviews) throws Exception {
+                mShowSeeAllButton = true;
                 if (reviews.size() > 3) {
-                    mShowSeeAllButton = true;
                     return reviews.subList(0, 3);
                 }
                 return reviews;

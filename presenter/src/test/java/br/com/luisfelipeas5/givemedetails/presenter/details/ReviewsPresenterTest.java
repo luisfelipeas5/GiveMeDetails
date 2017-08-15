@@ -182,7 +182,7 @@ public class ReviewsPresenterTest {
         mReviewsMvpPresenter.getReviewsPreviews(mMovie.getId());
         mTestScheduler.triggerActions();
         verify(mReviewsMvpView).onReviewsReady(mReviews.subList(0, 3));
-        verify(mReviewsMvpView, never()).showSeeAllReviewsButton();
+        verify(mReviewsMvpView).showSeeAllReviewsButton();
     }
 
 }

@@ -110,7 +110,9 @@ public class TrailersOnDetailInstrumentedTest {
         }
 
         onView(withId(R.id.button_see_all_trailers))
-                .check(matches(not(isDisplayed())));
+                .check(
+                        matches(allOf(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE), withText(R.string.see_all_trailers)))
+                );
     }
 
     @Test
