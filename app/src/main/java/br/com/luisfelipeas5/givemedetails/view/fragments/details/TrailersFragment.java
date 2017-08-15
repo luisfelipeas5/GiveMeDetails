@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.adapters.recyclers.TrailersAdapter;
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentTrailersBinding;
 import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
@@ -23,10 +24,11 @@ import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.details.TrailersMvpView;
 import br.com.luisfelipeas5.givemedetails.view.di.components.BaseComponent;
 
-public class TrailersFragment extends Fragment implements TrailersMvpView, TrailersAdapter.OnTrailerClickListener {
+public class TrailersFragment extends Fragment implements TrailersMvpView, TrailersAdapter.OnTrailerClickListener, View.OnClickListener {
 
     private FragmentTrailersBinding mBinding;
     private TrailerMvpPresenter mTrailerMvpPresenter;
+    private Listener listener;
 
     @Nullable
     @Override
@@ -35,6 +37,8 @@ public class TrailersFragment extends Fragment implements TrailersMvpView, Trail
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mBinding.recyclerTrailers.setLayoutManager(layoutManager);
         mBinding.recyclerTrailers.setNestedScrollingEnabled(false);
+
+        mBinding.buttonSeeAllTrailers.setOnClickListener(this);
 
         MoviesApp moviesApp = (MoviesApp) getContext().getApplicationContext();
         BaseComponent baseComponent = moviesApp.getDiComponent();
@@ -98,5 +102,23 @@ public class TrailersFragment extends Fragment implements TrailersMvpView, Trail
         Uri trailerUri = Uri.parse(trailer.getIntentUri());
         Intent intent = new Intent(Intent.ACTION_VIEW, trailerUri);
         startActivity(intent);
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.button_see_all_trailers) {
+            if (listener != null) {
+                listener.onSeeAllTrailersClicked();
+            }
+        }
+    }
+
+    public interface Listener {
+        void onSeeAllTrailersClicked();
     }
 }

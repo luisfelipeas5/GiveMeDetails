@@ -71,9 +71,31 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         TrailersFragment trailersFragment = (TrailersFragment) fragmentManager.findFragmentById(R.id.fragment_trailers);
         trailersFragment.setMovieId(movieId, true);
+        trailersFragment.setListener(new TrailersFragment.Listener() {
+
+            @Override
+            public void onSeeAllTrailersClicked() {
+                showAllTrailers();
+            }
+
+        });
 
         ReviewsFragment reviewsFragment = (ReviewsFragment) fragmentManager.findFragmentById(R.id.fragment_reviews);
         reviewsFragment.setMovieId(movieId, true);
+        reviewsFragment.setListener(new ReviewsFragment.Listener() {
+            @Override
+            public void onSeeAllReviewsClicked() {
+                showAllReviews();
+            }
+        });
+    }
+
+    private void showAllReviews() {
+
+    }
+
+    private void showAllTrailers() {
+
     }
 
     @Override

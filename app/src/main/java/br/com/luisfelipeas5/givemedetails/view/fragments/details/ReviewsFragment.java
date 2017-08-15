@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.com.luisfelipeas5.givemedetails.R;
 import br.com.luisfelipeas5.givemedetails.adapters.recyclers.ReviewsAdapter;
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentReviewsBinding;
 import br.com.luisfelipeas5.givemedetails.model.model.reviews.Review;
@@ -21,10 +22,11 @@ import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.details.ReviewsMvpView;
 import br.com.luisfelipeas5.givemedetails.view.di.components.BaseComponent;
 
-public class ReviewsFragment extends Fragment implements ReviewsMvpView {
+public class ReviewsFragment extends Fragment implements ReviewsMvpView, View.OnClickListener {
 
     private ReviewsMvpPresenter presenter;
     private FragmentReviewsBinding binding;
+    private Listener listener;
 
     @Nullable
     @Override
@@ -34,6 +36,8 @@ public class ReviewsFragment extends Fragment implements ReviewsMvpView {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         binding.recyclerReviews.setLayoutManager(layoutManager);
         binding.recyclerReviews.setNestedScrollingEnabled(false);
+
+        binding.buttonSeeAllReviews.setOnClickListener(this);
 
         MoviesApp moviesApp = (MoviesApp) getContext().getApplicationContext();
         BaseComponent baseComponent = moviesApp.getDiComponent();
@@ -92,5 +96,23 @@ public class ReviewsFragment extends Fragment implements ReviewsMvpView {
     public void setPresenter(ReviewsMvpPresenter presenter) {
         this.presenter = presenter;
         presenter.attach(this);
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        if (id == R.id.button_see_all_reviews) {
+            if (listener != null) {
+                listener.onSeeAllReviewsClicked();
+            }
+        }
+    }
+
+    public interface Listener {
+        void onSeeAllReviewsClicked();
     }
 }
