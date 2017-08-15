@@ -15,14 +15,18 @@ import br.com.luisfelipeas5.givemedetails.view.di.modules.model.ModelTestModule;
 public class AppTestComponentTestRule implements TestRule {
     @Override
     public Statement apply(Statement base, Description description) {
+        ModelTestModule modelTestModule = new ModelTestModule();
+        setAppTestComponent(modelTestModule);
+        return base;
+    }
+
+    public static void setAppTestComponent(ModelTestModule modelTestModule) {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
         MoviesApp moviesApp = (MoviesApp) context.getApplicationContext();
         BaseComponent moviesComponent = DaggerAppTestComponent.builder()
-                .modelTestModule(new ModelTestModule())
+                .modelTestModule(modelTestModule)
                 .build();
         moviesApp.setDiComponent(moviesComponent);
-
-        return base;
     }
 }

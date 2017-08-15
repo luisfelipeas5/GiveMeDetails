@@ -7,12 +7,12 @@
         android:layout_height="match_parent"
         tools:context="br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity">
 
-        <fragment android:id="@+id/fragment_poster"
+        <fragment android:id="@+id/fragment_poster_background"
             android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.PosterFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <ScrollView
+        <ScrollView android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -36,6 +36,48 @@
                     android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.SocialFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
+                <fragment android:id="@+id/fragment_trailers_preview"
+                    android:layout_marginTop="5dp"
+                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.TrailersFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <fragment android:id="@+id/fragment_reviews_preview"
+                    android:layout_marginTop="5dp"
+                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.ReviewsFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <ScrollView android:id="@+id/sub_scroll_view"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:padding="@dimen/details_card_layout_padding"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View android:layout_width="match_parent"
+                    android:focusableInTouchMode="true"
+                    android:focusable="true"
+                    android:layout_height="?actionBarSize"/>
+
+                <fragment android:id="@+id/fragment_trailers"
+                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.TrailersFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <fragment android:id="@+id/fragment_reviews"
+                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.ReviewsFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

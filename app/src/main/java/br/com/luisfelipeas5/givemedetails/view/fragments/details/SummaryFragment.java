@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import javax.inject.Inject;
 
 import br.com.luisfelipeas5.givemedetails.databinding.FragmentSummaryBinding;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import br.com.luisfelipeas5.givemedetails.presenter.details.SummaryMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.details.SummaryMvpView;

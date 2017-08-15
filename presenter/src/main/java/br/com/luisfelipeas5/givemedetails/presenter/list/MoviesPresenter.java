@@ -3,7 +3,7 @@ package br.com.luisfelipeas5.givemedetails.presenter.list;
 import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import br.com.luisfelipeas5.givemedetails.presenter.BasePresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.schedulers.SchedulerProvider;
 import br.com.luisfelipeas5.givemedetails.view.list.MoviesMvpView;

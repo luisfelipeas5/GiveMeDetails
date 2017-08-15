@@ -4,7 +4,7 @@
     <data>
         <variable
             name="movie"
-            type="br.com.luisfelipeas5.givemedetails.model.model.Movie"/>
+            type="br.com.luisfelipeas5.givemedetails.model.model.movie.Movie"/>
         <import type="android.view.View"/>
     </data>
 
@@ -24,9 +24,8 @@
             android:layout_height="wrap_content">
 
             <TextView android:id="@+id/txt_popularity_label"
+                style="@style/TxtDetailSessionMediumTitle"
                 android:text="@string/popularity"
-                android:textSize="@dimen/detail_normal_text"
-                android:textColor="@color/colorAccent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -47,9 +46,8 @@
 
             <TextView android:id="@+id/txt_vote_average_label"
                 android:layout_marginTop="10dp"
+                style="@style/TxtDetailSessionMediumTitle"
                 android:text="@string/vote_average"
-                android:textSize="@dimen/detail_normal_text"
-                android:textColor="@color/colorAccent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

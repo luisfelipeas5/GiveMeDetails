@@ -7,13 +7,11 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.List;
-
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
@@ -31,7 +29,6 @@ public class GetByIdDataManagerTest {
     private MovieApiMvpHelper mMovieApiMvpHelper;
     @Mock
     private MovieCacheMvpHelper mMovieCacheHelper;
-
     @Mock
     private Movie mMovieMocked;
 

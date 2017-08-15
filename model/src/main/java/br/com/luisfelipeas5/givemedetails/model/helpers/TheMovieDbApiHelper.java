@@ -6,9 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.R;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
-import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
-import br.com.luisfelipeas5.givemedetails.model.model.MoviesResponseBody;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
+import br.com.luisfelipeas5.givemedetails.model.model.responsebodies.MoviesResponseBody;
+import br.com.luisfelipeas5.givemedetails.model.model.responsebodies.ReviewsResponseBody;
+import br.com.luisfelipeas5.givemedetails.model.model.responsebodies.TrailersResponseBody;
+import br.com.luisfelipeas5.givemedetails.model.model.reviews.Review;
+import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
 import io.reactivex.Observable;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
@@ -28,8 +32,11 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
 
     private static final String MOVIE_ID_PATH = "movieId";
     private static final String GET_MOVIE_PATH = "3/movie/{" + MOVIE_ID_PATH + "}";
+    private static final String GET_TRAILERS_PATH = GET_MOVIE_PATH + "/videos";
+    private static final String GET_REVIEWS_PATH = GET_MOVIE_PATH + "/reviews";
 
     private static final String KEY_QUERY_API_KEY = "api_key";
+    private static final String KEY_QUERY_PAGE = "page";
 
     private final TheMovieDbApi mTheMovieDbApi;
     private String mApiKey;
@@ -78,8 +85,36 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
 
     @Override
     public Observable<Movie> getMovieSocial(String movieId) {
-        return null;
+        return getMovie(movieId);
     }
+
+    @Override
+    public Observable<List<Trailer>> getTrailers(String movieId) {
+        return mTheMovieDbApi.getTrailers(movieId, mApiKey)
+                .flatMap(getTrailerResponseMapper());
+    }
+
+    @Override
+    public Observable<List<Review>> getReviews(String movieId, int pageIndex) {
+        return mTheMovieDbApi.getReviews(movieId, mApiKey, pageIndex + 1)
+                .map(new Function<ReviewsResponseBody, List<Review>>() {
+                    @Override
+                    public List<Review> apply(@NonNull ReviewsResponseBody reviewsResponseBody) throws Exception {
+                        return new LinkedList<Review>(reviewsResponseBody.getReviews());
+                    }
+                });
+    }
+
+    private Function<TrailersResponseBody, Observable<List<Trailer>>> getTrailerResponseMapper() {
+        return new Function<TrailersResponseBody, Observable<List<Trailer>>>() {
+            @Override
+            public Observable<List<Trailer>> apply(@NonNull TrailersResponseBody trailersResponseBody) throws Exception {
+                List<Trailer> trailers = new LinkedList<Trailer>(trailersResponseBody.getTrailers());
+                return Observable.just(trailers);
+            }
+        };
+    }
+
 
     @android.support.annotation.NonNull
     private Function<MoviesResponseBody, Observable<List<Movie>>> getMovieResponseMapper() {
@@ -104,6 +139,15 @@ public class TheMovieDbApiHelper implements MovieApiMvpHelper {
         @GET(GET_MOVIE_PATH)
         Observable<MovieTMDb> getMovie(@Path(MOVIE_ID_PATH) String movieId,
                                        @Query(KEY_QUERY_API_KEY) String apiKey);
+
+        @GET(GET_TRAILERS_PATH)
+        Observable<TrailersResponseBody> getTrailers(@Path(MOVIE_ID_PATH) String movieId,
+                                                     @Query(KEY_QUERY_API_KEY) String apiKey);
+
+        @GET(GET_REVIEWS_PATH)
+        Observable<ReviewsResponseBody> getReviews(@Path(MOVIE_ID_PATH) String movieId,
+                                                   @Query(KEY_QUERY_API_KEY) String apiKey,
+                                                   @Query(KEY_QUERY_PAGE) int pageIndex);
     }
 
 }

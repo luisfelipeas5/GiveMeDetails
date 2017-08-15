@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.model.model;
+package br.com.luisfelipeas5.givemedetails.model.model.movie;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;

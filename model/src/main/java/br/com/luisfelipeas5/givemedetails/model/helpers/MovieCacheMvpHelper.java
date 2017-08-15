@@ -1,6 +1,6 @@
 package br.com.luisfelipeas5.givemedetails.model.helpers;
 
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import io.reactivex.Single;
 
 public interface MovieCacheMvpHelper {

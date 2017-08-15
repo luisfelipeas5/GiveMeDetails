@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import javax.inject.Inject;
 
@@ -41,7 +42,7 @@ public class PosterFragment extends Fragment implements MoviePosterMvpView {
     public void onMoviePosterUrlReady(String posterUrl) {
         Glide.with(getContext())
                 .load(posterUrl)
-                .centerCrop()
+                .apply(RequestOptions.centerCropTransform())
                 .into(mBinding.imgMoviePoster);
     }
 

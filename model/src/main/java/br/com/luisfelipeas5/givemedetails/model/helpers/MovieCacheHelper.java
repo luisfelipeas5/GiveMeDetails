@@ -4,8 +4,8 @@ import java.util.Date;
 
 import br.com.luisfelipeas5.givemedetails.model.daos.MovieDao;
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieCacheDatabase;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
-import br.com.luisfelipeas5.givemedetails.model.model.MovieTMDb;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;

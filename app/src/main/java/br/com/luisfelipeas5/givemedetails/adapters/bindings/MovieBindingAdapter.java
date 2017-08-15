@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import br.com.luisfelipeas5.givemedetails.R;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 
 public class MovieBindingAdapter {
 
@@ -21,7 +21,7 @@ public class MovieBindingAdapter {
         }
     }
 
-    public static void setReleaseDate(TextView textView, Date releaseDate) {
+    private static void setReleaseDate(TextView textView, Date releaseDate) {
         if (releaseDate != null) {
             Context context = textView.getContext();
             String dateFormatPattern = context.getString(R.string.date_format_pattern);

@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import br.com.luisfelipeas5.givemedetails.R;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import br.com.luisfelipeas5.givemedetails.rules.AppTestComponentTestRule;
 import br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity;
 import br.com.luisfelipeas5.givemedetails.view.di.modules.model.ModelTestModule;

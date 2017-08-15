@@ -9,7 +9,7 @@ import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
-import br.com.luisfelipeas5.givemedetails.model.model.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
