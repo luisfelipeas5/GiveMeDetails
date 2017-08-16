@@ -1,6 +1,8 @@
 package br.com.luisfelipeas5.givemedetails.view.di.modules.presenter;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
+import br.com.luisfelipeas5.givemedetails.presenter.details.LoveMvpPresenter;
+import br.com.luisfelipeas5.givemedetails.presenter.details.LovePresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.details.MovieDetailMvpPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.details.MovieDetailPresenter;
 import br.com.luisfelipeas5.givemedetails.presenter.details.PosterMvpPresenter;
@@ -66,4 +68,10 @@ public class PresenterModule {
     static ReviewsMvpPresenter provideReviewsMvpPresenter(SchedulerProvider schedulerProvider, MovieMvpDataManager movieMvpDataManager) {
         return new ReviewsPresenter(schedulerProvider, movieMvpDataManager);
     }
+
+    @Provides
+    static LoveMvpPresenter provideLoveMvpPresenter(SchedulerProvider schedulerProvider, MovieMvpDataManager movieMvpDataManager) {
+        return new LovePresenter(schedulerProvider, movieMvpDataManager);
+    }
+
 }

@@ -102,6 +102,11 @@ public class MovieDataManager implements MovieMvpDataManager {
         return movieApiMvpHelper.getReviews(movieId, pageIndex).singleOrError();
     }
 
+    @Override
+    public Single<Boolean> toggleMovieLove(String movieId) {
+        return null;
+    }
+
     @android.support.annotation.NonNull
     private Function<Boolean, SingleSource<Movie>> getMovieCacheMapper(final String movieId) {
         return new Function<Boolean, SingleSource<Movie>>() {
