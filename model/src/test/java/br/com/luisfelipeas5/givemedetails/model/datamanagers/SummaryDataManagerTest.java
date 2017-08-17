@@ -7,6 +7,7 @@ import org.mockito.MockitoAnnotations;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
+import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
@@ -26,6 +27,8 @@ public class SummaryDataManagerTest {
     @Mock
     private MovieCacheMvpHelper mMovieCacheMvpHelper;
     @Mock
+    private DatabaseMvpHelper mDatabaseMvpHelper;
+    @Mock
     private Movie mMovieMocked;
 
     @Before
@@ -34,7 +37,7 @@ public class SummaryDataManagerTest {
 
         when(mMovieMocked.getId()).thenReturn("MOVIE_ID_MOCKED");
 
-        mMovieMvpDataManager = new MovieDataManager(mMovieApiMvpHelper, mMovieCacheMvpHelper);
+        mMovieMvpDataManager = new MovieDataManager(mMovieApiMvpHelper, mMovieCacheMvpHelper, mDatabaseMvpHelper);
     }
 
     @Test

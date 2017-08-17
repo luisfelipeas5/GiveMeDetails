@@ -7,6 +7,7 @@ import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
+import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
@@ -17,6 +18,7 @@ import br.com.luisfelipeas5.givemedetails.model.model.reviews.Review;
 import br.com.luisfelipeas5.givemedetails.model.model.trailer.Trailer;
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
@@ -125,9 +127,25 @@ public class ModelTestModule {
     }
 
     @Provides
+    DatabaseMvpHelper provideDatabaseMvpHelper() {
+        return new DatabaseMvpHelper() {
+            @Override
+            public Single<Boolean> isLoved(String movieId) {
+                return null;
+            }
+
+            @Override
+            public Completable setIsLoved(String movieId, boolean isLoved) {
+                return null;
+            }
+        };
+    }
+
+    @Provides
     MovieMvpDataManager provideMovieMvpDataManager(MovieApiMvpHelper movieApiMvpHelper,
-                                                   MovieCacheMvpHelper movieCacheMvpHelper) {
-        return new MovieDataManager(movieApiMvpHelper, movieCacheMvpHelper);
+                                                   MovieCacheMvpHelper movieCacheMvpHelper,
+                                                   DatabaseMvpHelper databaseMvpHelper) {
+        return new MovieDataManager(movieApiMvpHelper, movieCacheMvpHelper, databaseMvpHelper);
     }
 
     public void setTrailers(List<Trailer> trailers) {

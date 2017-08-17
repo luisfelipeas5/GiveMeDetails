@@ -9,6 +9,7 @@ import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
+import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
@@ -26,6 +27,8 @@ public class ListDataManagerTest {
     private MovieApiMvpHelper mMovieApiMvpHelper;
     @Mock
     private MovieCacheMvpHelper mMovieCacheHelper;
+    @Mock
+    private DatabaseMvpHelper mDatabaseMvpHelper;
 
     @Mock
     private List<Movie> mPopularMoviesMocked;
@@ -35,7 +38,7 @@ public class ListDataManagerTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mMvpDataManager = new MovieDataManager(mMovieApiMvpHelper, mMovieCacheHelper);
+        mMvpDataManager = new MovieDataManager(mMovieApiMvpHelper, mMovieCacheHelper, mDatabaseMvpHelper);
 
         when(mMovieApiMvpHelper.getPopular()).thenReturn(Observable.just(mPopularMoviesMocked));
         when(mMovieApiMvpHelper.getTopRated()).thenReturn(Observable.just(mTopRatedMoviesMocked));
