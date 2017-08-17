@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.model.helper;
+package br.com.luisfelipeas5.givemedetails.model.helper.cache;
 
 import org.junit.After;
 import org.junit.Before;

@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.model.helpers.cache;
+package br.com.luisfelipeas5.givemedetails.model.helpers.dao;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;
@@ -16,7 +16,7 @@ import br.com.luisfelipeas5.givemedetails.model.databases.MovieCacheDatabase;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
 
 @RunWith(AndroidJUnit4.class)
-public class CacheHelperCRUDIntegrationTest {
+public class MovieDaoCRUDIntegrationTest {
     private MovieCacheDatabase mMovieCacheDatabase;
 
     @Before
@@ -41,15 +41,6 @@ public class CacheHelperCRUDIntegrationTest {
         MovieDao movieDao = mMovieCacheDatabase.getMovieDao();
         long id = movieDao.insert(movieMocked);
         Assert.assertTrue(id > 0);
-    }
-
-    @Test
-    public void whenInsertMovie_withIdNull_failed() {
-        MovieTMDb movieMocked = new MovieTMDb();
-        movieMocked.setId(null);
-        MovieDao movieDao = mMovieCacheDatabase.getMovieDao();
-        long id = movieDao.insert(movieMocked);
-        Assert.assertEquals(0, id);
     }
 
     @Test
