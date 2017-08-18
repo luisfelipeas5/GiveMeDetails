@@ -109,16 +109,22 @@ public class MovieDataManager implements MovieMvpDataManager {
     @Override
     public Single<Boolean> toggleMovieLove(final String movieId) {
         return databaseMvpHelper.isLoved(movieId)
-                .flatMap(new Function<Boolean, Single<
-                        Boolean>>() {
+                .flatMap(new Function<Boolean, Single<Boolean>>() {
                     @Override
                     public Single<Boolean> apply(@NonNull Boolean isLoved) throws Exception {
                         final boolean newLoveStatus = !isLoved;
-                        return databaseMvpHelper.setIsLoved(movieId, newLoveStatus)
-                                .toSingle(new Callable<Boolean>() {
+                        return apiMvpHelper.getMovie(movieId)
+                                .singleOrError()
+                                .flatMap(new Function<Movie, Single<Boolean>>() {
                                     @Override
-                                    public Boolean call() throws Exception {
-                                        return newLoveStatus;
+                                    public Single<Boolean> apply(@NonNull Movie movie) throws Exception {
+                                        return databaseMvpHelper.setIsLoved(movie, newLoveStatus)
+                                                .toSingle(new Callable<Boolean>() {
+                                                    @Override
+                                                    public Boolean call() throws Exception {
+                                                        return newLoveStatus;
+                                                    }
+                                                });
                                     }
                                 });
                     }

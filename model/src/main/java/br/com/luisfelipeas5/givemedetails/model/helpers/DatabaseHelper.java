@@ -1,8 +1,11 @@
 package br.com.luisfelipeas5.givemedetails.model.helpers;
 
 import br.com.luisfelipeas5.givemedetails.model.daos.LoveDao;
+import br.com.luisfelipeas5.givemedetails.model.daos.MovieDao;
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieDatabase;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieLove;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
 import io.reactivex.CompletableOnSubscribe;
@@ -10,6 +13,7 @@ import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 
 public class DatabaseHelper implements DatabaseMvpHelper {
 
@@ -31,23 +35,47 @@ public class DatabaseHelper implements DatabaseMvpHelper {
     }
 
     @Override
-    public Completable setIsLoved(final String movieId, final boolean isLoved) {
-        return Completable.create(new CompletableOnSubscribe() {
-            @Override
-            public void subscribe(@NonNull CompletableEmitter e) throws Exception {
-                LoveDao loveDao = mMovieDatabase.getLoveDao();
+    public Completable setIsLoved(final Movie movie, final boolean isLoved) {
+        if (movie instanceof MovieTMDb) {
+            final MovieTMDb movieTMDb = (MovieTMDb) movie;
+            final MovieDao movieDao = mMovieDatabase.getMovieDao();
+            return Single.create(new SingleOnSubscribe<Integer>() {
+                    @Override
+                    public void subscribe(@NonNull SingleEmitter<Integer> e) throws Exception {
+                        String movieId = movieTMDb.getId();
+                        Integer movieByIdCount = movieDao.getMovieByIdCount(movieId);
+                        e.onSuccess(movieByIdCount);
+                    }
+                }).map(new Function<Integer, String>() {
+                    @Override
+                    public String apply(@NonNull Integer movieCount) throws Exception {
+                        if (movieCount == 0) {
+                            movieDao.insert(movieTMDb);
+                        }
+                        return movieTMDb.getId();
+                    }
+                }).toCompletable()
+                .concatWith(Completable.create(new CompletableOnSubscribe() {
+                    @Override
+                    public void subscribe(@NonNull CompletableEmitter e) throws Exception {
+                        String movieId = movieTMDb.getId();
 
-                MovieLove movieLove = new MovieLove();
-                movieLove.setMovieId(movieId);
-                movieLove.setLoved(isLoved);
+                        LoveDao loveDao = mMovieDatabase.getLoveDao();
 
-                long insert = loveDao.insert(movieLove);
-                if (insert > 0) {
-                    e.onComplete();
-                } else {
-                    e.onError(new Exception("Error inserting MovieLove with movieId = " + movieId));
-                }
-            }
-        });
+                        MovieLove movieLove = new MovieLove();
+                        movieLove.setMovieId(movieId);
+                        movieLove.setLoved(isLoved);
+
+                        long insert = loveDao.insert(movieLove);
+                        if (insert > 0) {
+                            e.onComplete();
+                        } else {
+                            e.onError(new Exception("Error inserting MovieLove with movieId = " + movieId));
+                        }
+                    }
+                }));
+        } else {
+            return Completable.error(new Exception("Movie must be a MovieTMDb instance"));
+        }
     }
 }

@@ -17,5 +17,5 @@ public interface LoveDao {
     boolean isLoved(String movieId);
 
     @Insert(onConflict = REPLACE)
-    long insert(MovieLove movie);
+    long insert(MovieLove movieLove);
 }

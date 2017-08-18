@@ -11,6 +11,7 @@ import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieLove;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
 import br.com.luisfelipeas5.givemedetails.model.model.responsebodies.ReviewsResponseBody;
 import br.com.luisfelipeas5.givemedetails.model.model.responsebodies.TrailersResponseBody;
@@ -28,11 +29,13 @@ public class ModelTestModule {
     private List<Trailer> trailers;
     private Movie movie;
     private List<Review> reviews;
+    private MovieLove movieLove;
 
     public ModelTestModule() {
         setMovie(getMovieMocked());
         setTrailers(getTrailersMocked());
         setReviews(getReviewsMocked());
+        setMovieLove(getMovieLoveMocked());
     }
 
     @Provides
@@ -131,12 +134,12 @@ public class ModelTestModule {
         return new DatabaseMvpHelper() {
             @Override
             public Single<Boolean> isLoved(String movieId) {
-                return null;
+                return Single.just(movieLove.isLoved());
             }
 
             @Override
-            public Completable setIsLoved(String movieId, boolean isLoved) {
-                return null;
+            public Completable setIsLoved(Movie movie, boolean isLoved) {
+                return Completable.complete();
             }
         };
     }
@@ -158,6 +161,10 @@ public class ModelTestModule {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    private void setMovieLove(MovieLove movieLove) {
+        this.movieLove = movieLove;
     }
 
     public static List<Trailer> getTrailersMocked() {
@@ -298,4 +305,10 @@ public class ModelTestModule {
         return new LinkedList<Review>(reviewsResponseBody.getReviews());
     }
 
+    private MovieLove getMovieLoveMocked() {
+        MovieLove movieLove = new MovieLove();
+        movieLove.setMovieId(movie.getId());
+        movieLove.setLoved(true);
+        return movieLove;
+    }
 }

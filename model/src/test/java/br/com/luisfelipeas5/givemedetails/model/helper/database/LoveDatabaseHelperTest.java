@@ -11,14 +11,17 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import br.com.luisfelipeas5.givemedetails.model.daos.LoveDao;
+import br.com.luisfelipeas5.givemedetails.model.daos.MovieDao;
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieDatabase;
 import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieLove;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -31,22 +34,47 @@ public class LoveDatabaseHelperTest {
     private MovieDatabase mMovieDatabase;
     @Mock
     private LoveDao mLoveDao;
+    @Mock
+    private MovieDao mMovieDao;
+    @Mock
+    private MovieTMDb mMovieTMDb;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        when(mMovieDatabase.getLoveDao()).thenReturn(mLoveDao);
+        when(mMovieTMDb.getId()).thenReturn(MOVIE_ID_MOCKED);
 
+        when(mMovieDatabase.getLoveDao()).thenReturn(mLoveDao);
         when(mLoveDao.insert(getMovieLoveMatcher(true))).thenReturn(1L);
         when(mLoveDao.insert(getMovieLoveMatcher(false))).thenReturn(1L);
+
+        when(mMovieDatabase.getMovieDao()).thenReturn(mMovieDao);
+        when(mMovieDao.insert(getMovieMatcher(MOVIE_ID_MOCKED))).thenReturn(1L);
+        when(mMovieDao.getMovieByIdCount(MOVIE_ID_MOCKED)).thenReturn(0);
 
         mDatabaseMvpHelper = new DatabaseHelper(mMovieDatabase);
     }
 
     @Test
+    public void whenSetIsMovieLoved_callInsertOfMovieDao_success() {
+        Completable setIsLovedCompletable = mDatabaseMvpHelper.setIsLoved(mMovieTMDb, true);
+        setIsLovedCompletable.test();
+        verify(mMovieDao).insert(getMovieMatcher(MOVIE_ID_MOCKED));
+    }
+
+    @Test
+    public void whenSetIsMovieLoved_notCallInsertOfMovieDao_success() {
+        when(mMovieDao.getMovieByIdCount(MOVIE_ID_MOCKED)).thenReturn(1);
+
+        Completable setIsLovedCompletable = mDatabaseMvpHelper.setIsLoved(mMovieTMDb, true);
+        setIsLovedCompletable.test();
+        verify(mMovieDao, never()).insert(getMovieMatcher(MOVIE_ID_MOCKED));
+    }
+
+    @Test
     public void whenSetIsMovieLoved_withTrue_callSetIsLovedOfLoveDao_success() {
-        Completable setIsLovedCompletable = mDatabaseMvpHelper.setIsLoved(MOVIE_ID_MOCKED, true);
+        Completable setIsLovedCompletable = mDatabaseMvpHelper.setIsLoved(mMovieTMDb, true);
         TestObserver<Void> testObserver = setIsLovedCompletable.test();
         testObserver.assertComplete();
         testObserver.assertNoErrors();
@@ -55,7 +83,7 @@ public class LoveDatabaseHelperTest {
 
     @Test
     public void whenSetIsMovieLoved_withFalse_callSetIsLovedOfLoveDao_success() {
-        Completable setIsLovedCompletable = mDatabaseMvpHelper.setIsLoved(MOVIE_ID_MOCKED, false);
+        Completable setIsLovedCompletable = mDatabaseMvpHelper.setIsLoved(mMovieTMDb, false);
         TestObserver<Void> testObserver = setIsLovedCompletable.test();
         testObserver.assertComplete();
         testObserver.assertNoErrors();
@@ -97,6 +125,32 @@ public class LoveDatabaseHelperTest {
                 return  movieLove != null &&
                         movieLove.getMovieId().equals(MOVIE_ID_MOCKED) &&
                         movieLove.isLoved() == isLoved;
+            }
+
+            @Override
+            public void describeMismatch(Object item, Description mismatchDescription) {
+
+            }
+
+            @Override
+            public void _dont_implement_Matcher___instead_extend_BaseMatcher_() {
+
+            }
+
+            @Override
+            public void describeTo(Description description) {
+
+            }
+        });
+    }
+
+    private MovieTMDb getMovieMatcher(final String movieId) {
+        return Matchers.argThat(new Matcher<MovieTMDb>() {
+            @Override
+            public boolean matches(Object item) {
+                MovieTMDb movieTMDb = (MovieTMDb) item;
+                return movieTMDb != null &&
+                        movieTMDb.getId().equals(movieId);
             }
 
             @Override

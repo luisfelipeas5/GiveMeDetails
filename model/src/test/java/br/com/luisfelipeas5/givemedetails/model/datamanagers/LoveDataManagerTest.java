@@ -1,7 +1,10 @@
 package br.com.luisfelipeas5.givemedetails.model.datamanagers;
 
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -10,10 +13,13 @@ import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseMvpHelper;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -28,14 +34,20 @@ public class LoveDataManagerTest {
     private MovieCacheMvpHelper mCacheMvpHelper;
     @Mock
     private DatabaseMvpHelper mDatabaseMvpHelper;
+    @Mock
+    private Movie mMovie;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
+        when(mMovie.getId()).thenReturn(MOVIE_ID_MOCKED);
+
         when(mDatabaseMvpHelper.isLoved(MOVIE_ID_MOCKED)).thenReturn(Single.just(false));
-        when(mDatabaseMvpHelper.setIsLoved(MOVIE_ID_MOCKED, true)).thenReturn(Completable.complete());
-        when(mDatabaseMvpHelper.setIsLoved(MOVIE_ID_MOCKED, false)).thenReturn(Completable.complete());
+        when(mDatabaseMvpHelper.setIsLoved(getMovieMatcher(), eq(true))).thenReturn(Completable.complete());
+        when(mDatabaseMvpHelper.setIsLoved(getMovieMatcher(), eq(false))).thenReturn(Completable.complete());
+
+        when(mApiMvpHelper.getMovie(MOVIE_ID_MOCKED)).thenReturn(Observable.just(mMovie));
 
         mMovieMvpDataManager = new MovieDataManager(mApiMvpHelper, mCacheMvpHelper, mDatabaseMvpHelper);
     }
@@ -46,6 +58,13 @@ public class LoveDataManagerTest {
         TestObserver<Boolean> testObserver = toggleLoveSingle.test();
         testObserver.assertNoErrors();
         testObserver.assertComplete();
+    }
+
+    @Test
+    public void whenToggleMovieLove_callGetMovieOfApiHelper_success() {
+        Single<Boolean> toggleLoveSingle = mMovieMvpDataManager.toggleMovieLove(MOVIE_ID_MOCKED);
+        toggleLoveSingle.test();
+        verify(mApiMvpHelper).getMovie(MOVIE_ID_MOCKED);
     }
 
     @Test
@@ -62,7 +81,7 @@ public class LoveDataManagerTest {
         Single<Boolean> toggleLoveSingle = mMovieMvpDataManager.toggleMovieLove(MOVIE_ID_MOCKED);
         toggleLoveSingle.test();
 
-        verify(mDatabaseMvpHelper).setIsLoved(MOVIE_ID_MOCKED, false);
+        verify(mDatabaseMvpHelper).setIsLoved(getMovieMatcher(), eq(false));
     }
 
     @Test
@@ -72,7 +91,7 @@ public class LoveDataManagerTest {
         Single<Boolean> toggleLoveSingle = mMovieMvpDataManager.toggleMovieLove(MOVIE_ID_MOCKED);
         toggleLoveSingle.test();
 
-        verify(mDatabaseMvpHelper).setIsLoved(MOVIE_ID_MOCKED, true);
+        verify(mDatabaseMvpHelper).setIsLoved(getMovieMatcher(), eq(true));
     }
 
     @Test
@@ -91,6 +110,32 @@ public class LoveDataManagerTest {
         Single<Boolean> toggleLoveSingle = mMovieMvpDataManager.toggleMovieLove(MOVIE_ID_MOCKED);
         TestObserver<Boolean> testObserver = toggleLoveSingle.test();
         testObserver.assertValue(false);
+    }
+
+    private Movie getMovieMatcher() {
+        return Matchers.argThat(new Matcher<Movie>() {
+            @Override
+            public boolean matches(Object item) {
+                Movie movie = (Movie) item;
+                return movie != null &&
+                        movie.getId().equals(MOVIE_ID_MOCKED);
+            }
+
+            @Override
+            public void describeMismatch(Object item, Description mismatchDescription) {
+
+            }
+
+            @Override
+            public void _dont_implement_Matcher___instead_extend_BaseMatcher_() {
+
+            }
+
+            @Override
+            public void describeTo(Description description) {
+
+            }
+        });
     }
 
 }
