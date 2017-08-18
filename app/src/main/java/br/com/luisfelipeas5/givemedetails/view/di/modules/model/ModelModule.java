@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieCacheDatabase;
+import br.com.luisfelipeas5.givemedetails.model.databases.MovieDatabase;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
 import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseHelper;
@@ -45,8 +46,15 @@ public class ModelModule {
     }
 
     @Provides
-    DatabaseMvpHelper provideDatabaseMvpHelper() {
-        return new DatabaseHelper();
+    MovieDatabase provideMovieDatabase() {
+        return Room.databaseBuilder(mContext.getApplicationContext(),
+                MovieDatabase.class,
+                "database").build();
+    }
+
+    @Provides
+    DatabaseMvpHelper provideDatabaseMvpHelper(MovieDatabase movieDatabase) {
+        return new DatabaseHelper(movieDatabase);
     }
 
     @Provides
