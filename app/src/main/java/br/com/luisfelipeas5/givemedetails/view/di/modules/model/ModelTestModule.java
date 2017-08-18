@@ -35,7 +35,7 @@ public class ModelTestModule {
         setMovie(getMovieMocked());
         setTrailers(getTrailersMocked());
         setReviews(getReviewsMocked());
-        setMovieLove(getMovieLoveMocked());
+        setMovieLove(getMovieLoveMocked(movie.getId()));
     }
 
     @Provides
@@ -305,10 +305,10 @@ public class ModelTestModule {
         return new LinkedList<Review>(reviewsResponseBody.getReviews());
     }
 
-    private MovieLove getMovieLoveMocked() {
+    public static MovieLove getMovieLoveMocked(String movieId) {
         MovieLove movieLove = new MovieLove();
-        movieLove.setMovieId(movie.getId());
-        movieLove.setLoved(true);
+        movieLove.setMovieId(movieId);
+        movieLove.setLoved(false);
         return movieLove;
     }
 }

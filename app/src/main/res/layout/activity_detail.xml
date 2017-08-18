@@ -83,6 +83,11 @@
 
         </ScrollView>
 
+        <fragment android:id="@+id/fragment_love"
+            android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.LoveFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <android.support.v7.widget.AppCompatImageView
             app:srcCompat="@drawable/background_shadow_gradient"
             android:layout_width="match_parent"
