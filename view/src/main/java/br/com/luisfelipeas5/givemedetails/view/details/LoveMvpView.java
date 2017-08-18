@@ -12,4 +12,6 @@ public interface LoveMvpView extends MvpView {
     void onLoveFailed();
 
     void onIsLovingMovie(boolean isLoving);
+
+    String getMovieId();
 }

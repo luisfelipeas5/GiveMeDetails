@@ -27,4 +27,6 @@ public interface MovieMvpDataManager {
     Single<List<Review>> getMovieReviewsByPage(String movieId, int pageIndex);
 
     Single<Boolean> toggleMovieLove(String movieId);
+
+    Single<Boolean> isMovieLoved(String movieId);
 }

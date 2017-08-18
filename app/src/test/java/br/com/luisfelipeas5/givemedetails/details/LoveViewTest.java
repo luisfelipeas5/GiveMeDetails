@@ -27,6 +27,7 @@ public class LoveViewTest {
 
         ((LoveFragment) mLoveMvpView).setPresenter(mLoveMvpPresenter);
         verify(mLoveMvpPresenter).attach(mLoveMvpView);
+        verify(mLoveMvpPresenter).loveMovieById(MOVIE_ID_MOCKED);
     }
 
     @Test

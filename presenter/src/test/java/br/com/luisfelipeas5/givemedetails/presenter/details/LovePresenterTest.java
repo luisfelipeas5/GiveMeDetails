@@ -34,12 +34,34 @@ public class LovePresenterTest {
         MockitoAnnotations.initMocks(this);
 
         when(mMovieMvpDataManager.toggleMovieLove(MOVIE_ID_MOCKED)).thenReturn(Single.just(true));
+        when(mMovieMvpDataManager.isMovieLoved(MOVIE_ID_MOCKED)).thenReturn(Single.just(true));
+        when(mLoveMvpView.getMovieId()).thenReturn(MOVIE_ID_MOCKED);
 
         mTestScheduler = new TestScheduler();
 
         SchedulerProvider testSchedulerProvider = new TestSchedulerProvider(mTestScheduler);
         mLoveMvpPresenter = new LovePresenter(testSchedulerProvider, mMovieMvpDataManager);
         mLoveMvpPresenter.attach(mLoveMvpView);
+    }
+
+    @Test
+    public void whenMovieIdReady_callIsLovedOfDataManager_success() {
+        mLoveMvpPresenter.onMovieIdReady(MOVIE_ID_MOCKED);
+        verify(mMovieMvpDataManager).isMovieLoved(MOVIE_ID_MOCKED);
+    }
+
+    @Test
+    public void whenMovieIdReady_callOnMovieLovedTrueOfView_success() {
+        when(mMovieMvpDataManager.isMovieLoved(MOVIE_ID_MOCKED)).thenReturn(Single.just(true));
+        mLoveMvpPresenter.onMovieIdReady(MOVIE_ID_MOCKED);
+        verify(mLoveMvpView).onMovieLoved(true);
+    }
+
+    @Test
+    public void whenMovieIdReady_callOnMovieLovedFalseOfView_success() {
+        when(mMovieMvpDataManager.isMovieLoved(MOVIE_ID_MOCKED)).thenReturn(Single.just(false));
+        mLoveMvpPresenter.onMovieIdReady(MOVIE_ID_MOCKED);
+        verify(mLoveMvpView).onMovieLoved(false);
     }
 
     @Test

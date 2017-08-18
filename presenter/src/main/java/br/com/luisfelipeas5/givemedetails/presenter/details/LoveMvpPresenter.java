@@ -5,4 +5,6 @@ import br.com.luisfelipeas5.givemedetails.view.details.LoveMvpView;
 
 public interface LoveMvpPresenter extends MvpPresenter<LoveMvpView> {
     void loveMovieById(String movieId);
+
+    void onMovieIdReady(String movieId);
 }

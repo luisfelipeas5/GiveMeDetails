@@ -52,4 +52,30 @@ public class LovePresenter extends BasePresenter<LoveMvpView> implements LoveMvp
                     }
                 });
     }
+
+    @Override
+    public void onMovieIdReady(String movieId) {
+        SchedulerProvider schedulerProvider = getSchedulerProvider();
+        mMovieMvpDataManager.isMovieLoved(movieId)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe(new SingleObserver<Boolean>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        mLoveMvpView.onIsLovingMovie(true);
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull Boolean isLoved) {
+                        mLoveMvpView.onIsLovingMovie(false);
+                        mLoveMvpView.onMovieLoved(isLoved);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        mLoveMvpView.onIsLovingMovie(false);
+                        mLoveMvpView.onLoveFailed();
+                    }
+                });
+    }
 }

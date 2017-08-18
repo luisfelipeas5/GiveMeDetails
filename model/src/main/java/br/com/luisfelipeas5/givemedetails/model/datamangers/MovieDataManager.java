@@ -131,6 +131,11 @@ public class MovieDataManager implements MovieMvpDataManager {
                 });
     }
 
+    @Override
+    public Single<Boolean> isMovieLoved(String movieId) {
+        return null;
+    }
+
     @android.support.annotation.NonNull
     private Function<Boolean, SingleSource<Movie>> getMovieCacheMapper(final String movieId) {
         return new Function<Boolean, SingleSource<Movie>>() {
