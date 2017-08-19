@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class ListDataManagerTest {
-    private MovieMvpDataManager mMvpDataManager;
+    private MovieMvpDataManager mDataManager;
 
     @Mock
     private MovieApiMvpHelper mMovieApiMvpHelper;
@@ -34,19 +34,22 @@ public class ListDataManagerTest {
     private List<Movie> mPopularMoviesMocked;
     @Mock
     private List<Movie> mTopRatedMoviesMocked;
+    @Mock
+    private List<Movie> mLovedMovies;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mMvpDataManager = new MovieDataManager(mMovieApiMvpHelper, mMovieCacheHelper, mDatabaseMvpHelper);
+        mDataManager = new MovieDataManager(mMovieApiMvpHelper, mMovieCacheHelper, mDatabaseMvpHelper);
 
         when(mMovieApiMvpHelper.getPopular()).thenReturn(Observable.just(mPopularMoviesMocked));
         when(mMovieApiMvpHelper.getTopRated()).thenReturn(Observable.just(mTopRatedMoviesMocked));
+        when(mDatabaseMvpHelper.getLovedMovies()).thenReturn(Observable.just(mLovedMovies));
     }
 
     @Test
     public void whenGetPopularMovies_returnMovies_success() {
-        Single<List<Movie>> moviesObservable = mMvpDataManager.getPopularMovies();
+        Single<List<Movie>> moviesObservable = mDataManager.getPopularMovies();
 
         TestObserver<List<Movie>> testObserver = moviesObservable.test();
         testObserver.assertNoErrors();
@@ -58,18 +61,8 @@ public class ListDataManagerTest {
     }
 
     @Test
-    public void whenGetPopularMovies_returnMoviesEmpty_success() {
-        when(mMovieApiMvpHelper.getPopular()).thenReturn(Observable.<List<Movie>>empty());
-
-        Single<List<Movie>> moviesObservable = mMvpDataManager.getPopularMovies();
-
-        TestObserver<List<Movie>> testObserver = moviesObservable.test();
-        testObserver.assertError(Exception.class);
-    }
-
-    @Test
     public void whenGetToRatedMovies_returnMovies_success() {
-        Single<List<Movie>> moviesObservable = mMvpDataManager.getTopRatedMovies();
+        Single<List<Movie>> moviesObservable = mDataManager.getTopRatedMovies();
 
         TestObserver<List<Movie>> testObserver = moviesObservable.test();
         testObserver.assertNoErrors();
@@ -80,13 +73,14 @@ public class ListDataManagerTest {
     }
 
     @Test
-    public void whenGetTopRatedMovies_returnMoviesEmpty_success() {
-        when(mMovieApiMvpHelper.getTopRated()).thenReturn(Observable.<List<Movie>>empty());
+    public void whenGetLovedMovies_callGetLovedMoviesOfDatabaseHelper_success() {
+        Single<List<Movie>> lovedMovies = mDataManager.getLovedMovies();
+        TestObserver<List<Movie>> testObserver = lovedMovies.test();
+        testObserver.assertNoErrors();
+        testObserver.assertComplete();
+        testObserver.assertValue(mLovedMovies);
 
-        Single<List<Movie>> moviesObservable = mMvpDataManager.getTopRatedMovies();
-
-        TestObserver<List<Movie>> testObserver = moviesObservable.test();
-        testObserver.assertError(Exception.class);
+        verify(mDatabaseMvpHelper).getLovedMovies();
     }
 
 }

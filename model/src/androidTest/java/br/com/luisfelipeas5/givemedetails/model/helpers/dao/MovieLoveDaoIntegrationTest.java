@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.List;
+
 import br.com.luisfelipeas5.givemedetails.model.daos.LoveDao;
 import br.com.luisfelipeas5.givemedetails.model.daos.MovieDao;
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieDatabase;
@@ -20,6 +22,7 @@ import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
 public class MovieLoveDaoIntegrationTest {
 
     private static final String MOVIE_ID_MOCKED = "Movie id mocked";
+    private static final String MOVIE_ID_MOCKED_1 = "Movie id mocked 1";
     private LoveDao mLoveDao;
     private MovieLove mMovieLove;
 
@@ -40,6 +43,10 @@ public class MovieLoveDaoIntegrationTest {
         MovieTMDb movie = new MovieTMDb();
         movie.setId(MOVIE_ID_MOCKED);
         movieDao.insert(movie);
+
+        MovieTMDb movie1 = new MovieTMDb();
+        movie1.setId(MOVIE_ID_MOCKED_1);
+        movieDao.insert(movie1);
     }
 
     @Test
@@ -78,6 +85,18 @@ public class MovieLoveDaoIntegrationTest {
     public void whenIsLoved_withoutInsertion_success() {
         boolean isLoved = mLoveDao.isLoved(MOVIE_ID_MOCKED);
         Assert.assertFalse(isLoved);
+    }
+
+    @Test
+    public void whenGetLovedMovies_withTrue_success() {
+        mMovieLove.setLoved(true);
+        mLoveDao.insert(mMovieLove);
+        mMovieLove.setMovieId(MOVIE_ID_MOCKED_1);
+        mMovieLove.setLoved(true);
+        mLoveDao.insert(mMovieLove);
+
+        List<MovieTMDb> lovedMovies = mLoveDao.getLoved(true);
+        Assert.assertTrue(lovedMovies.size() == 2);
     }
 
 }

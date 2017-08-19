@@ -60,8 +60,8 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroy() {
+        super.onDestroy();
         mPresenter.detachView();
     }
 

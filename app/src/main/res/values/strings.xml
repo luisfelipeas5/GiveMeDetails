@@ -28,5 +28,6 @@
     <string name="see_all_reviews">See all the reviews</string>
     <string name="movie_was_not_loved_by_you">This movie was not loved by you</string>
     <string name="movie_was_loved_by_you">This movie was loved by you</string>
+    <string name="loved_movies">Loved movies</string>
 
 </resources>

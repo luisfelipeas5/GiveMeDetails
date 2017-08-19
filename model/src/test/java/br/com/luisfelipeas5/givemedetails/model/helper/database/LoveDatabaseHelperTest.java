@@ -10,14 +10,19 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import br.com.luisfelipeas5.givemedetails.model.daos.LoveDao;
 import br.com.luisfelipeas5.givemedetails.model.daos.MovieDao;
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieDatabase;
 import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseMvpHelper;
+import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieLove;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
 import io.reactivex.Completable;
+import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;
 
@@ -39,15 +44,26 @@ public class LoveDatabaseHelperTest {
     @Mock
     private MovieTMDb mMovieTMDb;
 
+    private List<MovieTMDb> mLovedMovies;
+    @Mock
+    private MovieTMDb movie0;
+    @Mock
+    private MovieTMDb movie1;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+
+        mLovedMovies = new LinkedList<>();
+        mLovedMovies.add(movie0);
+        mLovedMovies.add(movie1);
 
         when(mMovieTMDb.getId()).thenReturn(MOVIE_ID_MOCKED);
 
         when(mMovieDatabase.getLoveDao()).thenReturn(mLoveDao);
         when(mLoveDao.insert(getMovieLoveMatcher(true))).thenReturn(1L);
         when(mLoveDao.insert(getMovieLoveMatcher(false))).thenReturn(1L);
+        when(mLoveDao.getLoved(true)).thenReturn(mLovedMovies);
 
         when(mMovieDatabase.getMovieDao()).thenReturn(mMovieDao);
         when(mMovieDao.insert(getMovieMatcher(MOVIE_ID_MOCKED))).thenReturn(1L);
@@ -114,6 +130,17 @@ public class LoveDatabaseHelperTest {
         test.assertValue(false);
 
         verify(mLoveDao).isLoved(MOVIE_ID_MOCKED);
+    }
+
+    @Test
+    public void whenGetLoved_callGetLovedOfDao_success() {
+        Observable<List<Movie>> lovedMoviesObservable = mDatabaseMvpHelper.getLovedMovies();
+        TestObserver<List<Movie>> testObserver = lovedMoviesObservable.test();
+        testObserver.assertNoErrors();
+        testObserver.assertComplete();
+        testObserver.assertValue(new LinkedList<Movie>(mLovedMovies));
+
+        verify(mLoveDao).getLoved(true);
     }
 
     @NonNull

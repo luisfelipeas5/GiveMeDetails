@@ -12,6 +12,8 @@ public interface MovieMvpDataManager {
 
     Single<List<Movie>> getTopRatedMovies();
 
+    Single<List<Movie>> getLovedMovies();
+
     Single<Movie> getMovie(String movieId);
 
     Single<String> getMoviePosterUrl(int width, String movieId);

@@ -18,4 +18,9 @@ public interface LoveDao {
 
     @Insert(onConflict = REPLACE)
     long insert(MovieLove movieLove);
+
+    @Query("SELECT * FROM movies " +
+            "INNER JOIN movieLove ON movieLove.movie_id = movies.id " +
+            "WHERE is_loved LIKE :isLoved")
+    List<MovieTMDb> getLoved(boolean isLoved);
 }

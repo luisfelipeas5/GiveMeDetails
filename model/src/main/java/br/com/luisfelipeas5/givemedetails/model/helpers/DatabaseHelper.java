@@ -1,5 +1,8 @@
 package br.com.luisfelipeas5.givemedetails.model.helpers;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import br.com.luisfelipeas5.givemedetails.model.daos.LoveDao;
 import br.com.luisfelipeas5.givemedetails.model.daos.MovieDao;
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieDatabase;
@@ -9,6 +12,9 @@ import br.com.luisfelipeas5.givemedetails.model.model.movie.MovieTMDb;
 import io.reactivex.Completable;
 import io.reactivex.CompletableEmitter;
 import io.reactivex.CompletableOnSubscribe;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
@@ -77,5 +83,19 @@ public class DatabaseHelper implements DatabaseMvpHelper {
         } else {
             return Completable.error(new Exception("Movie must be a MovieTMDb instance"));
         }
+    }
+
+    @Override
+    public Observable<List<Movie>> getLovedMovies() {
+        return Observable.create(new ObservableOnSubscribe<List<Movie>>() {
+            @Override
+            public void subscribe(@NonNull ObservableEmitter<List<Movie>> e) throws Exception {
+                LoveDao loveDao = mMovieDatabase.getLoveDao();
+                List<MovieTMDb> lovedMovies = loveDao.getLoved(true);
+
+                e.onNext(new LinkedList<Movie>(lovedMovies));
+                e.onComplete();
+            }
+        });
     }
 }

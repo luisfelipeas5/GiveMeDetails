@@ -39,6 +39,12 @@ public class MovieDataManager implements MovieMvpDataManager {
     }
 
     @Override
+    public Single<List<Movie>> getLovedMovies() {
+        return databaseMvpHelper.getLovedMovies()
+                .singleOrError();
+    }
+
+    @Override
     public Single<Movie> getMovie(String movieId) {
         if (movieId == null || movieId.trim().isEmpty()) {
             return null;

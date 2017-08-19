@@ -49,6 +49,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <View
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_love"/>
+
             </LinearLayout>
 
         </ScrollView>
@@ -78,6 +83,11 @@
                     android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.ReviewsFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_margin="8dp"
+                    android:layout_height="@dimen/button_love"/>
 
             </LinearLayout>
 
