@@ -163,7 +163,7 @@ public class ModelTestModule {
         this.reviews = reviews;
     }
 
-    private void setMovieLove(MovieLove movieLove) {
+    public void setMovieLove(MovieLove movieLove) {
         this.movieLove = movieLove;
     }
 
@@ -305,7 +305,7 @@ public class ModelTestModule {
         return new LinkedList<Review>(reviewsResponseBody.getReviews());
     }
 
-    public static MovieLove getMovieLoveMocked(String movieId) {
+    private static MovieLove getMovieLoveMocked(String movieId) {
         MovieLove movieLove = new MovieLove();
         movieLove.setMovieId(movieId);
         movieLove.setLoved(false);

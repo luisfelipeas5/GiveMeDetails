@@ -23,11 +23,11 @@ public class LoveViewTest {
         MockitoAnnotations.initMocks(this);
 
         mLoveMvpView = new LoveFragment();
-        mLoveMvpView.setMovieId(MOVIE_ID_MOCKED);
-
         ((LoveFragment) mLoveMvpView).setPresenter(mLoveMvpPresenter);
         verify(mLoveMvpPresenter).attach(mLoveMvpView);
-        verify(mLoveMvpPresenter).loveMovieById(MOVIE_ID_MOCKED);
+
+        mLoveMvpView.setMovieId(MOVIE_ID_MOCKED);
+        verify(mLoveMvpPresenter).onMovieIdReady(MOVIE_ID_MOCKED);
     }
 
     @Test

@@ -112,6 +112,35 @@ public class LoveDataManagerTest {
         testObserver.assertValue(false);
     }
 
+    @Test
+    public void whenIsMovieLoved_callIsLovedOfDataManager_success() {
+        Single<Boolean> movieLovedSingle = mMovieMvpDataManager.isMovieLoved(MOVIE_ID_MOCKED);
+        movieLovedSingle.test();
+        verify(mDatabaseMvpHelper).isLoved(MOVIE_ID_MOCKED);
+    }
+
+    @Test
+    public void whenIsMovieLoved_assertTrue_success() {
+        when(mDatabaseMvpHelper.isLoved(MOVIE_ID_MOCKED)).thenReturn(Single.just(true));
+
+        Single<Boolean> movieLovedSingle = mMovieMvpDataManager.isMovieLoved(MOVIE_ID_MOCKED);
+        TestObserver<Boolean> testObserver = movieLovedSingle.test();
+        testObserver.assertNoErrors();
+        testObserver.assertComplete();
+        testObserver.assertValue(true);
+    }
+
+    @Test
+    public void whenIsMovieLoved_assertFalse_success() {
+        when(mDatabaseMvpHelper.isLoved(MOVIE_ID_MOCKED)).thenReturn(Single.just(false));
+
+        Single<Boolean> movieLovedSingle = mMovieMvpDataManager.isMovieLoved(MOVIE_ID_MOCKED);
+        TestObserver<Boolean> testObserver = movieLovedSingle.test();
+        testObserver.assertNoErrors();
+        testObserver.assertComplete();
+        testObserver.assertValue(false);
+    }
+
     private Movie getMovieMatcher() {
         return Matchers.argThat(new Matcher<Movie>() {
             @Override

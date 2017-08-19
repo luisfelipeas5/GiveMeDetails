@@ -54,6 +54,8 @@ public class LovePresenterTest {
     public void whenMovieIdReady_callOnMovieLovedTrueOfView_success() {
         when(mMovieMvpDataManager.isMovieLoved(MOVIE_ID_MOCKED)).thenReturn(Single.just(true));
         mLoveMvpPresenter.onMovieIdReady(MOVIE_ID_MOCKED);
+        mTestScheduler.triggerActions();
+
         verify(mLoveMvpView).onMovieLoved(true);
     }
 
@@ -61,6 +63,8 @@ public class LovePresenterTest {
     public void whenMovieIdReady_callOnMovieLovedFalseOfView_success() {
         when(mMovieMvpDataManager.isMovieLoved(MOVIE_ID_MOCKED)).thenReturn(Single.just(false));
         mLoveMvpPresenter.onMovieIdReady(MOVIE_ID_MOCKED);
+        mTestScheduler.triggerActions();
+
         verify(mLoveMvpView).onMovieLoved(false);
     }
 

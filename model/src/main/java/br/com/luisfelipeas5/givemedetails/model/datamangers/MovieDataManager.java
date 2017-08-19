@@ -108,7 +108,7 @@ public class MovieDataManager implements MovieMvpDataManager {
 
     @Override
     public Single<Boolean> toggleMovieLove(final String movieId) {
-        return databaseMvpHelper.isLoved(movieId)
+        return isMovieLoved(movieId)
                 .flatMap(new Function<Boolean, Single<Boolean>>() {
                     @Override
                     public Single<Boolean> apply(@NonNull Boolean isLoved) throws Exception {
@@ -133,7 +133,7 @@ public class MovieDataManager implements MovieMvpDataManager {
 
     @Override
     public Single<Boolean> isMovieLoved(String movieId) {
-        return null;
+        return databaseMvpHelper.isLoved(movieId);
     }
 
     @android.support.annotation.NonNull

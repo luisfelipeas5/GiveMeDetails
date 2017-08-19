@@ -43,9 +43,11 @@ public class LoveFragment extends Fragment implements LoveMvpView, View.OnClickL
     @Override
     public void setMovieId(String movieId) {
         mMovieId = movieId;
-        mBinding.buttonLove.setVisibility(View.VISIBLE);
-        mBinding.progressBar.setVisibility(View.GONE);
-        this.presenter.loveMovieById(movieId);
+        if (mBinding != null) {
+            mBinding.buttonLove.setVisibility(View.VISIBLE);
+            mBinding.progressBar.setVisibility(View.GONE);
+        }
+        this.presenter.onMovieIdReady(movieId);
     }
 
     @Override
@@ -56,11 +58,13 @@ public class LoveFragment extends Fragment implements LoveMvpView, View.OnClickL
     @Override
     public void onMovieLoved(boolean withLove) {
         int imageResource = R.drawable.ic_hearth;
+        int contentDescriptionResource = R.string.movie_was_not_loved_by_you;
         if (withLove) {
             imageResource = R.drawable.ic_hearth_filled;
+            contentDescriptionResource = R.string.movie_was_loved_by_you;
         }
         mBinding.buttonLove.setImageResource(imageResource);
-        mBinding.buttonLove.setContentDescription(Boolean.toString(withLove));
+        mBinding.buttonLove.setContentDescription(getString(contentDescriptionResource));
     }
 
     @Override
