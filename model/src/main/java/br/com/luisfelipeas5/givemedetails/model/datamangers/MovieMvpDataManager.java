@@ -12,6 +12,8 @@ public interface MovieMvpDataManager {
 
     Single<List<Movie>> getTopRatedMovies();
 
+    Single<List<Movie>> getLovedMovies();
+
     Single<Movie> getMovie(String movieId);
 
     Single<String> getMoviePosterUrl(int width, String movieId);
@@ -25,4 +27,8 @@ public interface MovieMvpDataManager {
     Single<List<Trailer>> getMovieTrailers(String movieId);
 
     Single<List<Review>> getMovieReviewsByPage(String movieId, int pageIndex);
+
+    Single<Boolean> toggleMovieLove(String movieId);
+
+    Single<Boolean> isMovieLoved(String movieId);
 }

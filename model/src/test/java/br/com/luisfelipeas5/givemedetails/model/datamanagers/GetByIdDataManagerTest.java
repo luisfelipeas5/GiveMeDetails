@@ -9,6 +9,7 @@ import org.mockito.MockitoAnnotations;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
+import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
@@ -30,12 +31,14 @@ public class GetByIdDataManagerTest {
     @Mock
     private MovieCacheMvpHelper mMovieCacheHelper;
     @Mock
+    private DatabaseMvpHelper mDatabaseMvpHelper;
+    @Mock
     private Movie mMovieMocked;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        mMvpDataManager = new MovieDataManager(mMovieApiMvpHelper, mMovieCacheHelper);
+        mMvpDataManager = new MovieDataManager(mMovieApiMvpHelper, mMovieCacheHelper, mDatabaseMvpHelper);
 
         Observable<Movie> movieObservable = Observable.just(mMovieMocked);
         when(mMovieApiMvpHelper.getMovie(Matchers.isNotNull(String.class))).thenReturn(movieObservable);

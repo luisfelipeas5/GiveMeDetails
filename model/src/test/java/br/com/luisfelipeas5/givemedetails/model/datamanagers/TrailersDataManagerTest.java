@@ -10,6 +10,7 @@ import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
+import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
@@ -34,6 +35,8 @@ public class TrailersDataManagerTest {
     private Movie mMovieMocked;
     @Mock
     private List<Trailer> mTrailers;
+    @Mock
+    private DatabaseMvpHelper mDatabaseMvpHelper;
 
     @Before
     public void setUp() {
@@ -42,7 +45,7 @@ public class TrailersDataManagerTest {
         when(mMovieMocked.getId()).thenReturn("Movie Mocked Id");
         when(mMovieApiMvpHelper.getTrailers(mMovieMocked.getId())).thenReturn(Observable.just(mTrailers));
 
-        mMovieMvpDataManager = new MovieDataManager(mMovieApiMvpHelper, mMovieCacheHelper);
+        mMovieMvpDataManager = new MovieDataManager(mMovieApiMvpHelper, mMovieCacheHelper, mDatabaseMvpHelper);
     }
 
     @Test

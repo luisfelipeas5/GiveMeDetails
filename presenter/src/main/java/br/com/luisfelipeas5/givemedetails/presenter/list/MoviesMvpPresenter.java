@@ -7,4 +7,6 @@ public interface MoviesMvpPresenter extends MvpPresenter<MoviesMvpView> {
     void getPopularMovies();
 
     void getTopRatedMovies();
+
+    void getLovedMovies();
 }

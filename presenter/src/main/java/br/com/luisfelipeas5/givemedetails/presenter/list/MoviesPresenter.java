@@ -66,6 +66,15 @@ public class MoviesPresenter extends BasePresenter<MoviesMvpView> implements Mov
                 .subscribe(getMoviesObserver());
     }
 
+    @Override
+    public void getLovedMovies() {
+        SchedulerProvider schedulerProvider = getSchedulerProvider();
+        mMovieMvpDataManager.getLovedMovies()
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe(getMoviesObserver());
+    }
+
     private SingleObserver<List<Movie>> getMoviesObserver() {
         return new SingleObserver<List<Movie>>() {
             @Override

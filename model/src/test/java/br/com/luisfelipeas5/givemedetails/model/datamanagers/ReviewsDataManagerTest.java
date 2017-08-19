@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
+import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
@@ -31,6 +32,8 @@ public class ReviewsDataManagerTest {
     private Movie mMovie;
     @Mock
     private List<Review> mReviews;
+    @Mock
+    private DatabaseMvpHelper mDatabaseMvpHelper;
 
     @Mock private List<Review> mReviewsSecondPage;
     @Mock private List<Review> mReviewsThirdPage;
@@ -53,7 +56,7 @@ public class ReviewsDataManagerTest {
         mReviewsPages.add(mReviewsThirdPage);
         mReviewsPages.add(mReviewsForthPage);
 
-        mDataManager = new MovieDataManager(mApiMvpHelper, mCacheMvpHelper);
+        mDataManager = new MovieDataManager(mApiMvpHelper, mCacheMvpHelper, mDatabaseMvpHelper);
     }
 
     @Test

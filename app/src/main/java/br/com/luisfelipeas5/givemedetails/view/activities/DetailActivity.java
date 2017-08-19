@@ -20,6 +20,7 @@ import br.com.luisfelipeas5.givemedetails.presenter.details.MovieDetailMvpPresen
 import br.com.luisfelipeas5.givemedetails.view.MoviesApp;
 import br.com.luisfelipeas5.givemedetails.view.details.MovieMvpView;
 import br.com.luisfelipeas5.givemedetails.view.di.components.BaseComponent;
+import br.com.luisfelipeas5.givemedetails.view.fragments.details.LoveFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.ReviewsFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.SummaryFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.PosterFragment;
@@ -99,6 +100,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
         ReviewsFragment reviewsFragment = (ReviewsFragment) fragmentManager.findFragmentById(R.id.fragment_reviews);
         reviewsFragment.setMovieId(movieId, false);
+
+        LoveFragment loveFragment = (LoveFragment) fragmentManager.findFragmentById(R.id.fragment_love);
+        loveFragment.setMovieId(movieId);
     }
 
     @Override

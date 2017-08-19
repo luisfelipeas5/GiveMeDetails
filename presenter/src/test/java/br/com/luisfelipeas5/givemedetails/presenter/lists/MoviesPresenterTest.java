@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.presenter;
+package br.com.luisfelipeas5.givemedetails.presenter.lists;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,10 +35,14 @@ public class MoviesPresenterTest {
     private List<Movie> mPopularMoviesMocked;
     @Mock
     private List<Movie> mTopRatedMoviesMocked;
+    @Mock
+    private List<Movie> mLovedMoviesMocked;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
+
+        when(mMovieMvpDataManager.getLovedMovies()).thenReturn(Single.just(mLovedMoviesMocked));
 
         mTestScheduler = new TestScheduler();
         SchedulerProvider schedulerProvider = new TestSchedulerProvider(mTestScheduler);
@@ -100,6 +104,38 @@ public class MoviesPresenterTest {
         verify(mMoviesMvpView, never()).onMoviesReady(anyListOf(Movie.class));
         verify(mMoviesMvpView, times(1)).onGetMoviesFailed();
         verify(mMoviesMvpView).onGettingMovies(false);
+    }
+
+    @Test
+    public void whenGetLovedMovies_callGetLovedMoviesOfDataManager_success() {
+        mMoviesMvpPresenter.getLovedMovies();
+        mTestScheduler.triggerActions();
+
+        verify(mMovieMvpDataManager).getLovedMovies();
+    }
+
+    @Test
+    public void whenGetLovedMovies_callOnGettingMoviesOfView_success() {
+        mMoviesMvpPresenter.getLovedMovies();
+        verify(mMoviesMvpView).onGettingMovies(true);
+        mTestScheduler.triggerActions();
+        verify(mMoviesMvpView).onGettingMovies(false);
+    }
+
+    @Test
+    public void whenGetLovedMovies_callOnMoviesReadyOfView_success() {
+        mMoviesMvpPresenter.getLovedMovies();
+        mTestScheduler.triggerActions();
+        verify(mMoviesMvpView).onMoviesReady(mLovedMoviesMocked);
+    }
+
+    @Test
+    public void whenGetLovedMovies_andDataManagerError_callOnGetMoviesFailedOfView_success() {
+        when(mMovieMvpDataManager.getLovedMovies()).thenReturn(Single.<List<Movie>>error(new Exception()));
+
+        mMoviesMvpPresenter.getLovedMovies();
+        mTestScheduler.triggerActions();
+        verify(mMoviesMvpView).onGetMoviesFailed();
     }
 
 }

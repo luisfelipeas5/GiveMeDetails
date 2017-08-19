@@ -14,4 +14,5 @@
     <dimen name="movie_poster_size_median">200dp</dimen>
     <dimen name="trailer_thumb_img_width">100dp</dimen>
     <dimen name="trailer_thumb_img_height">70dp</dimen>
+    <dimen name="button_love">50dp</dimen>
 </resources>

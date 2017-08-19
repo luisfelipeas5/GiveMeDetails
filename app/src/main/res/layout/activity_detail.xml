@@ -49,6 +49,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <View
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_love"/>
+
             </LinearLayout>
 
         </ScrollView>
@@ -79,9 +84,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_margin="8dp"
+                    android:layout_height="@dimen/button_love"/>
+
             </LinearLayout>
 
         </ScrollView>
+
+        <fragment android:id="@+id/fragment_love"
+            android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.LoveFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <android.support.v7.widget.AppCompatImageView
             app:srcCompat="@drawable/background_shadow_gradient"

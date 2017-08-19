@@ -1,6 +1,7 @@
 package br.com.luisfelipeas5.givemedetails.view.di.components;
 
 import br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity;
+import br.com.luisfelipeas5.givemedetails.view.fragments.details.LoveFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.PosterFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.ReviewsFragment;
 import br.com.luisfelipeas5.givemedetails.view.fragments.details.SocialFragment;
@@ -23,4 +24,6 @@ public interface BaseComponent {
     void inject(TrailersFragment trailersFragment);
 
     void inject(ReviewsFragment reviewsFragment);
+
+    void inject(LoveFragment loveFragment);
 }

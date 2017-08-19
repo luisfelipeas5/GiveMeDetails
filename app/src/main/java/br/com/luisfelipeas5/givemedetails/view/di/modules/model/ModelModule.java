@@ -4,8 +4,11 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieCacheDatabase;
+import br.com.luisfelipeas5.givemedetails.model.databases.MovieDatabase;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
+import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseHelper;
+import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
@@ -43,9 +46,21 @@ public class ModelModule {
     }
 
     @Provides
+    MovieDatabase provideMovieDatabase() {
+        return Room.databaseBuilder(mContext.getApplicationContext(),
+                MovieDatabase.class,
+                "database").build();
+    }
+
+    @Provides
+    DatabaseMvpHelper provideDatabaseMvpHelper(MovieDatabase movieDatabase) {
+        return new DatabaseHelper(movieDatabase);
+    }
+
+    @Provides
     MovieMvpDataManager provideMovieMvpDataManager(MovieApiMvpHelper movieApiMvpHelper,
-                                                   MovieCacheMvpHelper movieCacheMvpHelper) {
-        return new MovieDataManager(movieApiMvpHelper, movieCacheMvpHelper);
+                                                   MovieCacheMvpHelper movieCacheMvpHelper, DatabaseMvpHelper databaseMvpHelper) {
+        return new MovieDataManager(movieApiMvpHelper, movieCacheMvpHelper, databaseMvpHelper);
     }
 
 }
