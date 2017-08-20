@@ -1,8 +1,10 @@
 package br.com.luisfelipeas5.givemedetails.model.model.movie;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.content.ContentValues;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -14,8 +16,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-@Entity(tableName = "movies")
+@Entity(tableName = MovieTMDb.TABLE_NAME)
 public class MovieTMDb implements Parcelable, Movie {
+    public static final String TABLE_NAME = "movies";
+    private static final String COLUMN_ID = "id";
+
     @Ignore
     private static final int[] IMAGE_WIDTH_AVAILABLE = {92, 154, 185, 342, 500, 780};
     @Ignore
@@ -24,6 +29,7 @@ public class MovieTMDb implements Parcelable, Movie {
     private static final String IMG_AUTHORITY = "image.tmdb.org";
 
     @PrimaryKey
+    @ColumnInfo(name = COLUMN_ID)
     @SerializedName("id")
     private String id;
     @SerializedName("poster_path")
@@ -228,4 +234,20 @@ public class MovieTMDb implements Parcelable, Movie {
             return new MovieTMDb[size];
         }
     };
+
+    public static MovieTMDb fromContentValues(ContentValues values) {
+        MovieTMDb movieTMDb = new MovieTMDb();
+
+        movieTMDb.setId(values.getAsString(COLUMN_ID));
+
+        return movieTMDb;
+    }
+
+    public static ContentValues toContentValues(MovieTMDb movieTMDb) {
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put(COLUMN_ID, movieTMDb.getId());
+
+        return contentValues;
+    }
 }
