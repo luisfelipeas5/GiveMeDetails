@@ -98,7 +98,7 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
 
     @Override
     public void onRefresh() {
-        if (NetworkUtils.isConnected(getContext())) {
+        if (!needsNetworkConnection() || NetworkUtils.isConnected(getContext())) {
             onGetMovies();
         } else {
             mBinding.recycler.setVisibility(View.GONE);
@@ -108,6 +108,8 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
             registerReceiverForNetwork();
         }
     }
+
+    protected abstract boolean needsNetworkConnection();
 
     protected int getNoNetworkMessage() {
         return R.string.no_movies_network_error;
