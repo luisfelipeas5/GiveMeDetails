@@ -51,13 +51,26 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
 
         GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         mBinding.recycler.setLayoutManager(layoutManager);
+
+        mBinding.txtNoMovies.setText(getNoMoviesMessage());
         mBinding.txtNoMovies.setOnClickListener(this);
+        mBinding.txtNoMovies.setVisibility(View.GONE);
 
         mBinding.swipeRefreshLayout.setOnRefreshListener(this);
 
         onRefresh();
 
         return mBinding.getRoot();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPresenter.attach(this);
+    }
+
+    protected int getNoMoviesMessage() {
+        return R.string.no_movies;
     }
 
     @Override
@@ -89,10 +102,15 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
             onGetMovies();
         } else {
             mBinding.recycler.setVisibility(View.GONE);
+            mBinding.txtNoMovies.setText(getNoNetworkMessage());
             mBinding.txtNoMovies.setVisibility(View.VISIBLE);
-            mBinding.txtNoMovies.setText(R.string.no_movies_network_error);
+            onGettingMovies(false);
             registerReceiverForNetwork();
         }
+    }
+
+    protected int getNoNetworkMessage() {
+        return R.string.no_movies_network_error;
     }
 
     private void registerReceiverForNetwork() {
@@ -116,13 +134,21 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
 
     @Override
     public void onMoviesReady(List<Movie> movies) {
-        if (movies != null) {
+        int txtNoMoviesVisibility = View.VISIBLE;
+        int recyclerVisibility = View.GONE;
+        if (movies != null && movies.size() > 0) {
             int posterWidth = getResources().getDimensionPixelSize(R.dimen.movie_poster_size_median);
             MoviesAdapter adapter = new MoviesAdapter(movies, posterWidth);
             adapter.setListener(this);
             mBinding.recycler.setAdapter(adapter);
+
+            txtNoMoviesVisibility = View.GONE;
+            recyclerVisibility = View.VISIBLE;
         }
-        mBinding.recycler.setVisibility(View.VISIBLE);
+        mBinding.recycler.setVisibility(recyclerVisibility);
+
+        mBinding.txtNoMovies.setText(getNoMoviesMessage());
+        mBinding.txtNoMovies.setVisibility(txtNoMoviesVisibility);
     }
 
     @Override

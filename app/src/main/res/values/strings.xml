@@ -16,6 +16,7 @@
 
     <string name="no_movies">No movies for now, try again later.</string>
     <string name="no_movies_network_error">No movies for now, verify your network status.</string>
+    <string name="no_loved_movies">You didn\'t love any movie yet. Click in a Movie in the other lists and click the Heart!</string>
     <string name="movie_poster_description">%s\'s poster</string>
     <string name="no_summary">Failed to load summary</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet ultricies nisi. Pellentesque pellentesque porta sapien eget congue. Nunc sed nisi eu libero ornare feugiat tristique sit amet libero. Aliquam condimentum fringilla diam, nec pulvinar orci placerat eu. Etiam non urna leo. Pellentesque finibus lacus dui, ac ultricies mi consectetur eu. Sed lacinia sem vel iaculis faucibus. Nunc dictum turpis a libero egestas, ut dignissim velit commodo. In aliquet nec purus in finibus.</string>

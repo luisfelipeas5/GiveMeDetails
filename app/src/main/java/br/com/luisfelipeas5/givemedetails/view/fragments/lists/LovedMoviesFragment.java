@@ -15,6 +15,16 @@ public class LovedMoviesFragment extends MoviesFragment {
     }
 
     @Override
+    protected int getNoMoviesMessage() {
+        return R.string.no_loved_movies;
+    }
+
+    @Override
+    protected int getNoNetworkMessage() {
+        return getNoMoviesMessage();
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         onRefresh();
