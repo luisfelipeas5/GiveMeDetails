@@ -20,6 +20,11 @@ public class LovedMoviesFragment extends MoviesFragment {
     }
 
     @Override
+    protected boolean needsNetworkConnection() {
+        return false;
+    }
+
+    @Override
     protected int getNoNetworkMessage() {
         return getNoMoviesMessage();
     }

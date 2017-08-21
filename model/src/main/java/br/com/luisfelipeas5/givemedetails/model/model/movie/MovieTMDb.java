@@ -239,7 +239,8 @@ public class MovieTMDb implements Movie {
         contentValues.put(COLUMN_OVERVIEW, movieTMDb.getOverview());
         contentValues.put(COLUMN_ORIGINAL_TITLE, movieTMDb.getOriginalTitle());
         contentValues.put(COLUMN_VOTE_AVERAGE, movieTMDb.getVoteAverage());
-        contentValues.put(COLUMN_VOTE_COUNT, movieTMDb.getPopularity());
+        contentValues.put(COLUMN_VOTE_COUNT, movieTMDb.getVoteCount());
+        contentValues.put(COLUMN_POPULARITY, movieTMDb.getPopularity());
         contentValues.put(COLUMN_RELEASE_DATE, movieTMDb.getReleaseDate());
 
         return contentValues;
@@ -250,7 +251,8 @@ public class MovieTMDb implements Movie {
 
         movieTMDb.setId(cursor.getString(cursor.getColumnIndex(COLUMN_ID)));
         movieTMDb.setPosterSuffix(cursor.getString(cursor.getColumnIndex(COLUMN_POSTER_SUFFIX)));
-        movieTMDb.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_OVERVIEW)));
+        movieTMDb.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_TITLE)));
+        movieTMDb.setOverview(cursor.getString(cursor.getColumnIndex(COLUMN_OVERVIEW)));
         movieTMDb.setOriginalTitle(cursor.getString(cursor.getColumnIndex(COLUMN_ORIGINAL_TITLE)));
         movieTMDb.setVoteAverage(cursor.getDouble(cursor.getColumnIndex(COLUMN_VOTE_AVERAGE)));
         movieTMDb.setVoteCount(cursor.getLong(cursor.getColumnIndex(COLUMN_VOTE_COUNT)));

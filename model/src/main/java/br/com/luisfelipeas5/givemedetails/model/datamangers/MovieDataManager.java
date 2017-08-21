@@ -16,42 +16,51 @@ import io.reactivex.functions.Function;
 
 public class MovieDataManager implements MovieMvpDataManager {
 
-    private final MovieApiMvpHelper apiMvpHelper;
+    private final MovieApiMvpHelper mApiMvpHelper;
     private final MovieCacheMvpHelper cacheMvpHelper;
-    private final DatabaseMvpHelper databaseMvpHelper;
+    private final DatabaseMvpHelper mDatabaseMvpHelper;
 
     public MovieDataManager(MovieApiMvpHelper apiMvpHelper, MovieCacheMvpHelper cacheMvpHelper, DatabaseMvpHelper databaseMvpHelper) {
-        this.apiMvpHelper = apiMvpHelper;
+        this.mApiMvpHelper = apiMvpHelper;
         this.cacheMvpHelper = cacheMvpHelper;
-        this.databaseMvpHelper = databaseMvpHelper;
+        this.mDatabaseMvpHelper = databaseMvpHelper;
     }
 
     @Override
     public Single<List<Movie>> getPopularMovies() {
-        return apiMvpHelper.getPopular()
+        return mApiMvpHelper.getPopular()
                 .singleOrError();
     }
 
     @Override
     public Single<List<Movie>> getTopRatedMovies() {
-        return apiMvpHelper.getTopRated()
+        return mApiMvpHelper.getTopRated()
                 .singleOrError();
     }
 
     @Override
     public Single<List<Movie>> getLovedMovies() {
-        return databaseMvpHelper.getLovedMovies()
+        return mDatabaseMvpHelper.getLovedMovies()
                 .singleOrError();
     }
 
     @Override
-    public Single<Movie> getMovie(String movieId) {
+    public Single<Movie> getMovie(final String movieId) {
         if (movieId == null || movieId.trim().isEmpty()) {
             return null;
         }
-        return apiMvpHelper
-                .getMovie(movieId)
-                .flatMapSingle(new Function<Movie, Single<Movie>>() {
+        return mDatabaseMvpHelper.isLoved(movieId)
+                .flatMap(new Function<Boolean, Single<Movie>>() {
+                    @Override
+                    public Single<Movie> apply(@NonNull Boolean isLoved) throws Exception {
+                        if (isLoved) {
+                            return mDatabaseMvpHelper.getMovie(movieId);
+                        } else {
+                            return mApiMvpHelper.getMovie(movieId).singleOrError();
+                        }
+                    }
+                })
+                .flatMap(new Function<Movie, Single<Movie>>() {
                     @Override
                     public Single<Movie> apply(@NonNull final Movie movie) throws Exception {
                         return cacheMvpHelper.clearCache()
@@ -63,7 +72,7 @@ public class MovieDataManager implements MovieMvpDataManager {
                                 });
                     }
                 })
-                .flatMapSingle(new Function<Movie, Single<Movie>>() {
+                .flatMap(new Function<Movie, Single<Movie>>() {
                     @Override
                     public Single<Movie> apply(@NonNull final Movie movie) throws Exception {
                         return cacheMvpHelper.saveMovie(movie)
@@ -74,8 +83,7 @@ public class MovieDataManager implements MovieMvpDataManager {
                                     }
                                 });
                     }
-                })
-                .singleOrError();
+                });
     }
 
     @Override
@@ -118,7 +126,7 @@ public class MovieDataManager implements MovieMvpDataManager {
     @Override
     public Single<List<Trailer>> getMovieTrailers(String movieId) {
         if (movieId != null) {
-            return apiMvpHelper.getTrailers(movieId)
+            return mApiMvpHelper.getTrailers(movieId)
                     .singleOrError();
         }
         return null;
@@ -126,7 +134,7 @@ public class MovieDataManager implements MovieMvpDataManager {
 
     @Override
     public Single<List<Review>> getMovieReviewsByPage(String movieId, int pageIndex) {
-        return apiMvpHelper.getReviews(movieId, pageIndex).singleOrError();
+        return mApiMvpHelper.getReviews(movieId, pageIndex).singleOrError();
     }
 
     @Override
@@ -138,16 +146,16 @@ public class MovieDataManager implements MovieMvpDataManager {
                         final boolean newLoveStatus = !isLoved;
                         Single<Movie> movieSingle;
                         if (newLoveStatus) {
-                            movieSingle = apiMvpHelper.getMovie(movieId).singleOrError();
+                            movieSingle = mApiMvpHelper.getMovie(movieId).singleOrError();
                         } else {
-                            movieSingle = databaseMvpHelper.getMovie(movieId);
+                            movieSingle = mDatabaseMvpHelper.getMovie(movieId);
                         }
 
                         return movieSingle
                                 .flatMap(new Function<Movie, Single<Boolean>>() {
                                     @Override
                                     public Single<Boolean> apply(@NonNull Movie movie) throws Exception {
-                                        return databaseMvpHelper.setIsLoved(movie, newLoveStatus)
+                                        return mDatabaseMvpHelper.setIsLoved(movie, newLoveStatus)
                                                 .toSingle(new Callable<Boolean>() {
                                                     @Override
                                                     public Boolean call() throws Exception {
@@ -162,7 +170,7 @@ public class MovieDataManager implements MovieMvpDataManager {
 
     @Override
     public Single<Boolean> isMovieLoved(String movieId) {
-        return databaseMvpHelper.isLoved(movieId);
+        return mDatabaseMvpHelper.isLoved(movieId);
     }
 
     @android.support.annotation.NonNull
@@ -173,7 +181,7 @@ public class MovieDataManager implements MovieMvpDataManager {
                 if (isMovieDetailCached) {
                     return cacheMvpHelper.getMovie(movieId);
                 }
-                return apiMvpHelper.getMovie(movieId).singleOrError();
+                return mApiMvpHelper.getMovie(movieId).singleOrError();
             }
         };
     }
@@ -186,7 +194,7 @@ public class MovieDataManager implements MovieMvpDataManager {
                 if (isMovieDetailCached) {
                     return cacheMvpHelper.getMovie(movieId);
                 }
-                return apiMvpHelper.getMovieSummary(movieId).singleOrError();
+                return mApiMvpHelper.getMovieSummary(movieId).singleOrError();
             }
         };
     }
@@ -199,7 +207,7 @@ public class MovieDataManager implements MovieMvpDataManager {
                 if (isMovieDetailCached) {
                     return cacheMvpHelper.getMovie(movieId);
                 }
-                return apiMvpHelper.getMovieSocial(movieId).singleOrError();
+                return mApiMvpHelper.getMovieSocial(movieId).singleOrError();
             }
         };
     }

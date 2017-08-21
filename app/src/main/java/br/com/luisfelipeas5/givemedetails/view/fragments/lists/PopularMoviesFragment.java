@@ -6,6 +6,11 @@ import br.com.luisfelipeas5.givemedetails.view.list.MoviesMvpView;
 public class PopularMoviesFragment extends MoviesFragment implements MoviesMvpView {
 
     @Override
+    protected boolean needsNetworkConnection() {
+        return true;
+    }
+
+    @Override
     public int getTitleResource() {
         return R.string.popular_movies;
     }

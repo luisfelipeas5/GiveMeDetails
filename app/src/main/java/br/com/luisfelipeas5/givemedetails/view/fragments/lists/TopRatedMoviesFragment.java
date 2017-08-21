@@ -5,6 +5,11 @@ import br.com.luisfelipeas5.givemedetails.R;
 public class TopRatedMoviesFragment extends MoviesFragment {
 
     @Override
+    protected boolean needsNetworkConnection() {
+        return true;
+    }
+
+    @Override
     public int getTitleResource() {
         return R.string.top_rated_movies;
     }
