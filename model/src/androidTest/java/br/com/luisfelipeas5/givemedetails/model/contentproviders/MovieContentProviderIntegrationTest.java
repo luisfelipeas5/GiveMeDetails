@@ -21,7 +21,6 @@ public class MovieContentProviderIntegrationTest {
     private ContentResolver mContentResolver;
 
     private static final String MOVIE_ID_MOCKED = "Movie id mocked";
-    private static final String MOVIE_ID_MOCKED_1 = "Movie id mocked 1";
 
     @Before
     public void setUp() {
@@ -38,10 +37,6 @@ public class MovieContentProviderIntegrationTest {
         MovieTMDb movie = new MovieTMDb();
         movie.setId(MOVIE_ID_MOCKED);
         movieDao.insert(movie);
-
-        MovieTMDb movie1 = new MovieTMDb();
-        movie1.setId(MOVIE_ID_MOCKED_1);
-        movieDao.insert(movie1);
     }
 
     @Test
@@ -51,6 +46,33 @@ public class MovieContentProviderIntegrationTest {
 
         long id = MovieContentProvider.insert(mContentResolver, movieMocked);
         Assert.assertTrue(id > 0);
+    }
+
+    @Test
+    public void whenGetMovieById_withIdExist_success() {
+        MovieTMDb movieById = MovieContentProvider.getMovieById(mContentResolver, MOVIE_ID_MOCKED);
+        Assert.assertNotNull(movieById);
+        Assert.assertEquals(MOVIE_ID_MOCKED, movieById.getId());
+    }
+
+    @Test
+    public void whenGetMovieById_withIdNotExist_success() {
+        String id = "Movie Id Mocked" + System.currentTimeMillis();
+        MovieTMDb movieById = MovieContentProvider.getMovieById(mContentResolver, id);
+        Assert.assertNull(movieById);
+    }
+
+    @Test
+    public void whenGetMovieByIdCount_withIdExist_success() {
+        int movieByIdCount = MovieContentProvider.getMovieByIdCount(mContentResolver, MOVIE_ID_MOCKED);
+        Assert.assertEquals(1, movieByIdCount);
+    }
+
+    @Test
+    public void whenGetMovieByIdCount_withIdNotExist_success() {
+        String id = "Movie Id Mocked" + System.currentTimeMillis();
+        int movieByIdCount = MovieContentProvider.getMovieByIdCount(mContentResolver, id);
+        Assert.assertEquals(0, movieByIdCount);
     }
 
 }

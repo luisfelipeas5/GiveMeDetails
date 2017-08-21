@@ -1,10 +1,8 @@
 package br.com.luisfelipeas5.givemedetails.model.model.movie;
 
-import android.os.Parcelable;
-
 import java.util.Date;
 
-public interface Movie extends Parcelable {
+public interface Movie {
     String getPoster();
 
     String getPoster(int posterWidth);

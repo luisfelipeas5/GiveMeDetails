@@ -5,8 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.content.ContentValues;
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.database.Cursor;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -17,9 +16,17 @@ import java.util.Date;
 import java.util.Locale;
 
 @Entity(tableName = MovieTMDb.TABLE_NAME)
-public class MovieTMDb implements Parcelable, Movie {
+public class MovieTMDb implements Movie {
     public static final String TABLE_NAME = "movies";
-    private static final String COLUMN_ID = "id";
+    public static final String COLUMN_ID = "id";
+    private static final String COLUMN_POSTER_SUFFIX = "poster_suffix";
+    private static final String COLUMN_TITLE = "title";
+    private static final String COLUMN_OVERVIEW = "overview";
+    private static final String COLUMN_ORIGINAL_TITLE = "original_title";
+    private static final String COLUMN_VOTE_AVERAGE = "vote_average";
+    private static final String COLUMN_VOTE_COUNT = "vote_count";
+    private static final String COLUMN_POPULARITY = "popularity";
+    private static final String COLUMN_RELEASE_DATE = "release_date";
 
     @Ignore
     private static final int[] IMAGE_WIDTH_AVAILABLE = {92, 154, 185, 342, 500, 780};
@@ -32,20 +39,36 @@ public class MovieTMDb implements Parcelable, Movie {
     @ColumnInfo(name = COLUMN_ID)
     @SerializedName("id")
     private String id;
+
+    @ColumnInfo(name = COLUMN_POSTER_SUFFIX)
     @SerializedName("poster_path")
     private String posterSuffix;
+
+    @ColumnInfo(name = COLUMN_TITLE)
     @SerializedName("title")
     private String title;
+
+    @ColumnInfo(name = COLUMN_OVERVIEW)
     @SerializedName("overview")
     private String overview;
+
+    @ColumnInfo(name = COLUMN_ORIGINAL_TITLE)
     @SerializedName("original_title")
     private String originalTitle;
+
+    @ColumnInfo(name = COLUMN_VOTE_AVERAGE)
     @SerializedName("vote_average")
     private Double voteAverage;
+
+    @ColumnInfo(name = COLUMN_VOTE_COUNT)
     @SerializedName("vote_count")
     private Long voteCount;
+
+    @ColumnInfo(name = COLUMN_POPULARITY)
     @SerializedName("popularity")
     private Float popularity;
+
+    @ColumnInfo(name = COLUMN_RELEASE_DATE)
     @SerializedName("release_date")
     private String releaseDate;
 
@@ -191,54 +214,18 @@ public class MovieTMDb implements Parcelable, Movie {
         this.popularity = popularity;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.posterSuffix);
-        dest.writeString(this.title);
-        dest.writeString(this.overview);
-        dest.writeString(this.originalTitle);
-        dest.writeValue(this.voteAverage);
-        dest.writeValue(this.voteCount);
-        dest.writeValue(this.popularity);
-        dest.writeString(this.releaseDate);
-        dest.writeSerializable(this.dateFormat);
-    }
-
-    protected MovieTMDb(Parcel in) {
-        this.id = in.readString();
-        this.posterSuffix = in.readString();
-        this.title = in.readString();
-        this.overview = in.readString();
-        this.originalTitle = in.readString();
-        this.voteAverage = (Double) in.readValue(Double.class.getClassLoader());
-        this.voteCount = (Long) in.readValue(Long.class.getClassLoader());
-        this.popularity = (Float) in.readValue(Float.class.getClassLoader());
-        this.releaseDate = in.readString();
-        this.dateFormat = (DateFormat) in.readSerializable();
-    }
-
-    public static final Creator<MovieTMDb> CREATOR = new Creator<MovieTMDb>() {
-        @Override
-        public MovieTMDb createFromParcel(Parcel source) {
-            return new MovieTMDb(source);
-        }
-
-        @Override
-        public MovieTMDb[] newArray(int size) {
-            return new MovieTMDb[size];
-        }
-    };
-
     public static MovieTMDb fromContentValues(ContentValues values) {
         MovieTMDb movieTMDb = new MovieTMDb();
 
         movieTMDb.setId(values.getAsString(COLUMN_ID));
+        movieTMDb.setPosterSuffix(values.getAsString(COLUMN_POSTER_SUFFIX));
+        movieTMDb.setTitle(values.getAsString(COLUMN_TITLE));
+        movieTMDb.setOverview(values.getAsString(COLUMN_OVERVIEW));
+        movieTMDb.setOriginalTitle(values.getAsString(COLUMN_ORIGINAL_TITLE));
+        movieTMDb.setVoteAverage(values.getAsDouble(COLUMN_VOTE_AVERAGE));
+        movieTMDb.setVoteCount(values.getAsLong(COLUMN_VOTE_COUNT));
+        movieTMDb.setPopularity(values.getAsFloat(COLUMN_POPULARITY));
+        movieTMDb.setReleaseDate(values.getAsString(COLUMN_RELEASE_DATE));
 
         return movieTMDb;
     }
@@ -247,7 +234,29 @@ public class MovieTMDb implements Parcelable, Movie {
         ContentValues contentValues = new ContentValues();
 
         contentValues.put(COLUMN_ID, movieTMDb.getId());
+        contentValues.put(COLUMN_POSTER_SUFFIX, movieTMDb.getPosterSuffix());
+        contentValues.put(COLUMN_TITLE, movieTMDb.getTitle());
+        contentValues.put(COLUMN_OVERVIEW, movieTMDb.getOverview());
+        contentValues.put(COLUMN_ORIGINAL_TITLE, movieTMDb.getOriginalTitle());
+        contentValues.put(COLUMN_VOTE_AVERAGE, movieTMDb.getVoteAverage());
+        contentValues.put(COLUMN_VOTE_COUNT, movieTMDb.getPopularity());
+        contentValues.put(COLUMN_RELEASE_DATE, movieTMDb.getReleaseDate());
 
         return contentValues;
+    }
+
+    public static MovieTMDb fromCursor(Cursor cursor) {
+        MovieTMDb movieTMDb = new MovieTMDb();
+
+        movieTMDb.setId(cursor.getString(cursor.getColumnIndex(COLUMN_ID)));
+        movieTMDb.setPosterSuffix(cursor.getString(cursor.getColumnIndex(COLUMN_POSTER_SUFFIX)));
+        movieTMDb.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_OVERVIEW)));
+        movieTMDb.setOriginalTitle(cursor.getString(cursor.getColumnIndex(COLUMN_ORIGINAL_TITLE)));
+        movieTMDb.setVoteAverage(cursor.getDouble(cursor.getColumnIndex(COLUMN_VOTE_AVERAGE)));
+        movieTMDb.setVoteCount(cursor.getLong(cursor.getColumnIndex(COLUMN_VOTE_COUNT)));
+        movieTMDb.setPopularity(cursor.getFloat(cursor.getColumnIndex(COLUMN_POPULARITY)));
+        movieTMDb.setReleaseDate(cursor.getString(cursor.getColumnIndex(COLUMN_RELEASE_DATE)));
+
+        return movieTMDb;
     }
 }
