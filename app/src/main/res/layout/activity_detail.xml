@@ -1,30 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data>
-        <variable
-            name="movie"
-            type="br.com.luisfelipeas5.givemedetails.model.Movie"/>
-    </data>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:background="@color/colorPrimaryDark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="br.com.luisfelipeas5.givemedetails.ui.DetailActivity">
+        tools:context="br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity">
 
-        <ProgressBar android:id="@+id/progress_bar"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <ImageView android:id="@+id/img_movie"
-            android:contentDescription="@{movie.title}"
-            app:set_movie_poster="@{movie}"
-            android:scaleType="centerCrop"
+        <fragment android:id="@+id/fragment_poster_background"
+            android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.PosterFragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
-        <ScrollView
+        <ScrollView android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -39,19 +27,76 @@
                     android:layout_height="@dimen/detail_fake_view_header_height"/>
 
                 <fragment android:id="@+id/fragment_detail"
-                    android:name="br.com.luisfelipeas5.givemedetails.ui.fragments.details.DetailFragment"
+                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.SummaryFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
                 <fragment android:id="@+id/fragment_social"
                     android:layout_marginTop="5dp"
-                    android:name="br.com.luisfelipeas5.givemedetails.ui.fragments.details.SocialFragment"
+                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.SocialFragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
+
+                <fragment android:id="@+id/fragment_trailers_preview"
+                    android:layout_marginTop="5dp"
+                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.TrailersFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <fragment android:id="@+id/fragment_reviews_preview"
+                    android:layout_marginTop="5dp"
+                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.ReviewsFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/button_love"/>
 
             </LinearLayout>
 
         </ScrollView>
+
+        <ScrollView android:id="@+id/sub_scroll_view"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:padding="@dimen/details_card_layout_padding"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View android:layout_width="match_parent"
+                    android:focusableInTouchMode="true"
+                    android:focusable="true"
+                    android:layout_height="?actionBarSize"/>
+
+                <fragment android:id="@+id/fragment_trailers"
+                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.TrailersFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <fragment android:id="@+id/fragment_reviews"
+                    android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.ReviewsFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_margin="8dp"
+                    android:layout_height="@dimen/button_love"/>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <fragment android:id="@+id/fragment_love"
+            android:name="br.com.luisfelipeas5.givemedetails.view.fragments.details.LoveFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <android.support.v7.widget.AppCompatImageView
             app:srcCompat="@drawable/background_shadow_gradient"
@@ -63,6 +108,7 @@
             style="?borderlessButtonStyle"
             android:layout_marginStart="-16dp"
             android:layout_marginLeft="-16dp"
+            android:layout_marginTop="16dp"
             android:contentDescription="@string/arrow_back_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

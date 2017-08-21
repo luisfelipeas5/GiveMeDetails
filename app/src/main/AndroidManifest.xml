@@ -12,8 +12,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".view.MoviesApp"
         android:theme="@style/AppTheme">
-        <activity android:name="br.com.luisfelipeas5.givemedetails.ui.MainActivity">
+        <activity android:name="br.com.luisfelipeas5.givemedetails.view.activities.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,18 +26,18 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="http"
-                    android:host="www.wherewatch.com"
+                    android:host="www.givemedetails.com"
                     android:pathPrefix="/app" />
                 <!-- note that the leading "/" is required for pathPrefix-->
                 <!-- Accepts URIs that begin with "example://gizmos” -->
-                <data android:scheme="wherewatch"
+                <data android:scheme="givemedetails"
                     android:host="app" />
 
             </intent-filter>
 
         </activity>
-        <activity android:name="br.com.luisfelipeas5.givemedetails.ui.DetailActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name="br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity"
+            android:theme="@style/AppTheme.DetailActivity" />
     </application>
 
 </manifest>

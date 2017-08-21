@@ -7,7 +7,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.2'
+        classpath 'com.android.tools.build:gradle:2.3.3'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -17,9 +17,52 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven { url 'https://maven.google.com' }
+        maven { url 'https://jitpack.io' }
+    }
+
+    project.ext {
+        buildToolsVersion = "25.0.3"
+        compileSdkVersion = 26
+        minSdkVersion = 15
+        targetSdkVersion = 26
+
+        androidLibrariesVersion = "26.0.0"
+        constraintLayoutVersion = "1.0.2"
+
+        espressoVersion = "3.0.0"
+        junitVersion = "4.12"
+        daggerMockVersion = "0.7.0"
+        dexmakerVersion = "1.2"
+
+        gsonVersion = "2.7"
+
+        rxjavaVersion = "2.1.1"
+        rxandroidVersion = "2.0.1"
+
+        mockitoVersion = "2.0.2-beta"
+
+        daggerVersion = "2.11"
+
+        retrofitVersion = "2.3.0"
+
+        roomVersion = "1.0.0-alpha7"
+
+        glideVersion = "4.0.0"
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        def requested = details.requested
+        if (requested.group == 'com.android.support') {
+            if (!requested.name.startsWith("multidex")) {
+                details.useVersion project.ext.androidLibrariesVersion
+            }
+        }
+    }
 }

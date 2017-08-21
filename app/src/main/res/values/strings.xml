@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Give Me Details</string>
-    <string name="img_movie">Movie\'s image</string>
+    <string name="movie_poster">Movie\'s poster</string>
     <string name="popular_movies">Popular movies</string>
     <string name="top_rated_movies">Top rated movies</string>
 
@@ -9,12 +9,26 @@
     <string name="vote_average">average rating</string>
     <string name="vote_count">%d rating this movie</string>
     <string name="value">%.01f</string>
-    <string name="popularity">popularidade</string>
+    <string name="popularity">popularity</string>
     <string name="date_format_pattern">MM/dd/yyyy</string>
     <string name="release_date">Release date: %s</string>
     <string name="arrow_back_description">Back icon</string>
 
     <string name="no_movies">No movies for now, try again later.</string>
     <string name="no_movies_network_error">No movies for now, verify your network status.</string>
+    <string name="no_loved_movies">You didn\'t love any movie yet. Click in a Movie in the other lists and click the Heart!</string>
+    <string name="movie_poster_description">%s\'s poster</string>
+    <string name="no_summary">Failed to load summary</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sit amet ultricies nisi. Pellentesque pellentesque porta sapien eget congue. Nunc sed nisi eu libero ornare feugiat tristique sit amet libero. Aliquam condimentum fringilla diam, nec pulvinar orci placerat eu. Etiam non urna leo. Pellentesque finibus lacus dui, ac ultricies mi consectetur eu. Sed lacinia sem vel iaculis faucibus. Nunc dictum turpis a libero egestas, ut dignissim velit commodo. In aliquet nec purus in finibus.</string>
+    <string name="img_trailer">Trailer\'s thumb</string>
+    <string name="trailers">Trailers</string>
+    <string name="no_trailers">No trailers</string>
+    <string name="reviews">Reviews</string>
+    <string name="no_reviews">No reviews</string>
+    <string name="see_all_trailers">See all the trailers</string>
+    <string name="see_all_reviews">See all the reviews</string>
+    <string name="movie_was_not_loved_by_you">This movie was not loved by you</string>
+    <string name="movie_was_loved_by_you">This movie was loved by you</string>
+    <string name="loved_movies">Loved movies</string>
 
 </resources>
