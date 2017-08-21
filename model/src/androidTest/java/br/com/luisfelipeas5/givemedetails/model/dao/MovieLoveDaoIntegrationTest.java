@@ -1,4 +1,4 @@
-package br.com.luisfelipeas5.givemedetails.model.helpers.dao;
+package br.com.luisfelipeas5.givemedetails.model.dao;
 
 import android.arch.persistence.room.Room;
 import android.content.Context;

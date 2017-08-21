@@ -51,11 +51,28 @@ public class MovieDataManager implements MovieMvpDataManager {
         }
         return apiMvpHelper
                 .getMovie(movieId)
-                .map(new Function<Movie, Movie>() {
+                .flatMapSingle(new Function<Movie, Single<Movie>>() {
                     @Override
-                    public Movie apply(@NonNull Movie movie) throws Exception {
-                        cacheMvpHelper.saveMovie(movie);
-                        return movie;
+                    public Single<Movie> apply(@NonNull final Movie movie) throws Exception {
+                        return cacheMvpHelper.clearCache()
+                                .map(new Function<Boolean, Movie>() {
+                                    @Override
+                                    public Movie apply(@NonNull Boolean aBoolean) throws Exception {
+                                        return movie;
+                                    }
+                                });
+                    }
+                })
+                .flatMapSingle(new Function<Movie, Single<Movie>>() {
+                    @Override
+                    public Single<Movie> apply(@NonNull final Movie movie) throws Exception {
+                        return cacheMvpHelper.saveMovie(movie)
+                                .map(new Function<Boolean, Movie>() {
+                                    @Override
+                                    public Movie apply(@NonNull Boolean aBoolean) throws Exception {
+                                        return movie;
+                                    }
+                                });
                     }
                 })
                 .singleOrError();
@@ -119,8 +136,14 @@ public class MovieDataManager implements MovieMvpDataManager {
                     @Override
                     public Single<Boolean> apply(@NonNull Boolean isLoved) throws Exception {
                         final boolean newLoveStatus = !isLoved;
-                        return apiMvpHelper.getMovie(movieId)
-                                .singleOrError()
+                        Single<Movie> movieSingle;
+                        if (newLoveStatus) {
+                            movieSingle = apiMvpHelper.getMovie(movieId).singleOrError();
+                        } else {
+                            movieSingle = databaseMvpHelper.getMovie(movieId);
+                        }
+
+                        return movieSingle
                                 .flatMap(new Function<Movie, Single<Boolean>>() {
                                     @Override
                                     public Single<Boolean> apply(@NonNull Movie movie) throws Exception {

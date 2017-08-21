@@ -135,6 +135,11 @@ public class ModelTestModule {
                 return Single.just(true);
             }
 
+            @Override
+            public Single<Boolean> clearCache() {
+                return Single.just(true);
+            }
+
         };
     }
 
@@ -154,6 +159,11 @@ public class ModelTestModule {
             @Override
             public Observable<List<Movie>> getLovedMovies() {
                 return Observable.just(mList);
+            }
+
+            @Override
+            public Single<Movie> getMovie(String movieId) {
+                return Single.just(movie);
             }
         };
     }

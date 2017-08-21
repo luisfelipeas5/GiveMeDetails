@@ -3,6 +3,8 @@ package br.com.luisfelipeas5.givemedetails.view.di.modules.model;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
+import br.com.luisfelipeas5.givemedetails.model.contentproviders.MovieContentProvider;
+import br.com.luisfelipeas5.givemedetails.model.contentproviders.MovieMvpContentProvider;
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieCacheDatabase;
 import br.com.luisfelipeas5.givemedetails.model.databases.MovieDatabase;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
@@ -53,8 +55,13 @@ public class ModelModule {
     }
 
     @Provides
-    DatabaseMvpHelper provideDatabaseMvpHelper(MovieDatabase movieDatabase) {
-        return new DatabaseHelper(movieDatabase);
+    MovieMvpContentProvider provideMovieMvpContentProvider(MovieDatabase movieDatabase) {
+        return new MovieContentProvider(movieDatabase, mContext);
+    }
+
+    @Provides
+    DatabaseMvpHelper provideDatabaseMvpHelper(MovieMvpContentProvider movieMvpContentProvider) {
+        return new DatabaseHelper(movieMvpContentProvider);
     }
 
     @Provides

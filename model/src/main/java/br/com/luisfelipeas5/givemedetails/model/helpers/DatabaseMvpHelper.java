@@ -13,4 +13,6 @@ public interface DatabaseMvpHelper {
     Completable setIsLoved(Movie movie, boolean isLoved);
 
     Observable<List<Movie>> getLovedMovies();
+
+    Single<Movie> getMovie(String movieId);
 }
