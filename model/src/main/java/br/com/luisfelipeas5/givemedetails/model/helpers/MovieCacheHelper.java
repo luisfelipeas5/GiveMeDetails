@@ -103,6 +103,18 @@ public class MovieCacheHelper implements MovieCacheMvpHelper {
                 });
     }
 
+    @Override
+    public Single<Boolean> clearCache() {
+        return Single.create(new SingleOnSubscribe<Boolean>() {
+            @Override
+            public void subscribe(@NonNull SingleEmitter<Boolean> e) throws Exception {
+                MovieDao movieDao = mMovieCacheDatabase.getMovieDao();
+                movieDao.deleteAll();
+                e.onSuccess(true);
+            }
+        });
+    }
+
     private boolean hasMovieSocialData(@NonNull Movie movie) {
         return isDataValid(movie.getVoteCount()) &&
                 isDataValid(movie.getVoteAverage()) &&

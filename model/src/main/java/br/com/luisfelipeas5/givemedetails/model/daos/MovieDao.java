@@ -32,4 +32,7 @@ public interface MovieDao {
 
     @Update
     int update(MovieTMDb movieTMDb);
+
+    @Query("DELETE FROM " + MovieTMDb.TABLE_NAME)
+    int deleteAll();
 }

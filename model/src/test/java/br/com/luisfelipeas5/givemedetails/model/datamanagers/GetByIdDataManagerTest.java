@@ -40,6 +40,9 @@ public class GetByIdDataManagerTest {
         MockitoAnnotations.initMocks(this);
         mMvpDataManager = new MovieDataManager(mMovieApiMvpHelper, mMovieCacheHelper, mDatabaseMvpHelper);
 
+        when(mMovieCacheHelper.saveMovie(mMovieMocked)).thenReturn(Single.just(true));
+        when(mMovieCacheHelper.clearCache()).thenReturn(Single.just(true));
+
         Observable<Movie> movieObservable = Observable.just(mMovieMocked);
         when(mMovieApiMvpHelper.getMovie(Matchers.isNotNull(String.class))).thenReturn(movieObservable);
         when(mMovieApiMvpHelper.getMovie(Matchers.matches(".{1,}"))).thenReturn(movieObservable);
@@ -62,6 +65,7 @@ public class GetByIdDataManagerTest {
         testObserver.assertValue(mMovieMocked);
         verify(mMovieApiMvpHelper).getMovie(movieId);
         verify(mMovieCacheHelper).saveMovie(mMovieMocked);
+        verify(mMovieCacheHelper).clearCache();
     }
 
     @Test

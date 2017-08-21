@@ -145,7 +145,7 @@ public class LoveDatabaseHelperTest {
         testObserver.assertValue(mMovieTMDb);
         testObserver.assertNoErrors();
 
-        verify(mMovieMvpContentProvider.getMovieById(MOVIE_ID_MOCKED));
+        verify(mMovieMvpContentProvider).getMovieById(MOVIE_ID_MOCKED);
     }
 
     @NonNull

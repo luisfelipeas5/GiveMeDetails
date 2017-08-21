@@ -46,6 +46,7 @@ public class LoveDataManagerTest {
         when(mDatabaseMvpHelper.isLoved(MOVIE_ID_MOCKED)).thenReturn(Single.just(false));
         when(mDatabaseMvpHelper.setIsLoved(getMovieMatcher(), eq(true))).thenReturn(Completable.complete());
         when(mDatabaseMvpHelper.setIsLoved(getMovieMatcher(), eq(false))).thenReturn(Completable.complete());
+        when(mDatabaseMvpHelper.getMovie(MOVIE_ID_MOCKED)).thenReturn(Single.just(mMovie));
 
         when(mApiMvpHelper.getMovie(MOVIE_ID_MOCKED)).thenReturn(Observable.just(mMovie));
 

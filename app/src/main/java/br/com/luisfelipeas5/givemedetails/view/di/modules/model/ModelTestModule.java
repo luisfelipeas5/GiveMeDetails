@@ -135,6 +135,11 @@ public class ModelTestModule {
                 return Single.just(true);
             }
 
+            @Override
+            public Single<Boolean> clearCache() {
+                return Single.just(true);
+            }
+
         };
     }
 
