@@ -119,8 +119,14 @@ public class MovieDataManager implements MovieMvpDataManager {
                     @Override
                     public Single<Boolean> apply(@NonNull Boolean isLoved) throws Exception {
                         final boolean newLoveStatus = !isLoved;
-                        return apiMvpHelper.getMovie(movieId)
-                                .singleOrError()
+                        Single<Movie> movieSingle;
+                        if (newLoveStatus) {
+                            movieSingle = apiMvpHelper.getMovie(movieId).singleOrError();
+                        } else {
+                            movieSingle = databaseMvpHelper.getMovie(movieId);
+                        }
+
+                        return movieSingle
                                 .flatMap(new Function<Movie, Single<Boolean>>() {
                                     @Override
                                     public Single<Boolean> apply(@NonNull Movie movie) throws Exception {

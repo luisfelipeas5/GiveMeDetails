@@ -122,6 +122,11 @@ public class MovieContentProvider extends ContentProvider implements MovieMvpCon
         return insert(mContentResolver, movieLove);
     }
 
+    @Override
+    public MovieTMDb getMovieById(String movieId) {
+        return getMovieById(mContentResolver, movieId);
+    }
+
     public static long insert(ContentResolver contentResolver, MovieLove movieLove) {
         ContentValues values = MovieLove.toContentValues(movieLove);
         Uri itemUri = contentResolver.insert(URI_MOVIE_LOVE, values);

@@ -155,6 +155,11 @@ public class ModelTestModule {
             public Observable<List<Movie>> getLovedMovies() {
                 return Observable.just(mList);
             }
+
+            @Override
+            public Single<Movie> getMovie(String movieId) {
+                return Single.just(movie);
+            }
         };
     }
 

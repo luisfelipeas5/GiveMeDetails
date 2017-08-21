@@ -31,6 +31,7 @@ import br.com.luisfelipeas5.givemedetails.view.list.MoviesMvpView;
 public abstract class MoviesFragment extends Fragment implements View.OnClickListener, MoviesAdapter.Listener, MoviesMvpView, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String CONNECTIVITY_CHANGE_ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
+    protected static final int REQUEST_CODE_DETAILS = 0;
     private FragmentMoviesBinding mBinding;
     protected MoviesMvpPresenter mPresenter;
     private boolean mIsGettingMovies;
@@ -69,7 +70,7 @@ public abstract class MoviesFragment extends Fragment implements View.OnClickLis
     public void onMovieClicked(Movie movie) {
         Intent movieDetailsIntent = new Intent(getContext(), DetailActivity.class);
         movieDetailsIntent.putExtra(DetailActivity.EXTRA_MOVIE_ID, movie.getId());
-        startActivity(movieDetailsIntent);
+        startActivityForResult(movieDetailsIntent, REQUEST_CODE_DETAILS);
     }
 
     @Override

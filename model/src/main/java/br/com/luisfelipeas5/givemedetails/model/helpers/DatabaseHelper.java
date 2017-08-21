@@ -91,4 +91,15 @@ public class DatabaseHelper implements DatabaseMvpHelper {
             }
         });
     }
+
+    @Override
+    public Single<Movie> getMovie(final String movieId) {
+        return Single.create(new SingleOnSubscribe<Movie>() {
+            @Override
+            public void subscribe(@NonNull SingleEmitter<Movie> e) throws Exception {
+                Movie movie = mMovieMvpContentProvider.getMovieById(movieId);
+                e.onSuccess(movie);
+            }
+        });
+    }
 }

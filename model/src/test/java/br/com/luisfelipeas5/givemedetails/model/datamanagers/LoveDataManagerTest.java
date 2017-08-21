@@ -10,9 +10,9 @@ import org.mockito.MockitoAnnotations;
 
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieDataManager;
 import br.com.luisfelipeas5.givemedetails.model.datamangers.MovieMvpDataManager;
+import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieApiMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.helpers.MovieCacheMvpHelper;
-import br.com.luisfelipeas5.givemedetails.model.helpers.DatabaseMvpHelper;
 import br.com.luisfelipeas5.givemedetails.model.model.movie.Movie;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
@@ -62,9 +62,20 @@ public class LoveDataManagerTest {
 
     @Test
     public void whenToggleMovieLove_callGetMovieOfApiHelper_success() {
+        when(mDatabaseMvpHelper.isLoved(MOVIE_ID_MOCKED)).thenReturn(Single.just(false));
+
         Single<Boolean> toggleLoveSingle = mMovieMvpDataManager.toggleMovieLove(MOVIE_ID_MOCKED);
         toggleLoveSingle.test();
         verify(mApiMvpHelper).getMovie(MOVIE_ID_MOCKED);
+    }
+
+    @Test
+    public void whenToggleMovieLove_CallGetMovieOfDatabaseHelper_success() {
+        when(mDatabaseMvpHelper.isLoved(MOVIE_ID_MOCKED)).thenReturn(Single.just(true));
+
+        Single<Boolean> toggleLoveSingle = mMovieMvpDataManager.toggleMovieLove(MOVIE_ID_MOCKED);
+        toggleLoveSingle.test();
+        verify(mDatabaseMvpHelper).getMovie(MOVIE_ID_MOCKED);
     }
 
     @Test

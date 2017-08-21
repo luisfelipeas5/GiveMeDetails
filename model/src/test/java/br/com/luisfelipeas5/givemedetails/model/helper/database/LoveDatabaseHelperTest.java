@@ -65,14 +65,14 @@ public class LoveDatabaseHelperTest {
     }
 
     @Test
-    public void whenSetIsMovieLoved_callInsertOfMovieDao_success() {
+    public void whenSetIsMovieLoved_callInsertOfContentProvider_success() {
         Completable setIsLovedCompletable = mDatabaseMvpHelper.setIsLoved(mMovieTMDb, true);
         setIsLovedCompletable.test();
         verify(mMovieMvpContentProvider).insert(getMovieMatcher(MOVIE_ID_MOCKED));
     }
 
     @Test
-    public void whenSetIsMovieLoved_notCallInsertOfMovieDao_success() {
+    public void whenSetIsMovieLoved_notCallInsertOfContentProvider_success() {
         when(mMovieMvpContentProvider.getMovieByIdCount(MOVIE_ID_MOCKED)).thenReturn(1);
 
         Completable setIsLovedCompletable = mDatabaseMvpHelper.setIsLoved(mMovieTMDb, true);
@@ -81,7 +81,7 @@ public class LoveDatabaseHelperTest {
     }
 
     @Test
-    public void whenSetIsMovieLoved_withTrue_callSetIsLovedOfLoveDao_success() {
+    public void whenSetIsMovieLoved_withTrue_callSetIsLovedOfContentProvider_success() {
         Completable setIsLovedCompletable = mDatabaseMvpHelper.setIsLoved(mMovieTMDb, true);
         TestObserver<Void> testObserver = setIsLovedCompletable.test();
         testObserver.assertComplete();
@@ -90,7 +90,7 @@ public class LoveDatabaseHelperTest {
     }
 
     @Test
-    public void whenSetIsMovieLoved_withFalse_callSetIsLovedOfLoveDao_success() {
+    public void whenSetIsMovieLoved_withFalse_callSetIsLovedOfContentProvider_success() {
         Completable setIsLovedCompletable = mDatabaseMvpHelper.setIsLoved(mMovieTMDb, false);
         TestObserver<Void> testObserver = setIsLovedCompletable.test();
         testObserver.assertComplete();
@@ -99,7 +99,7 @@ public class LoveDatabaseHelperTest {
     }
 
     @Test
-    public void whenIsLoved_callIsLovedOfLoveDao_returningTrue_success() {
+    public void whenIsLoved_callIsLovedOfContentProvider_returningTrue_success() {
         when(mMovieMvpContentProvider.isLoved(MOVIE_ID_MOCKED)).thenReturn(true);
 
         Single<Boolean> isLovedSingle = mDatabaseMvpHelper.isLoved(MOVIE_ID_MOCKED);
@@ -112,7 +112,7 @@ public class LoveDatabaseHelperTest {
     }
 
     @Test
-    public void whenIsLoved_callIsLovedOfLoveDao_returningFalse_success() {
+    public void whenIsLoved_callIsLovedOfContentProvider_returningFalse_success() {
         when(mMovieMvpContentProvider.isLoved(MOVIE_ID_MOCKED)).thenReturn(false);
 
         Single<Boolean> isLovedSingle = mDatabaseMvpHelper.isLoved(MOVIE_ID_MOCKED);
@@ -125,7 +125,7 @@ public class LoveDatabaseHelperTest {
     }
 
     @Test
-    public void whenGetLoved_callGetLovedOfDao_success() {
+    public void whenGetLoved_callGetLovedOfContentProvider_success() {
         Observable<List<Movie>> lovedMoviesObservable = mDatabaseMvpHelper.getLovedMovies();
         TestObserver<List<Movie>> testObserver = lovedMoviesObservable.test();
         testObserver.assertNoErrors();
@@ -133,6 +133,19 @@ public class LoveDatabaseHelperTest {
         testObserver.assertValue(new LinkedList<Movie>(mLovedMovies));
 
         verify(mMovieMvpContentProvider).getLoved();
+    }
+
+    @Test
+    public void whenGetMovie_callGetMovieOfContentProvider_success() {
+        when(mMovieMvpContentProvider.getMovieById(MOVIE_ID_MOCKED)).thenReturn(mMovieTMDb);
+
+        Single<Movie> movieSingle = mDatabaseMvpHelper.getMovie(MOVIE_ID_MOCKED);
+        TestObserver<Movie> testObserver = movieSingle.test();
+        testObserver.assertComplete();
+        testObserver.assertValue(mMovieTMDb);
+        testObserver.assertNoErrors();
+
+        verify(mMovieMvpContentProvider.getMovieById(MOVIE_ID_MOCKED));
     }
 
     @NonNull

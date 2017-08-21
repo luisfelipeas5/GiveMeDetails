@@ -13,4 +13,10 @@ public class LovedMoviesFragment extends MoviesFragment {
     public void onGetMovies() {
         mPresenter.getLovedMovies();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        onRefresh();
+    }
 }

@@ -15,4 +15,6 @@ public interface MovieMvpContentProvider {
     List<MovieTMDb> getLoved();
 
     long insert(MovieLove movieLove);
+
+    MovieTMDb getMovieById(String movieId);
 }
