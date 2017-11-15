@@ -8,27 +8,4 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
-
-    </style>
-
-    <style name="AppTheme.DetailActivity" parent="AppTheme.NoActionBar">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
-    </style>
-
-    <style name="TxtDetailSessionSmallTitle">
-        <item name="android:textSize">@dimen/details_small_text</item>
-        <item name="android:textColor">@color/colorAccent</item>
-        <item name="android:layout_marginBottom">10dp</item>
-    </style>
-
-    <style name="TxtDetailSessionMediumTitle" parent="TxtDetailSessionSmallTitle">
-        <item name="android:textSize">@dimen/details_normal_text</item>
-    </style>
-
-    <style name="ButtonSeeAll" parent="TxtDetailSessionSmallTitle">
-        <item name="android:background">@drawable/transparent_clickable</item>
-    </style>
-
 </resources>

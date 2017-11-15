@@ -1,15 +1,22 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
 android {
-    compileSdkVersion project.ext.compileSdkVersion
-    buildToolsVersion project.ext.buildToolsVersion
+    compileSdkVersion 27
     defaultConfig {
-        applicationId "br.com.luisfelipeas5.givemedetails"
-        minSdkVersion project.ext.minSdkVersion
-        targetSdkVersion project.ext.targetSdkVersion
+        applicationId "br.com.luisfelipeas5.gimmedetails"
+        minSdkVersion 21
+        targetSdkVersion 27
         versionCode 1
-        versionName "1.1"
+        versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    dataBinding {
+        enabled = true
     }
     buildTypes {
         release {
@@ -17,39 +24,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    dataBinding {
-        enabled true
-    }
-    android.defaultConfig.vectorDrawables.useSupportLibrary = true
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:' + project.ext.espressoVersion, {
-        exclude group: 'com.android.support', module: 'support-annotations'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation "junit:junit:${junit_version}"
+    androidTestImplementation ("com.android.support.test:runner:${test_runner_version}", {
+        exclude group: 'com.android.support'
+    })
+    androidTestImplementation ("com.android.support.test.espresso:espresso-core:${espresso_version}", {
+        exclude group: 'com.android.support'
     })
 
-    testCompile 'junit:junit:' + project.ext.junitVersion
-    androidTestCompile 'junit:junit:' + project.ext.junitVersion
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-    testCompile "org.mockito:mockito-core:" + project.ext.mockitoVersion
-    androidTestCompile "org.mockito:mockito-core:" + project.ext.mockitoVersion
+    implementation "com.android.support:appcompat-v7:${android_support_version}"
+    implementation "com.android.support.constraint:constraint-layout:${constraint_layout_version}"
+    implementation "com.android.support:recyclerview-v7:${android_support_version}"
 
-    compile 'com.android.support:appcompat-v7:' + project.ext.androidLibrariesVersion
-    compile 'com.android.support:recyclerview-v7:' + project.ext.androidLibrariesVersion
-    compile 'com.android.support:cardview-v7:' + project.ext.androidLibrariesVersion
-    compile 'com.android.support:support-v4:' + project.ext.androidLibrariesVersion
-    compile 'com.android.support:design:' + project.ext.androidLibrariesVersion
-
-    compile 'com.google.dagger:dagger:' + project.ext.daggerVersion
-    annotationProcessor "com.google.dagger:dagger-compiler:" + project.ext.daggerVersion
-
-    compile 'com.android.support.constraint:constraint-layout:' + project.ext.constraintLayoutVersion
-
-    compile 'com.github.bumptech.glide:glide:' + project.ext.glideVersion
-    compile 'com.github.JakeWharton:ViewPagerIndicator:2.4.1'
-
-    compile project(path: ':model')
-    compile project(path: ':view')
-    compile project(path: ':presenter')
+    implementation ("android.arch.lifecycle:extensions:${lifecycle_extensions_version}", {
+        exclude group: 'com.android.support'
+    })
 }

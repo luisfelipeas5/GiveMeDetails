@@ -1,43 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.luisfelipeas5.givemedetails">
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    package="br.com.luisfelipeas5.gimmedetails">
 
     <application
+        android:name=".GimmeDetailsApplication"
         android:allowBackup="true"
-        android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:name=".view.MoviesApp"
         android:theme="@style/AppTheme">
-        <activity android:name="br.com.luisfelipeas5.givemedetails.view.activities.HomeActivity">
+        <activity android:name=".ui.movies.MoviesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            <intent-filter android:label="@string/app_name">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http"
-                    android:host="www.givemedetails.com"
-                    android:pathPrefix="/app" />
-                <!-- note that the leading "/" is required for pathPrefix-->
-                <!-- Accepts URIs that begin with "example://gizmos” -->
-                <data android:scheme="givemedetails"
-                    android:host="app" />
-
-            </intent-filter>
-
         </activity>
-        <activity android:name="br.com.luisfelipeas5.givemedetails.view.activities.DetailActivity"
-            android:theme="@style/AppTheme.DetailActivity" />
     </application>
 
 </manifest>
