@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 27
     defaultConfig {
@@ -42,4 +44,7 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:${android_support_version}"
 
     implementation "android.arch.lifecycle:extensions:${lifecycle_extensions_version}"
+
+    kapt "com.google.dagger:dagger-compiler:${dagger_version}"
+    implementation "com.google.dagger:dagger:${dagger_version}"
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GimmeDetails</string>
+    <string name="media_image">%1$s\'s image (%2$s)</string>
 </resources>
